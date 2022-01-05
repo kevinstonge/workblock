@@ -1,0 +1,14 @@
+@import './vars.scss';
+@mixin flexR {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin flexC {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin button {
+  background-color: $b2;
+}

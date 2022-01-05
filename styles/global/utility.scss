@@ -1,0 +1,39 @@
+@import './vars.scss';
+@import './mixins.scss';
+body {
+  background-color: $b1;
+  color: $f1;
+}
+header {
+  padding: 1rem;
+  background-color: $b2;
+  @include flexR();
+  justify-content: space-between;
+  align-items: center;
+  h1 {
+    font-size: 1.6rem;
+  }
+  nav {
+    @include flexR();
+    gap: 1rem;
+    a {
+      padding: 0.4rem 0.5rem;
+      color: lighten($b1, 80%);
+      text-decoration: none;
+      border-width: 1px;
+      border-style: solid;
+      border-color: transparent;
+      border-radius: 0.2rem;
+      &:nth-of-type(1) {
+        border-right-color: $c1;
+        border-bottom-color: $c1;
+        background-color: desaturate($c1, 80%);
+      }
+      &:nth-of-type(2) {
+        border-left-color: $c2;
+        border-top-color: $c2;
+        background-color: darken($c2, 25%);
+      }
+    }
+  }
+}
