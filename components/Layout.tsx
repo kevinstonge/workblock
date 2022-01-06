@@ -1,8 +1,12 @@
-import type { NextPage } from 'next';
-import Header from './Header';
-import Head from 'next/head';
-import styles from '../styles/Home.module.scss';
-const Layout: NextPage = (props) => {
+import type { NextPage } from "next";
+import Header from "./Header";
+import Head from "next/head";
+import styles from "../styles/Home.module.scss";
+import { ReactNode } from "react";
+type Props = {
+  children?: ReactNode;
+};
+const Layout: NextPage = ({ children }: Props) => {
   return (
     <>
       <Head>
@@ -14,7 +18,7 @@ const Layout: NextPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className={styles.main}>{props.children}</main>
+      <main className={styles.main}>{children}</main>
     </>
   );
 };

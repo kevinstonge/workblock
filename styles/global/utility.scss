@@ -1,5 +1,5 @@
-@import './vars.scss';
-@import './mixins.scss';
+@import "./vars.scss";
+@import "./mixins.scss";
 body {
   background-color: $b1;
   color: $f1;
@@ -15,7 +15,6 @@ header {
   }
   nav {
     @include flexR();
-    gap: 1rem;
     a {
       padding: 0.4rem 0.5rem;
       color: lighten($b1, 80%);
@@ -36,4 +35,17 @@ header {
       }
     }
   }
+}
+form {
+  background-color: $b2;
+  padding: 1rem;
+  @include flexC();
+  align-items: center;
+  label {
+    @include flexC();
+  }
+}
+
+.error {
+  color: $e1;
 }

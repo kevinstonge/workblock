@@ -1,12 +1,14 @@
-@import './vars.scss';
+@import "./vars.scss";
 @mixin flexR {
   display: flex;
   flex-direction: row;
+  gap: 0.5rem;
 }
 
 @mixin flexC {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
 @mixin button {
