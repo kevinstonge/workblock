@@ -1,5 +1,7 @@
 export interface ReducerState {
-  username: String;
+  email: String;
+  token: String | undefined;
+  userID: String | undefined;
   blocks: Object[];
 }
 
@@ -7,4 +9,9 @@ export interface State {
   state: ReducerState;
   dispatch: React.Dispatch<any>;
 }
-export const initialState: ReducerState = { username: '', blocks: [{}] };
+export const initialState: ReducerState = {
+  email: '',
+  token: undefined,
+  userID: undefined,
+  blocks: [{}],
+};

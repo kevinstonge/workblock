@@ -1,5 +1,5 @@
-@import "./vars.scss";
-@import "./mixins.scss";
+@import './vars.scss';
+@import './mixins.scss';
 body {
   background-color: $b1;
   color: $f1;
@@ -16,6 +16,10 @@ header {
   nav {
     @include flexR();
     a {
+      @include flexC();
+      gap: 0.1rem;
+      align-items: center;
+      cursor: pointer;
       padding: 0.4rem 0.5rem;
       color: lighten($b1, 80%);
       text-decoration: none;
@@ -48,4 +52,8 @@ form {
 
 .error {
   color: $e1;
+}
+
+.smalltext {
+  font-size: 0.7rem;
 }

@@ -1,46 +1,66 @@
-import { ChangeEvent, FormEvent } from "react";
-import { axiosWithAuth } from "../utils/axios";
-import { useState } from "react";
-import validator from "validator";
+import { ChangeEvent, FormEvent } from 'react';
+import { axiosWithAuth } from '../utils/axios';
+import { useState } from 'react';
+import validator from 'validator';
+import { useContext } from 'react';
+import { store } from '../state/store';
+import actionTypes from '../state/actionTypes';
+import { useRouter } from 'next/router';
 
 const login = () => {
+  const router = useRouter();
+  const { state, dispatch } = useContext(store);
   type FormState = {
     email: string;
     password: string;
     error: string;
   };
   const [formState, setFormState]: [FormState, Function] = useState({
-    email: "",
-    password: "",
-    error: "asdf",
+    email: '',
+    password: '',
+    error: 'asdf',
   });
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, password } = formState;
-    console.log(validator.isEmail(email));
     if (!validator.isEmail(email)) {
       setFormState({
         ...formState,
-        error: "please provide a valid email",
+        error: 'please provide a valid email',
       });
       return;
     }
     if (password.length < 2) {
       setFormState({
         ...formState,
-        error: "please provide a slightly better password",
+        error: 'please provide a slightly better password',
       });
       return;
     }
     const data = await axiosWithAuth({
-      method: "POST",
-      url: "/api/login",
+      method: 'POST',
+      url: '/api/login',
       data: { email, password },
     });
-    console.log(data);
+    const token: string | undefined = data.data.token;
+    if (typeof window !== 'undefined' && token) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('email', formState.email);
+      localStorage.setItem('userID', data.data.userID);
+    }
+    dispatch({
+      type: actionTypes.LOGIN_SUCCESS,
+      payload: {
+        email: formState.email,
+        token,
+        userID: data.data.userID,
+      },
+    });
+    // redirect from here!
+    router.push('/');
   };
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value, error: "" });
+    setFormState({ ...formState, [e.target.name]: e.target.value, error: '' });
   };
   return (
     <>
@@ -68,7 +88,7 @@ const login = () => {
             onChange={(e) => onChange(e)}
           ></input>
         </label>
-        {formState.error !== "" && <p className="error">{formState.error}</p>}
+        {formState.error !== '' && <p className="error">{formState.error}</p>}
         <button type="submit">log in</button>
       </form>
     </>

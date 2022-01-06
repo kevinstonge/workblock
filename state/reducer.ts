@@ -8,9 +8,9 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
   console.log(state);
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:
-      return { ...state, username: action.payload };
+      return { ...state, ...action.payload };
     case actionTypes.LOGOUT:
-      return { ...state, username: '' };
+      return { initialState };
     default:
       return state;
   }
