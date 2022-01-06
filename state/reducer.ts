@@ -11,6 +11,8 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
       return { ...state, ...action.payload };
     case actionTypes.LOGOUT:
       return { initialState };
+    case actionTypes.NEW_SESSION:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

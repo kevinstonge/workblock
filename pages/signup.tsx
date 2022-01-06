@@ -5,21 +5,23 @@ import { store } from '../state/store';
 import actionTypes from '../state/actionTypes';
 import Router from 'next/router';
 
-const login = () => {
+const signup = () => {
   const { dispatch } = useContext(store);
   type FormState = {
     email: string;
     password: string;
+    confirmPassword: string;
     error: string;
   };
   const [formState, setFormState]: [FormState, Function] = useState({
     email: '',
     password: '',
+    confirmPassword: '',
     error: '',
   });
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password } = formState;
+    const { email, password, confirmPassword } = formState;
     if (!validator.isEmail(email)) {
       setFormState({
         ...formState,
@@ -34,12 +36,16 @@ const login = () => {
       });
       return;
     }
+    if (password !== confirmPassword) {
+      setFormState({ ...formState, error: 'passwords do not match' });
+      return;
+    }
     const data = await axiosWithAuth({
       method: 'POST',
-      url: '/api/login',
+      url: '/api/signup',
       data: { email, password },
     });
-    if (data.status === 200) {
+    if (data.status === 201) {
       const token: string | undefined = data.data.token;
       if (typeof window !== 'undefined' && token) {
         localStorage.setItem('token', token);
@@ -56,7 +62,7 @@ const login = () => {
       });
       Router.push('/');
     } else {
-      setFormState({ ...formState, error: 'error logging in' });
+      setFormState({ ...formState, error: 'error creating account' });
     }
   };
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +71,7 @@ const login = () => {
   return (
     <>
       <form onSubmit={(e) => onSubmit(e)}>
-        <h2>Log In</h2>
+        <h2>Sign Up</h2>
         <label htmlFor="email">
           <p>email: </p>
           <input
@@ -81,17 +87,28 @@ const login = () => {
           <p>password: </p>
           <input
             type="password"
-            autoComplete="password"
+            autoComplete="new-password"
             id="password"
             name="password"
             value={formState.password}
             onChange={(e) => onChange(e)}
           ></input>
         </label>
+        <label htmlFor="confirmPassword">
+          <p>password: </p>
+          <input
+            type="password"
+            autoComplete="new-password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formState.confirmPassword}
+            onChange={(e) => onChange(e)}
+          ></input>
+        </label>
         {formState.error !== '' && <p className="error">{formState.error}</p>}
-        <button type="submit">log in</button>
+        <button type="submit">sign up</button>
       </form>
     </>
   );
 };
-export default login;
+export default signup;

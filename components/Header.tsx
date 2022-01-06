@@ -1,11 +1,26 @@
 import type { NextPage } from 'next';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { store } from '../state/store';
 import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import actionTypes from '../state/actionTypes';
 const Header: NextPage = () => {
   const { state, dispatch } = useContext(store);
+  useEffect(() => {
+    if (!state.token) {
+      const lsToken = localStorage.getItem('token') || undefined;
+      if (lsToken) {
+        dispatch({
+          type: actionTypes.NEW_SESSION,
+          payload: {
+            email: localStorage.getItem('email'),
+            token: localStorage.getItem('token'),
+            userId: localStorage.getItem('userID'),
+          },
+        });
+      }
+    }
+  }, []);
   const onLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
