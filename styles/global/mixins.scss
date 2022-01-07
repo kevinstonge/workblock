@@ -1,4 +1,4 @@
-@import './vars.scss';
+@import "./vars.scss";
 @mixin flexR {
   display: flex;
   flex-direction: row;
@@ -9,15 +9,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-}
-
-@mixin button {
-  background-color: $b2;
-  cursor: pointer;
-  color: $f1;
-  border: 1px solid $b2;
-  border-radius: 0.4rem;
-  padding: 0.5rem;
 }
 
 @mixin button-animation-mixin($name, $color) {
@@ -37,12 +28,42 @@
   }
 }
 
-@include button-animation-mixin(neutral, $c1);
-@include button-animation-mixin(positive, $c2);
-@include button-animation-mixin(negative, $e1);
+@include button-animation-mixin(c1, $c1);
+@include button-animation-mixin(c2, $c2);
+@include button-animation-mixin(e1, $e1);
 
-@mixin button-animate-on-hover($color-category) {
-  animation: $color-category 0.4s ease-out both;
+@mixin button-animate-on-hover($c) {
+  animation: $c 0.4s ease-out both;
+}
+
+@mixin button {
+  @include flexC();
+  align-items: center;
+  background-color: $b2;
+  cursor: pointer;
+  color: $f1;
+  border: 1px solid transparent;
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  color: black;
+  &[data-glow-color="c1"] {
+    background-color: $c1;
+    &:hover {
+      @include button-animate-on-hover(c1);
+    }
+  }
+  &[data-glow-color="c2"] {
+    background-color: $c2;
+    &:hover {
+      @include button-animate-on-hover(c2);
+    }
+  }
+  &[data-glow-color="e1"] {
+    background-color: $e1;
+    &:hover {
+      @include button-animate-on-hover(e1);
+    }
+  }
 }
 
 @mixin paperView {

@@ -56,7 +56,8 @@ const login = () => {
       });
       Router.push('/');
     } else {
-      setFormState({ ...formState, error: 'error logging in' });
+      const error = data.data.message || 'error logging in';
+      setFormState({ ...formState, error });
     }
   };
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {

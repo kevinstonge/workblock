@@ -5,6 +5,7 @@ import type { NextApiRequestExtended } from '../../utils/types';
 import db from './middleware/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { ObjectID } from 'bson';
 
 const handler = nextConnect();
 handler.use(db);

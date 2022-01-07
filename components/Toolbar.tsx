@@ -7,28 +7,33 @@ import {
   faTrash,
   faGears,
 } from '@fortawesome/free-solid-svg-icons';
+import SelectBlock from './SelectBlock';
+import styles from '../styles/Toolbar.module.scss';
 const Toolbar: NextPage = () => {
   return (
-    <div className="toolbar">
+    <div className={styles.toolbar}>
       <ul>
         <li>
-          <button id="select-block" data-color-style="neutral">
+          <button data-glow-color="c1" className={styles.b2 + ' ' + styles.dropdown}>
             <span className="double-icon">
               <FontAwesomeIcon
                 icon={faArrowsRotate}
-                className="color-neutral top-icon"
+                className="c1 top-icon"
               />
               <FontAwesomeIcon icon={faTableColumns} className="bottom-icon" />
             </span>
             <p>select block</p>
+            <div className={styles.dropdownContent + `${true ? styles.visible : ''}`}>
+              <SelectBlock />
+            </div>
           </button>
         </li>
         <li>
-          <button id="new-block" data-color-style="positive">
+          <button data-glow-color="c2" className={styles.b2}>
             <span className="double-icon">
               <FontAwesomeIcon
                 icon={faPlus}
-                className="color-positive top-icon"
+                className="c2 top-icon"
               />
               <FontAwesomeIcon icon={faTableColumns} className="bottom-icon" />
             </span>
@@ -36,11 +41,11 @@ const Toolbar: NextPage = () => {
           </button>
         </li>
         <li>
-          <button id="edit-block" data-color-style="neutral">
+          <button data-glow-color="c1" className={styles.b2}>
             <span className="double-icon">
               <FontAwesomeIcon
                 icon={faGears}
-                className="color-neutral top-icon"
+                className="c1 top-icon"
               />
               <FontAwesomeIcon icon={faTableColumns} className="bottom-icon" />
             </span>
@@ -48,11 +53,11 @@ const Toolbar: NextPage = () => {
           </button>
         </li>
         <li>
-          <button id="delete-block" data-color-style="negative">
+          <button data-glow-color="e1" className={styles.b2}>
             <span className="double-icon">
               <FontAwesomeIcon
                 icon={faTrash}
-                className="color-negative top-icon"
+                className="e1 top-icon"
               />
               <FontAwesomeIcon icon={faTableColumns} className="bottom-icon" />
             </span>

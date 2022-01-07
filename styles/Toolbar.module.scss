@@ -1,0 +1,28 @@
+@import "./global/vars.scss";
+@import "./global/mixins.scss";
+.toolbar {
+  ul {
+    @include flexR();
+    justify-content: space-between;
+    button {
+      @include button();
+      color: white;
+      &.b2 {
+        background-color: $b2;
+      }
+      &.dropdown {
+        position: relative;
+        // display: inline-block;
+        .dropdownContent {
+          display: none;
+          position: absolute;
+          bottom: -1.5rem;
+          left: 1rem;
+          &.visible {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}

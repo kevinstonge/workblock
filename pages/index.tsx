@@ -15,7 +15,7 @@ const Home: NextPage = (props) => {
         .catch(console.log);
     }
   }, [state.token]);
-  if (state.token) {
+  if (!state.token) {
     return (
       <>
         <Toolbar />

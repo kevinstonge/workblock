@@ -11,15 +11,15 @@ const CurrentTask: NextPage = () => {
     <div className={styles.currentTask}>
       <div className={styles.currentTaskLeft}>
         <div className={styles.currentTaskToolbar}>
-          <button className={styles.playButton}>
+          <button data-glow-color="c2">
             <FontAwesomeIcon icon={faPlay} />
             <p>play</p>
           </button>
-          <button className={styles.pauseButton}>
+          <button data-glow-color="c1">
             <FontAwesomeIcon icon={faPause} />
             <p>pause</p>
           </button>
-          <button className={styles.stopButton}>
+          <button data-glow-color="e1">
             <FontAwesomeIcon icon={faStopCircle} />
             <p>stop</p>
           </button>
