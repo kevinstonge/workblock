@@ -26,7 +26,7 @@ const Header: NextPage = () => {
     localStorage.removeItem('email');
     localStorage.removeItem('userID');
     dispatch({ type: actionTypes.LOGOUT });
-    Router.push('/login');
+    Router.push('/');
   };
 
   return (

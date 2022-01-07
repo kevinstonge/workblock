@@ -57,3 +57,62 @@ form {
 .smalltext {
   font-size: 0.7rem;
 }
+
+.toolbar {
+  ul {
+    @include flexR();
+    justify-content: space-between;
+    button {
+      @include flexC();
+      align-items: center;
+      @include button();
+      .double-icon {
+        position: relative;
+        top: 0;
+        width: 3rem;
+        height: 2rem;
+        .top-icon {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 1.8rem;
+          height: 1.8rem;
+          z-index: +1;
+          filter: drop-shadow(0.2rem 0.2rem 0.05rem rgba(0, 0, 0, 1));
+        }
+        .bottom-icon {
+          position: absolute;
+          top: 0.6rem;
+          left: 1.6rem;
+          width: 1.4rem;
+          height: 1.4rem;
+        }
+      }
+      &[data-color-style='neutral'] {
+        &:hover {
+          @include button-animate-on-hover(neutral);
+        }
+      }
+      &[data-color-style='positive'] {
+        &:hover {
+          @include button-animate-on-hover(positive);
+        }
+      }
+      &[data-color-style='negative'] {
+        &:hover {
+          @include button-animate-on-hover(negative);
+        }
+      }
+    }
+  }
+}
+
+.color-neutral {
+  color: $c1;
+}
+.color-positive {
+  color: $c2;
+}
+.color-negative {
+  color: $e1;
+}

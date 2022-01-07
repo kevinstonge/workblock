@@ -1,4 +1,4 @@
-@import "./vars.scss";
+@import './vars.scss';
 @mixin flexR {
   display: flex;
   flex-direction: row;
@@ -13,4 +13,35 @@
 
 @mixin button {
   background-color: $b2;
+  cursor: pointer;
+  color: $f1;
+  border: 1px solid $b2;
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+@mixin button-animation-mixin($name, $color) {
+  @keyframes #{$name} {
+    0% {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+    100% {
+      -webkit-transform: translateZ(50px);
+      transform: translateZ(50px);
+      -webkit-box-shadow: 0 0 20px 0px transparentize($color, 0.5);
+      box-shadow: 0 0 20px 0px transparentize($color, 0.5);
+    }
+  }
+}
+
+@include button-animation-mixin(neutral, $c1);
+@include button-animation-mixin(positive, $c2);
+@include button-animation-mixin(negative, $e1);
+
+@mixin button-animate-on-hover($color-category) {
+  animation: $color-category 0.4s ease-out both;
 }
