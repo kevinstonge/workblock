@@ -1,0 +1,65 @@
+@import './global/vars.scss';
+@import './global/mixins.scss';
+.taskList {
+  @include flexC();
+  > div {
+    @include flexC();
+    @include paperView();
+    max-height: 15vh;
+  }
+}
+
+.taskListItem {
+  @include flexR();
+  justify-content: space-between;
+  align-items: center;
+  svg {
+    opacity: 0;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  button {
+    opacity: 0;
+    background-color: transparent;
+    border: none;
+  }
+  > div:nth-of-type(1) {
+    @include flexR();
+    align-items: center;
+    width: 30%;
+  }
+  > div:nth-of-type(2) {
+    @include flexR();
+    justify-content: flex-end;
+    width: 70%;
+  }
+  > div {
+    > p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  padding: 0.1rem;
+  border-bottom: 1px solid $paper-line;
+}
+
+.taskTitle {
+  font-weight: bold;
+}
+.taskListItemActive {
+  svg {
+    opacity: 1;
+  }
+  div:nth-of-type(1) > p {
+    font-size: 1.1rem;
+    border-radius: 0.5rem;
+    background-color: desaturate(lighten($c1, 20%), 20%);
+    box-shadow: 0 0 0.5rem desaturate(lighten($c1, 20%), 20%);
+    padding: 0.5rem;
+  }
+  button {
+    cursor: pointer;
+    opacity: 1;
+  }
+}

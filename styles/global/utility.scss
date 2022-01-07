@@ -25,7 +25,7 @@ header {
       align-items: center;
       cursor: pointer;
       padding: 0.4rem 0.5rem;
-      color: lighten($b1, 80%);
+      color: black;
       text-decoration: none;
       border-width: 1px;
       border-style: solid;
@@ -34,12 +34,13 @@ header {
       &:nth-of-type(1) {
         border-right-color: $c1;
         border-bottom-color: $c1;
-        background-color: desaturate($c1, 80%);
+        background-color: lighten($c1, 30%);
+        color: black;
       }
       &:nth-of-type(2) {
         border-left-color: $c2;
         border-top-color: $c2;
-        background-color: darken($c2, 25%);
+        background-color: lighten($c2, 30%);
       }
     }
   }
