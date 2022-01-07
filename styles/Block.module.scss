@@ -1,0 +1,133 @@
+@import './global/vars.scss';
+@import './global/mixins.scss';
+.activeBlock {
+  background-color: $b2;
+  @include flexC();
+  flex-grow: 1;
+  h2 {
+    font-weight: bold;
+  }
+}
+$hcolor: darken(desaturate($c1, 80%), 30);
+.blockHeader {
+  @include flexR();
+  padding: 0.5rem 0.2rem;
+  justify-content: space-between;
+  background: linear-gradient(
+    to right,
+    $b1 10%,
+    $hcolor 20%,
+    $hcolor 80%,
+    $b1 90%
+  );
+}
+
+.currentTask {
+  padding: 0.5rem;
+  flex-grow: 1;
+  @include flexR();
+  align-items: stretch;
+  > * {
+    width: 50%;
+  }
+}
+.currentTaskLeft {
+  @include flexC();
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  > p {
+    font-size: 10vw;
+    font-weight: bold;
+    font-family: monospace;
+  }
+}
+.currentTaskToolbar {
+  position: absolute;
+  bottom: 1rem;
+  @include flexR();
+  gap: 1rem;
+  > button {
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    border: 1px solid $c2;
+    font-size: 1rem;
+    font-weight: bold;
+    > svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+.stopButton {
+  background-color: lighten($e1, 30%);
+  &:hover {
+    @include button-animate-on-hover(negative);
+  }
+}
+.playButton {
+  background-color: lighten($c2, 30%);
+  &:hover {
+    @include button-animate-on-hover(positive);
+  }
+}
+.pauseButton {
+  background-color: lighten($c1, 30%);
+  &:hover {
+    @include button-animate-on-hover(neutral);
+  }
+}
+.currentTaskRight {
+  @include flexC();
+  font-size: 2rem;
+  @include paperView();
+  > h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid black;
+  }
+}
+.taskList {
+  @include flexC();
+  > div {
+    @include flexC();
+    @include paperView();
+    max-height: 15vh;
+  }
+}
+
+.taskListItem {
+  @include flexR();
+  justify-content: space-between;
+  align-items: center;
+  > div:nth-of-type(1) {
+    @include flexR();
+    align-items: center;
+    max-width: 30%;
+  }
+  > div:nth-of-type(2) {
+    @include flexR();
+    justify-content: flex-end;
+    max-width: 70%;
+  }
+  > div {
+    > p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  padding: 0.1rem;
+  border-bottom: 1px solid $paper-line;
+}
+
+.taskTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  background-color: desaturate(lighten($c1, 20%), 20%);
+  box-shadow: 0 0 0.5rem desaturate(lighten($c1, 20%), 20%);
+  padding: 0.5rem 0.2rem;
+}

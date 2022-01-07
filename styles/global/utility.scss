@@ -1,8 +1,12 @@
 @import './vars.scss';
 @import './mixins.scss';
-body {
+#__next {
   background-color: $b1;
   color: $f1;
+  height: 100vh;
+  @include flexC();
+  justify-content: stretch;
+  font-size: 1rem;
 }
 header {
   padding: 1rem;
