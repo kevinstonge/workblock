@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
-import styles from '../styles/TaskList.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faPlay } from '@fortawesome/free-solid-svg-icons';
+import type { NextPage } from "next";
+import styles from "../styles/TaskList.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faPlay } from "@fortawesome/free-solid-svg-icons";
 const TaskList: NextPage = () => {
   return (
     <div className={styles.taskList}>
       <h2>Task List:</h2>
-      <div>
-        <div className={styles.taskListItem + ' ' + styles.taskListItemActive}>
+      <ul>
+        <li className={styles.taskListItem + " " + styles.taskListItemActive}>
           <div>
             <FontAwesomeIcon icon={faPlay} />
             <p className={styles.taskTitle}>task_title asdfasdf asdfa sdf</p>
@@ -21,8 +21,8 @@ const TaskList: NextPage = () => {
               <FontAwesomeIcon icon={faEye} />
             </button>
           </div>
-        </div>
-        <div className={styles.taskListItem}>
+        </li>
+        <li className={styles.taskListItem}>
           <div>
             <FontAwesomeIcon icon={faPlay} />
             <p className={styles.taskTitle}>task_title asdfasdf asdfa sdf</p>
@@ -36,8 +36,8 @@ const TaskList: NextPage = () => {
               <FontAwesomeIcon icon={faEye} />
             </button>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
   );
 };

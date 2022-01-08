@@ -1,0 +1,16 @@
+@import "./global/vars.scss";
+@import "./global/mixins.scss";
+.modalContainer {
+  @include flexC();
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: transparentize($b1, 0.5);
+  z-index: +2;
+  backdrop-filter: blur(0.06rem);
+}

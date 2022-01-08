@@ -3,7 +3,7 @@
 .taskList {
   @include flexC();
   padding: 0.5rem;
-  > div {
+  > ul {
     @include flexC();
     @include paperView();
     max-height: 15vh;

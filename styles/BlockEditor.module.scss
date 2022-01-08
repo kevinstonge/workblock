@@ -1,0 +1,26 @@
+@import "./global/vars.scss";
+@import "./global/mixins.scss";
+.blockEditor {
+  > h2 {
+    padding: 0.2rem 0.5rem;
+    border-bottom: 1px solid desaturate($c2, 40%);
+  }
+  @include flexC();
+  background-color: $b2;
+  box-shadow: 0 0.2rem 0.4rem black;
+  border-radius: 0.2rem;
+  .twoColumn {
+    @include flexR();
+    > div {
+      width: 20vw;
+    }
+  }
+  .buttonRow {
+    @include flexR();
+    justify-content: space-evenly;
+    padding-bottom: 0.5rem;
+    > button {
+      @include button();
+    }
+  }
+}
