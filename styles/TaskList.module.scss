@@ -47,17 +47,15 @@
 
 .taskTitle {
   font-weight: bold;
+  padding: 0.2rem;
 }
 .taskListItemActive {
   svg {
     opacity: 1;
   }
-  div:nth-of-type(1) > p {
+  .taskTitle {
     font-size: 1.1rem;
-    border-radius: 0.5rem;
-    background-color: desaturate(lighten($c1, 20%), 20%);
-    box-shadow: 0 0 0.5rem desaturate(lighten($c1, 20%), 20%);
-    padding: 0.5rem;
+    @include highlight($c2);
   }
   button {
     cursor: pointer;

@@ -67,10 +67,69 @@
 }
 
 @mixin paperView {
+  @include highlightTop();
   overflow-y: auto;
-  background-color: $paper;
-  box-shadow: 0.1rem 0.1rem 0.2rem darken($paper, 60%) inset,
-    -0.1rem -0.1rem 0.2rem white inset;
-  color: black;
+  background: linear-gradient(
+    to bottom,
+    lighten($paper, 5%) 0%,
+    darken($paper, 5%) 100%
+  );
+  box-shadow: 0 0.2rem 0.5rem black;
+  color: $b2;
   padding: 0.6rem;
+  border: 1px solid $paper;
+  border-top: 1px solid white;
+  border-radius: 0.2rem;
+  > div,
+  > p,
+  > ul > li,
+  > h3 {
+    padding: 0.2rem;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid $paper-line;
+  }
+  > h3 {
+    @include flexR();
+    justify-content: space-between;
+  }
+}
+
+@mixin highlightTop {
+  border-top: 1px solid lighten($b2, 5%);
+}
+
+@mixin pseudotv($bg, $fg) {
+  border-bottom: 0.2rem solid darken($fg, 50%);
+  border-top: 0.2rem solid black;
+  border-left: 0.2rem solid $bg;
+  border-right: 0.2rem solid $bg;
+  border-radius: 1rem;
+  background: radial-gradient(lighten($bg, 10%), transparent),
+    radial-gradient(
+      closest-side at 50% 5%,
+      lighten($bg, 15%) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      closest-side at 50% 95%,
+      darken($bg, 5%) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      closest-side at 5% 60%,
+      darken($bg, 1%) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      closest-side at 95% 60%,
+      darken($bg, 1%) 0%,
+      transparent 100%
+    );
+}
+@mixin highlight($c) {
+  border-radius: 0.2rem;
+  background-color: desaturate(lighten($c, 20%), 20%);
+  box-shadow: 0 0 0.5rem desaturate(lighten($c, 20%), 20%);
+  // padding: 0.5rem;
 }

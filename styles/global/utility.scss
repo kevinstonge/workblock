@@ -8,6 +8,7 @@
   gap: 0;
   justify-content: stretch;
   font-size: 1rem;
+  overflow: hidden;
 }
 header {
   padding: 1rem;
@@ -64,7 +65,6 @@ form {
     left: 0;
     width: 1.8rem;
     height: 1.8rem;
-    z-index: +1;
     filter: drop-shadow(0.2rem 0.2rem 0.05rem rgba(0, 0, 0, 1));
   }
   .bottom-icon {
@@ -86,4 +86,26 @@ a {
 }
 .c2 {
   color: $c2;
+}
+
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: lighten($c2, 30%);
+  border-radius: 0.3rem;
+}
+
+.button-icon {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  &:hover {
+    filter: drop-shadow(0 0.1rem 0.05rem black);
+  }
 }

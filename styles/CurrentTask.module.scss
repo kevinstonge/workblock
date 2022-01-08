@@ -13,6 +13,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    @include pseudotv($b1, $f1);
     > p {
       font-size: 10vw;
       font-weight: bold;
@@ -26,6 +27,7 @@
       justify-content: space-evenly;
       > button {
         @include button;
+        box-shadow: 0 0.2rem 0.5rem black;
         color: white;
         font-size: 1rem;
         font-weight: bold;
@@ -45,7 +47,6 @@
       font-size: 2.5rem;
       font-weight: bold;
       padding-bottom: 0.5rem;
-      border-bottom: 1px solid black;
     }
   }
 }

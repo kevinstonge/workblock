@@ -1,6 +1,7 @@
 @import "./global/vars.scss";
 @import "./global/mixins.scss";
 .toolbar {
+  z-index: +1;
   ul {
     @include flexR();
     justify-content: space-between;
@@ -10,16 +11,28 @@
       &.b2 {
         background-color: $b2;
       }
-      &.dropdown {
+      &.dropdownButton {
         position: relative;
-        // display: inline-block;
         .dropdownContent {
-          display: none;
+          @include flexC();
+          max-height: 70vh;
+          width: 90vw;
+          max-width: 20rem;
           position: absolute;
-          bottom: -1.5rem;
-          left: 1rem;
-          &.visible {
-            display: block;
+          top: calc(100% + 0.5rem);
+          left: 0.5rem;
+          background-color: lighten($b2, 20%);
+          padding: 5rem;
+          cursor: default;
+          @include paperView();
+          > ul {
+            @include flexC();
+            > li {
+              cursor: pointer;
+              &:hover {
+                @include highlight($c1);
+              }
+            }
           }
         }
       }
