@@ -1,13 +1,26 @@
-@import "./vars.scss";
-@import "./mixins.scss";
+@import './vars.scss';
+@import './mixins.scss';
 #__next {
   background-color: $b1;
   color: $f1;
   height: 100vh;
   @include flexC();
+  p,
+  li,
+  div,
+  span,
+  button,
+  label {
+    @include vwFont(0.8);
+  }
+  h1 {
+    @include vwFont(1.2);
+  }
+  h2 {
+    @include vwFont(1);
+  }
   gap: 0;
   justify-content: stretch;
-  font-size: 1rem;
   overflow: hidden;
 }
 header {
@@ -17,7 +30,7 @@ header {
   justify-content: space-between;
   align-items: center;
   h1 {
-    font-size: 1.6rem;
+    @include vwFont(1.1);
   }
   nav {
     @include flexR();
@@ -51,7 +64,7 @@ form {
 }
 
 .smalltext {
-  font-size: 0.7rem;
+  @include vwFont(0.9, true);
 }
 
 .double-icon {

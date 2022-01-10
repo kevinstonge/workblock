@@ -2,6 +2,9 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+html {
+  font-size: 62.5%;
+}
 
 html,
 body,
@@ -87,8 +90,6 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 62.5%;
-  font: inherit;
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */

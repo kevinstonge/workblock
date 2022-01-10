@@ -1,4 +1,4 @@
-@import "./vars.scss";
+@import './vars.scss';
 @mixin flexR {
   display: flex;
   flex-direction: row;
@@ -46,19 +46,19 @@
   border-radius: 0.4rem;
   padding: 0.5rem;
   color: black;
-  &[data-glow-color="c1"] {
+  &[data-glow-color='c1'] {
     background-color: $c1;
     &:hover {
       @include button-animate-on-hover(c1);
     }
   }
-  &[data-glow-color="c2"] {
+  &[data-glow-color='c2'] {
     background-color: $c2;
     &:hover {
       @include button-animate-on-hover(c2);
     }
   }
-  &[data-glow-color="e1"] {
+  &[data-glow-color='e1'] {
     background-color: $e1;
     &:hover {
       @include button-animate-on-hover(e1);
@@ -132,4 +132,14 @@
   background-color: desaturate(lighten($c, 20%), 20%);
   box-shadow: 0 0 0.5rem desaturate(lighten($c, 20%), 20%);
   // padding: 0.5rem;
+}
+
+@mixin vwFont($relativeSize, $important: false) {
+  font-size: calc(1rem * $relativeSize) #{if($important, '!important', '')};
+  @media screen and (min-width: 500px) {
+    font-size: calc(2vw * $relativeSize) #{if($important, '!important', '')};
+  }
+  @media screen and (min-width: 1600px) {
+    font-size: calc(3.2rem * $relativeSize) #{if($important, '!important', '')};
+  }
 }

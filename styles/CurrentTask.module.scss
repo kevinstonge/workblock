@@ -1,52 +1,80 @@
-@import "./global/vars.scss";
-@import "./global/mixins.scss";
+@import './global/vars.scss';
+@import './global/mixins.scss';
+
+@mixin vwLayout() {
+  @media (orientation: landscape) {
+    @include flexR();
+    justify-content: stretch;
+    .currentTaskLeft,
+    .currentTaskRight {
+      width: 50%;
+    }
+    .currentTaskLeft {
+      justify-content: center;
+      .currentTaskToolbar {
+        @include flexR();
+        justify-content: center;
+        position: absolute;
+        width: 40vw;
+        bottom: 1rem;
+      }
+    }
+  }
+  @media (orientation: portrait) {
+    @include flexC();
+    justify-content: flex-start;
+    align-items: center;
+    .currentTaskLeft {
+      min-height: 25vh;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+    .currentTaskRight {
+      width: 100%;
+      flex-grow: 1;
+    }
+  }
+}
 .currentTask {
   padding: 0.5rem;
   flex-grow: 1;
-  @include flexR();
-  align-items: stretch;
-  > * {
-    width: 50%;
-  }
+  @include vwLayout();
   .currentTaskLeft {
     @include flexC();
-    justify-content: center;
     align-items: center;
     position: relative;
     @include pseudotv($b1, $f1);
-    > p {
-      font-size: 10vw;
+    > .bigTime {
       font-weight: bold;
       font-family: monospace;
+      @include vwFont(5.3, true);
     }
     .currentTaskToolbar {
-      position: absolute;
-      width: 50%;
-      bottom: 1rem;
       @include flexR();
-      justify-content: space-evenly;
-      > button {
+      gap: 1vw;
+      > button:enabled {
         @include button;
         box-shadow: 0 0.2rem 0.5rem black;
         color: white;
-        font-size: 1rem;
-        font-weight: bold;
+      }
+      > button {
         align-items: center;
         > svg {
-          width: 1.5rem;
-          height: 1.5rem;
+          width: 6vw;
+          height: 4vw;
         }
       }
     }
   }
   .currentTaskRight {
     @include flexC();
-    font-size: 2rem;
     @include paperView();
     > h3 {
-      font-size: 2.5rem;
+      @include vwFont(2.1, true);
       font-weight: bold;
-      padding-bottom: 0.5rem;
+    }
+    > p {
+      @include vwFont(1.3, true);
     }
   }
 }

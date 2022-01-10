@@ -1,10 +1,12 @@
-@import "./global/vars.scss";
-@import "./global/mixins.scss";
+@import './global/vars.scss';
+@import './global/mixins.scss';
 .toolbar {
   z-index: +1;
   ul {
     @include flexR();
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
     button {
       @include button();
       color: white;
