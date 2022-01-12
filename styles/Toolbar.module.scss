@@ -2,7 +2,7 @@
 @import './global/mixins.scss';
 .toolbar {
   z-index: +1;
-  ul {
+  > ul {
     @include flexR();
     justify-content: flex-start;
     flex-wrap: wrap;
