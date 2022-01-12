@@ -1,24 +1,23 @@
-@import "./global/vars.scss";
-@import "./global/mixins.scss";
+@import './global/vars.scss';
+@import './global/mixins.scss';
 .blockEditor {
-  > h2 {
-    padding: 0.2rem 0.5rem;
-    border-bottom: 1px solid desaturate($c2, 40%);
-  }
+  padding: 1vw;
   @include flexC();
   background-color: $b2;
-  box-shadow: 0 0.2rem 0.4rem black;
+  @include dropShadow();
   border-radius: 0.2rem;
+  > h2 {
+    border-bottom: 0.25vw solid desaturate($c2, 40%);
+  }
   .twoColumn {
     @include flexR();
-    > div {
-      width: 20vw;
-    }
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
   }
   .buttonRow {
     @include flexR();
     justify-content: space-evenly;
-    padding-bottom: 0.5rem;
     > button {
       @include button();
     }

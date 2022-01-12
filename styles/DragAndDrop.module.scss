@@ -1,0 +1,75 @@
+@import './global/vars.scss';
+@import './global/mixins.scss';
+$bgColor: desaturate(lighten($c2, 40%), 40%);
+.dragAndDropList {
+  @include flexC();
+  gap: 0;
+  border: 1px inset $b2;
+  background-color: $bgColor;
+  padding: 1vw;
+  color: $b1;
+  overflow: hidden;
+  position: relative;
+  .draggableTaskSlot {
+    position: relative;
+    padding: 1vw;
+    &[data-taskslotstyle='highlight-top'] {
+      background-image: linear-gradient(
+          to right,
+          $bgColor 0%,
+          $bgColor 10%,
+          transparent 20%,
+          transparent 80%,
+          $bgColor 90%,
+          $bgColor 100%
+        ),
+        linear-gradient(
+          to bottom,
+          lighten($c1, 20%) 0%,
+          lighten($c1, 20%) 30%,
+          $bgColor 35%,
+          $bgColor 100%
+        );
+    }
+    &[data-taskslotstyle='highlight-bottom'] {
+      background-image: linear-gradient(
+          to right,
+          $bgColor 0%,
+          $bgColor 10%,
+          transparent 20%,
+          transparent 80%,
+          $bgColor 90%,
+          $bgColor 100%
+        ),
+        linear-gradient(
+          to top,
+          lighten($c1, 20%) 0%,
+          lighten($c1, 20%) 30%,
+          $bgColor 35%,
+          $bgColor 100%
+        );
+    }
+    &[data-taskslotstyle='none'] {
+      background-image: unset;
+    }
+    .draggableTask {
+      transition: all 2s;
+      @include flexR();
+      cursor: pointer;
+      padding: 0.5vw 1vw;
+      background-color: $c2;
+      justify-content: space-between;
+      @include dropShadow();
+      background-image: linear-gradient(
+        100deg,
+        transparent 0%,
+        transparent 20%,
+        darken($c2, 3%) 25%,
+        darken($c2, 3%) 30%,
+        transparent 35%,
+        transparent 100%
+      );
+      background-size: 0.8vw 200%;
+    }
+  }
+}

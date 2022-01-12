@@ -1,6 +1,7 @@
-import { NextPage } from "next";
-import ModalContainer from "./ModalContainer";
-import styles from "../styles/BlockEditor.module.scss";
+import { NextPage } from 'next';
+import ModalContainer from './ModalContainer';
+import styles from '../styles/BlockEditor.module.scss';
+import DragAndDropList from './DragAndDropList';
 interface Props {
   blockEditor: Object;
   setBlockEditor: Function;
@@ -13,12 +14,14 @@ const BlockEditor: NextPage<Props> = (props: Props) => {
         <h2>block editor</h2>
         <div className={styles.twoColumn}>
           <div>
-            <form>
-              <label htmlFor="blockTitle">
-                <p>block title:</p>
-                <input type="text" id="blockTitle" name="blockTitle"></input>
-              </label>
-            </form>
+            <label htmlFor="blockTitle">
+              <p>block title:</p>
+              <input type="text" id="blockTitle" name="blockTitle"></input>
+            </label>
+            <label>
+              <p>task sequence:</p>
+            </label>
+            <DragAndDropList />
           </div>
           <div>
             <h3>task list:</h3>
