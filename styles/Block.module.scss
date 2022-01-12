@@ -1,25 +1,31 @@
-@import "./global/vars.scss";
-@import "./global/mixins.scss";
+@import './global/vars.scss';
+@import './global/mixins.scss';
 .activeBlock {
-  background-color: $b2;
   @include flexC();
-  flex-grow: 1;
-  h2 {
-    font-weight: bold;
+  gap: 0;
+  justify-content: flex-start;
+  overflow-y: auto;
+  > .activeBlockContent {
+    background-color: $b2;
+    @include flexC();
+    padding: 1vw;
+    border-radius: 1vw;
+    overflow-y: auto;
+    @include dropShadow();
+    justify-content: flex-start;
+    > div:not(:nth-of-type(1)) {
+      @media (orientation: portrait) {
+        max-height: 64%;
+        overflow-y: hidden;
+      }
+      @media (orientation: landscape) {
+        max-height: 50%;
+        overflow-y: hidden;
+      }
+    }
   }
 }
-// $hcolor: darken(desaturate($c1, 80%), 30);
-$hcolor: $b1;
 .blockHeader {
   @include flexR();
-  padding: 0.5rem 0.2rem;
   justify-content: space-between;
-  background: linear-gradient(
-    to right,
-    $b2 10%,
-    $hcolor 20%,
-    $hcolor 80%,
-    $b2 90%
-  );
-  @include highlightTop();
 }

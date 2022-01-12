@@ -58,6 +58,19 @@ const CurrentTask: NextPage = () => {
       <div className={styles.currentTaskRight}>
         <h3>task name</h3>
         <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
+        <p>task description</p>
       </div>
     </div>
   );

@@ -23,7 +23,11 @@ const Home: NextPage = (props) => {
       </>
     );
   } else {
-    return <p>not logged in!</p>;
+    return (
+      <div>
+        <p>not logged in!</p>
+      </div>
+    );
   }
 };
 

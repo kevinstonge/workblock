@@ -31,21 +31,29 @@ const Header: NextPage = () => {
 
   return (
     <header>
-      <Link href="/"><h1><a>WorkBlock!</a></h1></Link>
+      <Link href="/">
+        <h1>
+          <a>WorkBlock!</a>
+        </h1>
+      </Link>
       {state.token === undefined ? (
         <nav>
           <Link href="/signup">
-            <button data-glow-color="c1">sign up</button>
+            <button data-glow-color="c1">
+              <p>sign up</p>
+            </button>
           </Link>
           <Link href="/login">
-            <button data-glow-color="c2">log in</button>
+            <button data-glow-color="c2">
+              <p>log in</p>
+            </button>
           </Link>
         </nav>
       ) : (
         <nav>
           <button onClick={() => onLogout()} data-glow-color="e1">
-            <span>logout</span>
-            <span className="smalltext">{state.email}</span>
+            <p>logout</p>
+            <p className="smalltext">{state.email}</p>
           </button>
         </nav>
       )}

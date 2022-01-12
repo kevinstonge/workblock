@@ -4,20 +4,9 @@
 @mixin vwLayout() {
   @media (orientation: landscape) {
     @include flexR();
-    justify-content: stretch;
     .currentTaskLeft,
     .currentTaskRight {
       width: 50%;
-    }
-    .currentTaskLeft {
-      justify-content: center;
-      .currentTaskToolbar {
-        @include flexR();
-        justify-content: center;
-        position: absolute;
-        width: 40vw;
-        bottom: 1rem;
-      }
     }
   }
   @media (orientation: portrait) {
@@ -25,9 +14,7 @@
     justify-content: flex-start;
     align-items: center;
     .currentTaskLeft {
-      min-height: 25vh;
       width: 100%;
-      justify-content: space-evenly;
     }
     .currentTaskRight {
       width: 100%;
@@ -36,32 +23,36 @@
   }
 }
 .currentTask {
-  padding: 0.5rem;
-  flex-grow: 1;
   @include vwLayout();
   .currentTaskLeft {
     @include flexC();
     align-items: center;
-    position: relative;
+    justify-content: center;
     @include pseudotv($b1, $f1);
-    > .bigTime {
+    > p {
       font-weight: bold;
       font-family: monospace;
-      @include vwFont(5.3, true);
+      @include vwFont(3.5);
+      @media screen and (orientation: portrait) and (max-width: 200px) {
+        font-size: 2.5rem;
+      }
     }
     .currentTaskToolbar {
       @include flexR();
-      gap: 1vw;
       > button:enabled {
         @include button;
-        box-shadow: 0 0.2rem 0.5rem black;
-        color: white;
       }
       > button {
+        @include flexC();
+        justify-content: center;
         align-items: center;
-        > svg {
-          width: 6vw;
-          height: 4vw;
+        border-radius: 1vw;
+        padding: 0.5vw 2vw;
+        svg {
+          width: 3vw;
+          height: 3vw;
+          min-width: 1.2rem;
+          min-height: 1.2rem;
         }
       }
     }
@@ -70,11 +61,11 @@
     @include flexC();
     @include paperView();
     > h3 {
-      @include vwFont(2.1, true);
+      @include vwFont(2.1);
       font-weight: bold;
     }
     > p {
-      @include vwFont(1.3, true);
+      @include vwFont(1.3);
     }
   }
 }

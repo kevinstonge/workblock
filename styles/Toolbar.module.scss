@@ -6,25 +6,23 @@
     @include flexR();
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 1rem;
     button {
       @include button();
-      color: white;
       &.b2 {
         background-color: $b2;
       }
       &.dropdownButton {
         position: relative;
         .dropdownContent {
+          z-index: +1;
+          cursor: unset;
+          text-shadow: none;
           @include flexC();
           max-height: 70vh;
-          width: 90vw;
-          max-width: 20rem;
+          width: 50vw;
           position: absolute;
           top: calc(100% + 0.5rem);
           left: 0.5rem;
-          background-color: lighten($b2, 20%);
-          padding: 5rem;
           cursor: default;
           @include paperView();
           > ul {
@@ -34,6 +32,16 @@
               &:hover {
                 @include highlight($c1);
               }
+            }
+          }
+          > h3 {
+            @include flexR();
+            justify-content: space-between;
+            > span > svg {
+              width: 1.3vw;
+              height: 1.3vw;
+              min-width: 1rem;
+              min-height: 1rem;
             }
           }
         }

@@ -2,13 +2,13 @@
 @mixin flexR {
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: 1vw;
 }
 
 @mixin flexC {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1vw;
 }
 
 @mixin button-animation-mixin($name, $color) {
@@ -20,10 +20,10 @@
       box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
     }
     100% {
-      -webkit-transform: translateZ(50px);
-      transform: translateZ(50px);
-      -webkit-box-shadow: 0 0 20px 0px transparentize($color, 0.5);
-      box-shadow: 0 0 20px 0px transparentize($color, 0.5);
+      -webkit-transform: translateZ(5vw);
+      transform: translateZ(5vw);
+      -webkit-box-shadow: 0 0 2vw 0 transparentize($color, 0.5);
+      box-shadow: 0 0 2vw 0 transparentize($color, 0.5);
     }
   }
 }
@@ -38,14 +38,24 @@
 
 @mixin button {
   @include flexC();
+  gap: 0;
   align-items: center;
   background-color: $b2;
   cursor: pointer;
+  border: 0 solid transparent;
+  border-radius: 1vw;
+  padding: 0.5vw 2vw;
   color: $f1;
-  border: 1px solid transparent;
-  border-radius: 0.4rem;
-  padding: 0.5rem;
-  color: black;
+  @include dropShadow();
+  > * {
+    @include dropShadow();
+  }
+  svg {
+    width: 3vw;
+    height: 3vw;
+    min-width: 1.2rem;
+    min-height: 1.2rem;
+  }
   &[data-glow-color='c1'] {
     background-color: $c1;
     &:hover {
@@ -74,20 +84,21 @@
     lighten($paper, 5%) 0%,
     darken($paper, 5%) 100%
   );
-  box-shadow: 0 0.2rem 0.5rem black;
+  box-shadow: 0 0.2vw 0.25vw black;
   color: $b2;
-  padding: 0.6rem;
-  border: 1px solid $paper;
-  border-top: 1px solid white;
-  border-radius: 0.2rem;
+  padding: 0.6vw;
+  border: 0.1vw solid $paper;
+  filter: drop-shadow(0 0.3vw 0.4vw black);
+  border-radius: 0.2vw;
+  border-bottom: 0.3vw outset $paper;
   > div,
   > p,
   > ul > li,
   > h3 {
-    padding: 0.2rem;
+    padding: 0.2vw;
     width: 100%;
     text-align: left;
-    border-bottom: 1px solid $paper-line;
+    border-bottom: 0.25vw solid $paper-line;
   }
   > h3 {
     @include flexR();
@@ -96,15 +107,17 @@
 }
 
 @mixin highlightTop {
-  border-top: 1px solid lighten($b2, 5%);
+  border-top: 0.1vw solid lighten($b2, 5%);
 }
 
 @mixin pseudotv($bg, $fg) {
-  border-bottom: 0.2rem solid darken($fg, 50%);
-  border-top: 0.2rem solid black;
-  border-left: 0.2rem solid $bg;
-  border-right: 0.2rem solid $bg;
-  border-radius: 1rem;
+  border-width: 0.3vw;
+  border-style: solid;
+  padding: 1vw;
+  border-color: $bg;
+  border-bottom-color: darken($fg, 50%);
+  border-top-color: black;
+  border-radius: 1vw;
   background: radial-gradient(lighten($bg, 10%), transparent),
     radial-gradient(
       closest-side at 50% 5%,
@@ -134,12 +147,16 @@
   // padding: 0.5rem;
 }
 
-@mixin vwFont($relativeSize, $important: false) {
-  font-size: calc(1rem * $relativeSize) #{if($important, '!important', '')};
+@mixin vwFont($relativeSize) {
+  font-size: calc(1.6rem * $relativeSize);
   @media screen and (min-width: 500px) {
-    font-size: calc(2vw * $relativeSize) #{if($important, '!important', '')};
+    font-size: calc(1.6vw * $relativeSize);
   }
   @media screen and (min-width: 1600px) {
-    font-size: calc(3.2rem * $relativeSize) #{if($important, '!important', '')};
+    font-size: calc(1.8rem * $relativeSize);
   }
+}
+
+@mixin dropShadow {
+  filter: drop-shadow(0 0.3vw 0.15vw black);
 }

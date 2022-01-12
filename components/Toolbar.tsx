@@ -1,36 +1,36 @@
-import type { NextPage } from "next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { NextPage } from 'next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowsRotate,
   faTableColumns,
   faPlus,
   faTrash,
   faGears,
-} from "@fortawesome/free-solid-svg-icons";
-import SelectBlock from "./SelectBlock";
-import styles from "../styles/Toolbar.module.scss";
-import { useState } from "react";
-import BlockEditor from "./BlockEditor";
+} from '@fortawesome/free-solid-svg-icons';
+import SelectBlock from './SelectBlock';
+import styles from '../styles/Toolbar.module.scss';
+import { useState } from 'react';
+import BlockEditor from './BlockEditor';
 const Toolbar: NextPage = () => {
   const [selectBlockVisible, setSelectBlockVisible] = useState(false);
   const [blockEditor, setBlockEditor] = useState({
     visible: true,
-    block: "new",
+    block: 'new',
   });
   return (
     <>
-      {blockEditor.visible && (
-        <BlockEditor
-          blockEditor={blockEditor}
-          setBlockEditor={setBlockEditor}
-        />
-      )}
       <div className={styles.toolbar}>
+        {blockEditor.visible && (
+          <BlockEditor
+            blockEditor={blockEditor}
+            setBlockEditor={setBlockEditor}
+          />
+        )}
         <ul>
           <li>
             <button
               data-glow-color="c1"
-              className={styles.b2 + " " + styles.dropdownButton}
+              className={styles.b2 + ' ' + styles.dropdownButton}
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectBlockVisible(!selectBlockVisible);
@@ -46,7 +46,7 @@ const Toolbar: NextPage = () => {
                   className="c1 top-icon"
                 />
               </span>
-              <p>select block</p>
+              <p>select</p>
               {selectBlockVisible && (
                 <div
                   className={styles.dropdownContent}
@@ -62,7 +62,7 @@ const Toolbar: NextPage = () => {
               data-glow-color="c2"
               className={styles.b2}
               onClick={() => {
-                setBlockEditor({ visible: !blockEditor.visible, block: "new" });
+                setBlockEditor({ visible: !blockEditor.visible, block: 'new' });
               }}
             >
               <span className="double-icon">
@@ -72,7 +72,7 @@ const Toolbar: NextPage = () => {
                 />
                 <FontAwesomeIcon icon={faPlus} className="c2 top-icon" />
               </span>
-              <p>new block</p>
+              <p>new</p>
             </button>
           </li>
           <li>
@@ -84,7 +84,7 @@ const Toolbar: NextPage = () => {
                 />
                 <FontAwesomeIcon icon={faGears} className="c1 top-icon" />
               </span>
-              <p>edit block</p>
+              <p>edit</p>
             </button>
           </li>
           <li>
@@ -96,7 +96,7 @@ const Toolbar: NextPage = () => {
                 />
                 <FontAwesomeIcon icon={faTrash} className="e1 top-icon" />
               </span>
-              <p>delete block</p>
+              <p>delete</p>
             </button>
           </li>
         </ul>
