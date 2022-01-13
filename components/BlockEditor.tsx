@@ -5,34 +5,30 @@ import { store } from '../state/store';
 import styles from '../styles/BlockEditor.module.scss';
 import DragAndDropList from './DragAndDropList';
 import { useContext, useEffect } from 'react';
-import { EditorState, Block } from '../utils/types';
+import { Block, ReducerState } from '../utils/types';
 import TaskEditor from './TaskEditor';
 
 const BlockEditor: NextPage = () => {
-  const {state, dispatch} = useContext(store);
+  const {state, dispatch} : {state: ReducerState, dispatch: Function} = useContext(store);
+  //populate editorState on first load
   useEffect(()=>{
-    const editorState = state.editorState;
-    if (editorState.blocks.length > 0) return;
-    const initialEditorState: EditorState = {
-      blocks: [],
-      tasks: [],
-      blockEditor: true,
-      taskEditor: false,
-      activeTaskID: 0,
-    }
-    if (state.blocks.length > 0) {
-      dispatch({type: actionTypes.UPDATE_EDITOR, payload: {blocks: [...state.blocks.filter((b:Block)=>b.id === state.activeBlockID)]}});
-    }
-  },[])
+    
+    dispatch({type: actionTypes.UPDATE_EDITOR, payload: {blocks: state.blocks, tasks: state.tasks}});
+  },[]);
+  const blockTitle = state.editorState.blocks.filter((b:Block)=>{
+    if (b.id === state.editorState.activeTaskID) return b.title
+  })[0].title;
+  
   return (
     <ModalContainer>
       <div className={styles.blockEditor}>
         <h2>block editor</h2>
+        {state.blocks.length === 0 ?
+         <p>no blocks</p> :
         <div className={styles.twoColumn}>
           <div>
             <label htmlFor="blockTitle">
-              <p>block title:</p>
-              <input type="text" id="blockTitle" name="blockTitle"></input>
+              <input type="text" id="blockTitle" name="blockTitle" value={blockTitle}></input>
             </label>
             <div className={styles.taskSequenceContainer}>
               <DragAndDropList />
@@ -46,6 +42,7 @@ const BlockEditor: NextPage = () => {
             </ul>
           </div>
         </div>
+}
         <div className={styles.buttonRow}>
           <button
             onClick={() => dispatch({ type: actionTypes.UPDATE_EDITOR, payload: { blockEditor: false }})}
@@ -61,7 +58,8 @@ const BlockEditor: NextPage = () => {
           </button>
         </div>
       </div>
-      {editorState.taskEditor && 
+ 
+      {state.editorState.taskEditor && 
         <TaskEditor />
       }
     </ModalContainer>

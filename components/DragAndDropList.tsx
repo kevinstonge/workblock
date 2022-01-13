@@ -5,7 +5,6 @@ import {
   Droppable,
   Draggable,
   DropResult,
-  resetServerContext,
 } from 'react-beautiful-dnd';
 import styles from '../styles/DragAndDropList.module.scss';
 import type { Block, TaskFull, TaskShort, EditorState, ReducerState } from '../utils/types';
@@ -16,7 +15,6 @@ function DragAndDropList(props: any) {
   const { state: {editorState, blocks, tasks, activeBlockID }, dispatch }: {state: ReducerState, editorState: EditorState, blocks: Block[], tasks: TaskFull[], activeBlockID: number, dispatch: Function} = useContext(store);
   const activeBlock: Block = editorState.blocks.filter((b:Block)=>b.id===activeBlockID)[0];
     
-  resetServerContext();
   const reorder = (
     list: TaskShort[],
     startIndex: number,
@@ -65,7 +63,7 @@ function DragAndDropList(props: any) {
             {...provided.droppableProps}
             className={styles.dragAndDropList}
           >
-            {activeBlock?.taskSchedule[0].taskTitle &&
+            {activeBlock?.taskSchedule[0].taskID &&
               activeBlock.taskSchedule.map((item: any, index: number) => {
                 return (
                 <Draggable
@@ -83,7 +81,7 @@ function DragAndDropList(props: any) {
                       }`}
                     >
                       <div>
-                        <h3>asdf{item.taskTitle}</h3>
+                        <h3>asdf</h3>
                       </div>
                       <div className={styles.draggableTaskControls}>
                         <input

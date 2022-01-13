@@ -41,6 +41,7 @@ export type TaskShort = {
 
 export type Block = {
   id: number;
+  title: string;
   taskSchedule: TaskShort[];
 };
 
