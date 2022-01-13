@@ -18,10 +18,9 @@ const BlockEditor: NextPage<Props> = (props: Props) => {
               <p>block title:</p>
               <input type="text" id="blockTitle" name="blockTitle"></input>
             </label>
-            <label>
-              <p>task sequence:</p>
-            </label>
-            <DragAndDropList />
+            <div className={styles.taskSequenceContainer}>
+              <DragAndDropList />
+            </div>
           </div>
           <div>
             <h3>task list:</h3>

@@ -1,6 +1,6 @@
 @import './global/vars.scss';
 @import './global/mixins.scss';
-$bgColor: desaturate(lighten($c2, 40%), 40%);
+$bgColor: desaturate(lighten($c2, 25%), 40%);
 .dragAndDropList {
   @include flexC();
   justify-content: flex-start;
@@ -8,8 +8,7 @@ $bgColor: desaturate(lighten($c2, 40%), 40%);
   background-color: $bgColor;
   padding: 1vw;
   color: $b1;
-  height: 100%;
-  overflow-y: auto;
+  min-height: min-content;
 }
 .draggableTask {
   user-select: 'none';
@@ -34,5 +33,16 @@ $bgColor: desaturate(lighten($c2, 40%), 40%);
   }
   &.draggingTask {
     position: unset !important;
+  }
+  .draggableTaskControls {
+    @include flexC();
+    justify-content: center;
+    font-family: monospace;
+    * {
+      color: black;
+    }
+    input {
+      font-family: monospace;
+    }
   }
 }

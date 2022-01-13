@@ -3,6 +3,7 @@
 .blockEditor {
   padding: 1vw;
   height: 80vh;
+  overflow: hidden;
   @include flexC();
   background-color: $b2;
   @include dropShadow();
@@ -13,14 +14,28 @@
   .twoColumn {
     @include flexR();
     justify-content: space-between;
-    padding: 0;
-    margin: 0;
-
-    > div:nth-of-type(1) {
-      height: 70vh;
-      max-height: 70vh;
-      width: 100%;
-      overflow-y: auto;
+    overflow: hidden;
+    > div {
+      @include flexC();
+      gap: 1vw;
+      width: 30vw;
+      @media screen and (max-width: 800px) {
+        width: 40vw;
+      }
+      overflow: hidden;
+      &:nth-of-type(1) {
+        overflow: hidden;
+        flex-grow: 1;
+        > div.taskSequenceContainer {
+          flex-grow: 1;
+          overflow-y: auto;
+          overflow-x: hidden;
+          border-radius: 0.25vw;
+          &::-webkit-scrollbar-track {
+            background: desaturate(lighten($c2, 25%), 40%) !important;
+          }
+        }
+      }
     }
   }
   .buttonRow {
