@@ -3,5 +3,6 @@ const actionTypes = {
   SIGNUP_SUCCESS: 'SIGNUP_SUCCESS',
   LOGOUT: 'LOGOUT',
   NEW_SESSION: 'NEW_SESSION',
+  UPDATE_EDITOR: 'UPDATE_EDITOR',
 };
 export default actionTypes;

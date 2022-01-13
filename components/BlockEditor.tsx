@@ -1,13 +1,29 @@
 import { NextPage } from 'next';
 import ModalContainer from './ModalContainer';
+import actionTypes from '../state/actionTypes';
+import { store } from '../state/store';
 import styles from '../styles/BlockEditor.module.scss';
 import DragAndDropList from './DragAndDropList';
-interface Props {
-  blockEditor: Object;
-  setBlockEditor: Function;
-}
-const BlockEditor: NextPage<Props> = (props: Props) => {
-  const { blockEditor, setBlockEditor } = props;
+import { useContext, useEffect } from 'react';
+import { EditorState, Block } from '../utils/types';
+import TaskEditor from './TaskEditor';
+
+const BlockEditor: NextPage = () => {
+  const {state, dispatch} = useContext(store);
+  useEffect(()=>{
+    const editorState = state.editorState;
+    if (editorState.blocks.length > 0) return;
+    const initialEditorState: EditorState = {
+      blocks: [],
+      tasks: [],
+      blockEditor: true,
+      taskEditor: false,
+      activeTaskID: 0,
+    }
+    if (state.blocks.length > 0) {
+      dispatch({type: actionTypes.UPDATE_EDITOR, payload: {blocks: [...state.blocks.filter((b:Block)=>b.id === state.activeBlockID)]}});
+    }
+  },[])
   return (
     <ModalContainer>
       <div className={styles.blockEditor}>
@@ -32,19 +48,22 @@ const BlockEditor: NextPage<Props> = (props: Props) => {
         </div>
         <div className={styles.buttonRow}>
           <button
-            onClick={() => setBlockEditor({ ...blockEditor, visible: false })}
+            onClick={() => dispatch({ type: actionTypes.UPDATE_EDITOR, payload: { blockEditor: false }})}
             data-glow-color="e1"
           >
             discard & close
           </button>
           <button
-            onClick={() => setBlockEditor({ ...blockEditor, visible: false })}
+            onClick={() => dispatch({ type: "UPDATE_EDITOR", payload: {blockEditor: false} })}
             data-glow-color="c2"
           >
             save & close
           </button>
         </div>
       </div>
+      {editorState.taskEditor && 
+        <TaskEditor />
+      }
     </ModalContainer>
   );
 };

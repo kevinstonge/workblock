@@ -1,20 +1,8 @@
-import { Block } from '../utils/types';
-export interface ReducerState {
-  email: String;
-  token: String | undefined;
-  userID: String | undefined;
-  blocks: Block[] | undefined;
-  tasks: Object[] | undefined;
-  activeBlock: number;
-  playing: Boolean | undefined;
-  timestamp: Number | undefined;
-}
+import * as type from '../utils/types';
 
-export interface State {
-  state: ReducerState;
-  dispatch: React.Dispatch<any>;
-}
-export const initialState: ReducerState = {
+
+
+export const initialState: type.ReducerState = {
   email: '',
   token: undefined,
   userID: undefined,
@@ -30,8 +18,20 @@ export const initialState: ReducerState = {
       taskTitle: 'task zero [0]',
       taskDescription: 'this is a description for the first task',
     },
+    {
+      id: 1,
+      taskTitle: "task one [1]",
+      taskDescription: 'this is a description for the second task',
+    }
   ],
-  activeBlock: 0,
+  activeBlockID: 0,
   playing: undefined,
   timestamp: undefined,
+  editorState: {
+    blocks: [],
+    tasks: [],
+    blockEditor: true,
+    taskEditor: true,
+    activeTaskID: 0,
+  },
 };

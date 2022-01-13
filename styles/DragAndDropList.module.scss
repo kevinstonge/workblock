@@ -1,5 +1,5 @@
-@import './global/vars.scss';
-@import './global/mixins.scss';
+@import "./global/vars.scss";
+@import "./global/mixins.scss";
 $bgColor: desaturate(lighten($c2, 25%), 40%);
 .dragAndDropList {
   @include flexC();
@@ -11,7 +11,7 @@ $bgColor: desaturate(lighten($c2, 25%), 40%);
   min-height: min-content;
 }
 .draggableTask {
-  user-select: 'none';
+  user-select: "none";
   @include flexR();
   cursor: pointer;
   padding: 0.5vw 1vw;
@@ -44,5 +44,14 @@ $bgColor: desaturate(lighten($c2, 25%), 40%);
     input {
       font-family: monospace;
     }
+  }
+}
+.addTask {
+  cursor: pointer;
+  @include button;
+  background-color: $c2;
+  > svg {
+    width: 3vw;
+    height: 3vw;
   }
 }

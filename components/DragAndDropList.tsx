@@ -8,33 +8,27 @@ import {
   resetServerContext,
 } from 'react-beautiful-dnd';
 import styles from '../styles/DragAndDropList.module.scss';
-import type { Block, TaskSchedule } from '../utils/types';
-
+import type { Block, TaskFull, TaskShort, EditorState, ReducerState } from '../utils/types';
+import actionTypes from '../state/actionTypes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 function DragAndDropList(props: any) {
-  const { state, dispatch } = useContext(store);
+  const { state: {editorState, blocks, tasks, activeBlockID }, dispatch }: {state: ReducerState, editorState: EditorState, blocks: Block[], tasks: TaskFull[], activeBlockID: number, dispatch: Function} = useContext(store);
+  const activeBlock: Block = editorState.blocks.filter((b:Block)=>b.id===activeBlockID)[0];
+    
   resetServerContext();
   const reorder = (
-    list: TaskSchedule,
+    list: TaskShort[],
     startIndex: number,
     endIndex: number
-  ): TaskSchedule => {
-    const result: TaskSchedule = [...list];
+  ): TaskShort[] => {
+    const result: TaskShort[] = [...list];
     const removed = result.splice(startIndex, 1);
     result.splice(endIndex, 0, ...removed);
     return result;
   };
 
-  const taskSchedule: TaskSchedule = state.blocks
-    ? [...state.blocks[state.activeBlock].taskSchedule]
-    : [];
-
-  const initialState: Block = {
-    id: state.activeBlock,
-    taskSchedule,
-  };
-  const [block, setBlock] = useState<Block>(initialState);
-
-  function onDragEnd(result: DropResult) {
+  const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return;
     }
@@ -42,17 +36,22 @@ function DragAndDropList(props: any) {
     if (result.destination.index === result.source.index) {
       return;
     }
-    const newTaskSchedule: TaskSchedule = reorder(
-      block.taskSchedule,
+    const newTaskSchedule: TaskShort[] = reorder(
+      activeBlock.taskSchedule,
       result.source.index,
       result.destination.index
     );
-    setBlock({ ...block, taskSchedule: newTaskSchedule });
+    const updatedBlocks: Block[] = editorState.blocks.map(block=>{
+      if (block.id === activeBlockID) {
+        return {...block, taskSchedule: newTaskSchedule}
+      }
+      return block;
+    });
+    dispatch({type: actionTypes.UPDATE_EDITOR, payload: {blocks: updatedBlocks}});
   }
   const handleDurationChange = () => {
-    console.log(block);
+    console.log('duration change');
   };
-  console.log(block);
   const [winReady, setWinReady] = useState(false);
   useEffect(() => {
     setWinReady(true);
@@ -66,8 +65,9 @@ function DragAndDropList(props: any) {
             {...provided.droppableProps}
             className={styles.dragAndDropList}
           >
-            {block.taskSchedule[0].taskID &&
-              block.taskSchedule.map((item: any, index: number) => (
+            {activeBlock?.taskSchedule[0].taskTitle &&
+              activeBlock.taskSchedule.map((item: any, index: number) => {
+                return (
                 <Draggable
                   draggableId={item.taskID.toString()}
                   index={index}
@@ -83,13 +83,13 @@ function DragAndDropList(props: any) {
                       }`}
                     >
                       <div>
-                        <h3>{item.taskTitle}</h3>
+                        <h3>asdf{item.taskTitle}</h3>
                       </div>
                       <div className={styles.draggableTaskControls}>
                         <input
                           type="text"
                           value={[
-                            block.taskSchedule[index].duration.toString(),
+                            activeBlock.taskSchedule[index].duration.toString(),
                           ]}
                           onChange={handleDurationChange}
                         ></input>
@@ -97,7 +97,8 @@ function DragAndDropList(props: any) {
                     </div>
                   )}
                 </Draggable>
-              ))}
+              )})}
+              <button className={styles.addTask}><span><FontAwesomeIcon icon={faPlus} /></span><p>add a new task</p></button>
             {provided.placeholder}
           </div>
         )}

@@ -1,4 +1,6 @@
 import type { NextPage } from 'next';
+import actionTypes from '../state/actionTypes';
+import { store } from '../state/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowsRotate,
@@ -9,22 +11,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import SelectBlock from './SelectBlock';
 import styles from '../styles/Toolbar.module.scss';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import BlockEditor from './BlockEditor';
 const Toolbar: NextPage = () => {
+  const {state, dispatch} = useContext(store);
   const [selectBlockVisible, setSelectBlockVisible] = useState(false);
-  const [blockEditor, setBlockEditor] = useState({
-    visible: true,
-    block: 'new',
-  });
+  
   return (
     <>
       <div className={styles.toolbar}>
-        {blockEditor.visible && (
-          <BlockEditor
-            blockEditor={blockEditor}
-            setBlockEditor={setBlockEditor}
-          />
+        {state.editorState.blockEditor && (
+          <BlockEditor />
         )}
         <ul>
           <li>
@@ -62,7 +59,7 @@ const Toolbar: NextPage = () => {
               data-glow-color="c2"
               className={styles.b2}
               onClick={() => {
-                setBlockEditor({ visible: !blockEditor.visible, block: 'new' });
+                dispatch({ type: actionTypes.UPDATE_EDITOR, payload: {blockEditor: true} });
               }}
             >
               <span className="double-icon">

@@ -13,6 +13,8 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
       return { initialState };
     case actionTypes.NEW_SESSION:
       return { ...state, ...action.payload };
+    case actionTypes.UPDATE_EDITOR:
+      return { ...state, editorState: {...state.editorState, ...action.payload}}; 
     default:
       return state;
   }
