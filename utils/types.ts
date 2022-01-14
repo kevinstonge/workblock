@@ -1,4 +1,4 @@
-import { NextApiRequest } from 'next';
+import { NextApiRequest } from "next";
 export interface NextApiRequestExtended extends NextApiRequest {
   db: any;
   dbClient: any;
@@ -16,12 +16,12 @@ export interface ReducerState {
 }
 
 export type EditorState = {
-  blocks: Block[] | [];
+  block: Block;
   tasks: TaskFull[] | [];
-  blockEditor: Boolean; 
-  taskEditor: Boolean; 
+  blockEditor: Boolean;
+  taskEditor: Boolean;
   activeTaskID: number;
-}
+};
 
 export interface State {
   state: ReducerState;
@@ -50,4 +50,3 @@ export type Task = {
   taskName: string;
   taskDescription: string;
 };
-

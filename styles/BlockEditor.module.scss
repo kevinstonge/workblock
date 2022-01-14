@@ -5,6 +5,7 @@
   height: 80vh;
   overflow: hidden;
   @include flexC();
+  align-items: stretch;
   background-color: $b2;
   @include dropShadow();
   border-radius: 0.2rem;
@@ -14,9 +15,14 @@
   .twoColumn {
     @include flexR();
     justify-content: space-between;
+    height: 100%;
     overflow: hidden;
     > div {
       @include flexC();
+      align-items: stretch;
+      height: 100%;
+      align-content: flex-start;
+      min-width: min-content;
       gap: 1vw;
       width: 30vw;
       @media screen and (max-width: 800px) {
@@ -24,7 +30,7 @@
       }
       overflow: hidden;
       &:nth-of-type(1) {
-        overflow: hidden;
+        overflow-y: hidden;
         flex-grow: 1;
         .taskSequenceContainer {
           flex-grow: 1;
@@ -38,11 +44,8 @@
       }
     }
   }
-  .buttonRow {
-    @include flexR();
-    justify-content: space-evenly;
-    > button {
-      @include button();
-    }
+
+  input {
+    @include inputDark(lighten($c1, 20%));
   }
 }

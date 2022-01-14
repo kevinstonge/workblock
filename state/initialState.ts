@@ -1,9 +1,7 @@
-import * as type from '../utils/types';
-
-
+import * as type from "../utils/types";
 
 export const initialState: type.ReducerState = {
-  email: '',
+  email: "",
   token: undefined,
   userID: undefined,
   blocks: [
@@ -16,20 +14,21 @@ export const initialState: type.ReducerState = {
   tasks: [
     {
       id: 0,
-      taskTitle: 'task zero [0]',
-      taskDescription: 'this is a description for the first task',
+      taskTitle: "task zero [0]",
+      taskDescription:
+        "this is a description for the first task - let me make it a little longer so I can explore the styling of scrollbars etc",
     },
     {
       id: 1,
       taskTitle: "task one [1]",
-      taskDescription: 'this is a description for the second task',
-    }
+      taskDescription: "this is a description for the second task",
+    },
   ],
   activeBlockID: 0,
   playing: undefined,
   timestamp: undefined,
   editorState: {
-    blocks: [],
+    block: { id: 0, title: "", taskSchedule: [] },
     tasks: [],
     blockEditor: true,
     taskEditor: false,

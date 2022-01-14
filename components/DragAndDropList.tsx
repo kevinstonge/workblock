@@ -1,20 +1,47 @@
-import { useState, useEffect, useContext } from 'react';
-import { store } from '../state/store';
+import {
+  useState,
+  useEffect,
+  useContext,
+  ReactEventHandler,
+  EventHandler,
+  SyntheticEvent,
+  FormEvent,
+} from "react";
+import { store } from "../state/store";
 import {
   DragDropContext,
   Droppable,
   Draggable,
   DropResult,
-} from 'react-beautiful-dnd';
-import styles from '../styles/DragAndDropList.module.scss';
-import type { Block, TaskFull, TaskShort, EditorState, ReducerState } from '../utils/types';
-import actionTypes from '../state/actionTypes';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+} from "react-beautiful-dnd";
+import styles from "../styles/DragAndDropList.module.scss";
+import type {
+  Block,
+  TaskFull,
+  TaskShort,
+  EditorState,
+  ReducerState,
+} from "../utils/types";
+import actionTypes from "../state/actionTypes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 function DragAndDropList(props: any) {
-  const { state: {editorState, blocks, tasks, activeBlockID }, dispatch }: {state: ReducerState, editorState: EditorState, blocks: Block[], tasks: TaskFull[], activeBlockID: number, dispatch: Function} = useContext(store);
-  const activeBlock: Block = editorState.blocks.filter((b:Block)=>b.id===activeBlockID)[0];
-    
+  const {
+    state: {
+      editorState: { block },
+      tasks,
+      activeBlockID,
+    },
+    dispatch,
+  }: {
+    state: ReducerState;
+    editorState: EditorState;
+    taskSchedule: TaskShort[];
+    tasks: TaskFull[];
+    activeBlockID: number;
+    dispatch: Function;
+  } = useContext(store);
+  const taskSchedule = block.taskSchedule;
   const reorder = (
     list: TaskShort[],
     startIndex: number,
@@ -35,20 +62,35 @@ function DragAndDropList(props: any) {
       return;
     }
     const newTaskSchedule: TaskShort[] = reorder(
-      activeBlock.taskSchedule,
+      taskSchedule,
       result.source.index,
       result.destination.index
     );
-    const updatedBlocks: Block[] = editorState.blocks.map(block=>{
-      if (block.id === activeBlockID) {
-        return {...block, taskSchedule: newTaskSchedule}
-      }
-      return block;
+    dispatch({
+      type: actionTypes.UPDATE_EDITOR,
+      payload: { block: { taskSchedule: newTaskSchedule } },
     });
-    dispatch({type: actionTypes.UPDATE_EDITOR, payload: {blocks: updatedBlocks}});
-  }
-  const handleDurationChange = () => {
-    console.log('duration change');
+  };
+  const showToolTip = (text: string): void => {
+    console.log("tooltip: ", text); //todo - add this feature
+  };
+  const updateDuration = (e: FormEvent<HTMLInputElement>, item: TaskShort) => {
+    //to do: error check duration entries
+    dispatch({
+      type: actionTypes.UPDATE_EDITOR,
+      payload: {
+        block: {
+          ...block,
+          taskSchedule: taskSchedule.map((t) => {
+            if (t.taskID === item.taskID)
+              return {
+                ...item,
+                duration: e.currentTarget.value,
+              };
+          }),
+        },
+      },
+    });
   };
   const [winReady, setWinReady] = useState(false);
   useEffect(() => {
@@ -63,9 +105,10 @@ function DragAndDropList(props: any) {
             {...provided.droppableProps}
             className={styles.dragAndDropList}
           >
-            {activeBlock?.taskSchedule[0].taskID &&
-              activeBlock.taskSchedule.map((item: any, index: number) => {
-                return (
+            {taskSchedule.map((item: any, index: number) => {
+              const fullTask = tasks.filter((t) => t.id === item.taskID)[0];
+
+              return (
                 <Draggable
                   draggableId={item.taskID.toString()}
                   index={index}
@@ -77,26 +120,63 @@ function DragAndDropList(props: any) {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       className={`${styles.draggableTask} ${
-                        snapshot.isDragging ? styles.draggingTask : ''
+                        snapshot.isDragging ? styles.draggingTask : ""
                       }`}
                     >
-                      <div>
-                        <h3>asdf</h3>
-                      </div>
-                      <div className={styles.draggableTaskControls}>
+                      <p
+                        onMouseOver={() =>
+                          showToolTip(fullTask.taskDescription)
+                        }
+                      >
+                        {fullTask.taskTitle}
+                      </p>
+                      <label className={styles.draggableTaskControls}>
                         <input
                           type="text"
-                          value={[
-                            activeBlock.taskSchedule[index].duration.toString(),
-                          ]}
-                          onChange={handleDurationChange}
+                          name="durationHours"
+                          placeholder="HH"
+                          size={2}
+                          data-placeholder-color="c1"
+                          maxLength={2}
+                          value={item.duration}
+                          onChange={(e) => {
+                            updateDuration(e, item);
+                          }}
                         ></input>
-                      </div>
+                        :
+                        <input
+                          type="text"
+                          name="durationMinutes"
+                          placeholder="MM"
+                          size={2}
+                          data-placeholder-color="c2"
+                          maxLength={2}
+                          max={59}
+                          value={item.duration}
+                          onChange={(e) => {
+                            updateDuration(e, item);
+                          }}
+                        ></input>
+                      </label>
                     </div>
                   )}
                 </Draggable>
-              )})}
-              <button className={styles.addTask}><span><FontAwesomeIcon icon={faPlus} /></span><p>add a new task</p></button>
+              );
+            })}
+            <button
+              className={styles.addTask}
+              onClick={() =>
+                dispatch({
+                  type: actionTypes.UPDATE_EDITOR,
+                  payload: { taskEditor: true, activeTaskID: 0 },
+                })
+              }
+            >
+              <span>
+                <FontAwesomeIcon icon={faPlus} />
+              </span>
+              <p>add a new task</p>
+            </button>
             {provided.placeholder}
           </div>
         )}

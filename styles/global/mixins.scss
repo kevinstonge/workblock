@@ -1,4 +1,4 @@
-@import './vars.scss';
+@import "./vars.scss";
 @mixin flexR {
   display: flex;
   flex-direction: row;
@@ -56,19 +56,19 @@
     min-width: 1.2rem;
     min-height: 1.2rem;
   }
-  &[data-glow-color='c1'] {
+  &[data-glow-color="c1"] {
     background-color: $c1;
     &:hover {
       @include button-animate-on-hover(c1);
     }
   }
-  &[data-glow-color='c2'] {
+  &[data-glow-color="c2"] {
     background-color: $c2;
     &:hover {
       @include button-animate-on-hover(c2);
     }
   }
-  &[data-glow-color='e1'] {
+  &[data-glow-color="e1"] {
     background-color: $e1;
     &:hover {
       @include button-animate-on-hover(e1);
@@ -148,15 +148,19 @@
 }
 
 @mixin vwFont($relativeSize) {
-  font-size: calc(1.6rem * $relativeSize);
-  @media screen and (min-width: 500px) {
-    font-size: calc(1.6vw * $relativeSize);
-  }
+  font-size: calc(1.9rem * $relativeSize);
+
   @media screen and (min-width: 1600px) {
-    font-size: calc(1.8rem * $relativeSize);
+    font-size: calc(1.2vw * $relativeSize);
   }
 }
 
 @mixin dropShadow {
   filter: drop-shadow(0 0.3vw 0.15vw black);
+}
+
+@mixin inputDark($fgColor) {
+  background-color: $b1;
+  color: $fgColor;
+  padding: 0.5vw 1vw;
 }

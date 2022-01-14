@@ -1,0 +1,20 @@
+@import "./global/mixins.scss";
+@import "./global/vars.scss";
+.taskEditor {
+  @include flexC();
+  align-items: stretch;
+  @include highlightTop();
+  box-shadow: 0 0.5vw 0.5vw black;
+  label {
+    @include flexC();
+    align-items: flex-start;
+    input,
+    textarea {
+      width: 100%;
+      @include inputDark(lighten($c2, 30%));
+    }
+    textarea {
+      resize: none;
+    }
+  }
+}
