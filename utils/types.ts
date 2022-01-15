@@ -1,25 +1,24 @@
-import { NextApiRequest } from "next";
+import { NextApiRequest } from 'next';
 export interface NextApiRequestExtended extends NextApiRequest {
   db: any;
   dbClient: any;
 }
 export interface ReducerState {
-  email: String;
-  token: String | undefined;
-  userID: String | undefined;
+  email: string;
+  token: string | undefined;
+  userID: number | undefined;
   blocks: Block[] | [];
   tasks: TaskFull[] | [];
   activeBlockID: number;
-  playing: Boolean | undefined;
-  timestamp: Number | undefined;
+  playing: boolean | undefined;
+  timestamp: number | undefined;
   editorState: EditorState;
 }
 
 export type EditorState = {
   block: Block;
-  tasks: TaskFull[] | [];
-  blockEditor: Boolean;
-  taskEditor: Boolean;
+  blockEditor: boolean;
+  taskEditor: boolean;
   activeTaskID: number;
 };
 

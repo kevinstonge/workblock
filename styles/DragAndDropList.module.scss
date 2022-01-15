@@ -1,24 +1,28 @@
-@import "./global/vars.scss";
-@import "./global/mixins.scss";
+@import './global/vars.scss';
+@import './global/mixins.scss';
 $bgColor: desaturate(lighten($c2, 25%), 40%);
 .dragAndDropList {
   @include flexC();
   justify-content: flex-start;
   gap: 1vw;
-  background-color: $bgColor;
+  background-color: $paper;
   padding: 1vw;
-  color: $b1;
-  min-height: min-content;
 }
 .draggableTask {
-  user-select: "none";
+  user-select: 'none';
   @include flexR();
+  @include dropShadow();
   cursor: pointer;
-  padding: 0.5vw 1vw;
   background-color: $c2;
+  padding: 1vw;
   justify-content: space-between;
   align-items: center;
-  @include dropShadow();
+  > p {
+    min-width: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   background-image: linear-gradient(
       to bottom,
       lighten($c2, 20%) 0%,
@@ -51,12 +55,12 @@ $bgColor: desaturate(lighten($c2, 25%), 40%);
     input {
       @include inputDark(lighten($c1, 20%));
       @include vwFont(0.9);
-      &[data-placeholder-color="c1"] {
+      &[data-placeholder-color='c1'] {
         &::placeholder {
           color: transparentize(lighten($c1, 20%), 0.6);
         }
       }
-      &[data-placeholder-color="c2"] {
+      &[data-placeholder-color='c2'] {
         &::placeholder {
           color: transparentize(lighten($c2, 10%), 0.5);
         }

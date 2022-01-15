@@ -1,9 +1,11 @@
-@import "./global/vars.scss";
-@import "./global/mixins.scss";
+@import './global/vars.scss';
+@import './global/mixins.scss';
 .modalContainer {
   @include flexC();
   justify-content: center;
   align-items: center;
+  align-content: center;
+  justify-items: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -13,4 +15,13 @@
   background-color: transparentize($b1, 0.3);
   z-index: +2;
   backdrop-filter: blur(0.2rem);
+  > div {
+    overflow: hidden;
+    @include flexC();
+    @include dropShadow();
+    @include highlightTop();
+    padding: 1vw;
+    border-radius: 0.2rem;
+    background-color: $b2;
+  }
 }

@@ -1,5 +1,5 @@
-@import "./global/vars.scss";
-@import "./global/mixins.scss";
+@import './global/vars.scss';
+@import './global/mixins.scss';
 
 @mixin vwLayout() {
   @media (orientation: landscape) {
@@ -30,10 +30,12 @@
     justify-content: center;
     @include pseudotv($b1, $f1);
     > p {
-      font-weight: bold;
-      font-size: 7vw;
-      @media screen and (orientation: portrait) {
-        font-size: 15vw;
+      > * {
+        font-weight: bold;
+        font-size: 7vw;
+        @media screen and (orientation: portrait) {
+          font-size: 15vw;
+        }
       }
     }
     .currentTaskToolbar {

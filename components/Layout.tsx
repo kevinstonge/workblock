@@ -1,11 +1,18 @@
 import type { NextPage } from 'next';
 import Header from './Header';
 import Head from 'next/head';
-import { ReactNode } from 'react';
+import { store } from '../state/store';
+import { ReactNode, useContext } from 'react';
+import TaskEditor from './TaskEditor';
+import BlockEditor from './BlockEditor';
+import { EditorState, ReducerState } from '../utils/types';
 type Props = {
   children?: ReactNode;
 };
 const Layout: NextPage = ({ children }: Props) => {
+  const {
+    state: { editorState },
+  }: { state: ReducerState; editorState: EditorState } = useContext(store);
   return (
     <>
       <Head>
@@ -18,6 +25,8 @@ const Layout: NextPage = ({ children }: Props) => {
       </Head>
       <Header />
       {children}
+      {editorState.blockEditor && <BlockEditor />}
+      {editorState.taskEditor && <TaskEditor />}
     </>
   );
 };

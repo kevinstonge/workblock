@@ -1,6 +1,6 @@
-import { initialState } from "./initialState";
-import { ReducerState } from "../utils/types";
-import actionTypes from "./actionTypes";
+import { initialState } from './initialState';
+import { ReducerState } from '../utils/types';
+import actionTypes from './actionTypes';
 export type Action = {
   type: String;
   payload: any;
@@ -32,6 +32,16 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
       return {
         ...state,
         editorState: { ...state.editorState, taskEditor: action.payload },
+      };
+    case actionTypes.SET_TIMESTAMP:
+      return {
+        ...state,
+        timestamp: action.payload,
+      };
+    case actionTypes.SET_PLAYING:
+      return {
+        ...state,
+        playing: action.payload,
       };
     default:
       return state;

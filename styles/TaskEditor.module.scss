@@ -1,12 +1,22 @@
-@import "./global/mixins.scss";
-@import "./global/vars.scss";
+@import './global/mixins.scss';
+@import './global/vars.scss';
 .taskEditor {
-  @include flexC();
-  align-items: stretch;
-  @include highlightTop();
-  box-shadow: 0 0.5vw 0.5vw black;
+  width: 80vw;
+  @media (min-width: 800px) {
+    width: 60vw;
+  }
+  @media (min-width: 1600px) {
+    width: 40vw;
+  }
+  h3 {
+    border-bottom: 0.25vw solid desaturate($c2, 40%);
+    width: 100%;
+    align-self: flex-start;
+  }
   label {
+    width: 100%;
     @include flexC();
+    gap: 0.5vw;
     align-items: flex-start;
     input,
     textarea {

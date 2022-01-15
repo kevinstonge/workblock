@@ -12,17 +12,16 @@ import {
 import SelectBlock from './SelectBlock';
 import styles from '../styles/Toolbar.module.scss';
 import { useContext, useState } from 'react';
-import BlockEditor from './BlockEditor';
 const Toolbar: NextPage = () => {
-  const {state, dispatch} = useContext(store);
+  const {
+    state: { activeBlockID },
+    dispatch,
+  } = useContext(store);
   const [selectBlockVisible, setSelectBlockVisible] = useState(false);
-  
+
   return (
     <>
       <div className={styles.toolbar}>
-        {state.editorState.blockEditor && (
-          <BlockEditor />
-        )}
         <ul>
           <li>
             <button
@@ -59,7 +58,14 @@ const Toolbar: NextPage = () => {
               data-glow-color="c2"
               className={styles.b2}
               onClick={() => {
-                dispatch({ type: actionTypes.UPDATE_EDITOR, payload: {blockEditor: true} });
+                dispatch({
+                  type: actionTypes.SET_ACTIVE_BLOCK_ID,
+                  payload: 0,
+                });
+                dispatch({
+                  type: actionTypes.UPDATE_EDITOR,
+                  payload: { blockEditor: true },
+                });
               }}
             >
               <span className="double-icon">

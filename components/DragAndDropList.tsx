@@ -1,36 +1,26 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  ReactEventHandler,
-  EventHandler,
-  SyntheticEvent,
-  FormEvent,
-} from "react";
-import { store } from "../state/store";
+import { useState, useEffect, useContext, FormEvent } from 'react';
+import { store } from '../state/store';
 import {
   DragDropContext,
   Droppable,
   Draggable,
   DropResult,
-} from "react-beautiful-dnd";
-import styles from "../styles/DragAndDropList.module.scss";
+} from 'react-beautiful-dnd';
+import styles from '../styles/DragAndDropList.module.scss';
 import type {
-  Block,
   TaskFull,
   TaskShort,
   EditorState,
   ReducerState,
-} from "../utils/types";
-import actionTypes from "../state/actionTypes";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+} from '../utils/types';
+import actionTypes from '../state/actionTypes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 function DragAndDropList(props: any) {
   const {
     state: {
       editorState: { block },
       tasks,
-      activeBlockID,
     },
     dispatch,
   }: {
@@ -38,7 +28,6 @@ function DragAndDropList(props: any) {
     editorState: EditorState;
     taskSchedule: TaskShort[];
     tasks: TaskFull[];
-    activeBlockID: number;
     dispatch: Function;
   } = useContext(store);
   const taskSchedule = block.taskSchedule;
@@ -72,7 +61,7 @@ function DragAndDropList(props: any) {
     });
   };
   const showToolTip = (text: string): void => {
-    console.log("tooltip: ", text); //todo - add this feature
+    console.log('tooltip: ', text); //todo - add this feature
   };
   const updateDuration = (e: FormEvent<HTMLInputElement>, item: TaskShort) => {
     //to do: error check duration entries
@@ -120,7 +109,7 @@ function DragAndDropList(props: any) {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       className={`${styles.draggableTask} ${
-                        snapshot.isDragging ? styles.draggingTask : ""
+                        snapshot.isDragging ? styles.draggingTask : ''
                       }`}
                     >
                       <p
