@@ -29,8 +29,9 @@ export const initialState: type.ReducerState = {
     },
   ],
   activeBlockID: 0,
-  playing: undefined,
-  timestamp: undefined,
+  duration: 0,
+  playing: 'stopped',
+  timestamp: 0,
   editorState: {
     block: { id: 0, title: '', taskSchedule: [] },
     blockEditor: true,

@@ -10,8 +10,9 @@ export interface ReducerState {
   blocks: Block[] | [];
   tasks: TaskFull[] | [];
   activeBlockID: number;
-  playing: boolean | undefined;
-  timestamp: number | undefined;
+  duration: number;
+  playing: 'playing' | 'paused' | 'stopped';
+  timestamp: number;
   editorState: EditorState;
 }
 

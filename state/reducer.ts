@@ -1,5 +1,5 @@
 import { initialState } from './initialState';
-import { ReducerState } from '../utils/types';
+import { ReducerState, TaskShort } from '../utils/types';
 import actionTypes from './actionTypes';
 export type Action = {
   type: String;
@@ -20,7 +20,14 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
         editorState: { ...state.editorState, ...action.payload },
       };
     case actionTypes.SET_ACTIVE_BLOCK_ID:
-      return { ...state, activeBlockID: action.payload };
+      //set the duration here!
+      const duration = state.blocks
+        .filter((b) => b.id === state.activeBlockID)[0]
+        .taskSchedule.reduce(
+          (durractionAcc, currentTask) => durractionAcc + currentTask.duration,
+          0
+        );
+      return { ...state, activeBlockID: action.payload, duration };
     case actionTypes.SET_ACTIVE_TASK_ID:
       return {
         ...state,

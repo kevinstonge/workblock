@@ -1,15 +1,11 @@
 import type { NextPage } from 'next';
 import styles from '../styles/CurrentTask.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faPlay,
-  faPause,
-  faStopCircle,
-} from '@fortawesome/free-solid-svg-icons';
-import { useContext, useEffect, useState } from 'react';
+import { faPlay, faPause, faStopCircle } from '@fortawesome/free-solid-svg-icons';
+import { JSXElementConstructor, ReactElement, useContext, useEffect, useState } from 'react';
 import { store } from '../state/store';
 import actionTypes from '../state/actionTypes';
-import { ReducerState, TaskShort } from '../utils/types';
+import { ReducerState, TaskFull, TaskShort } from '../utils/types';
 const CurrentTask: NextPage = () => {
   const {
     state, //temp?
@@ -25,30 +21,22 @@ const CurrentTask: NextPage = () => {
   const [fullTaskList, setFullTaskList]: [
     fullTaskList: TaskShort[] | [],
     setFullTaskList: Function
-  ] = useState([]);
-  const blockDuration = fullTaskList.reduce(
-    (acc: number, cur: TaskShort): number => {
-      return acc + cur.duration;
-    },
-    0
-  );
-  const [currentlyPlayingTaskID, setCurrentlyPlayingTaskID]: [
-    currentlyPlayingTaskID: number | undefined,
-    setCurrentlyPlayingTaskID: Function
-  ] = useState(undefined);
+  ] = useState([{ taskID: 0, duration: 0 }]);
+  const blockDuration: number = (fullTaskList as any[]).reduce((acc, cur): number => {
+    return acc + cur.duration;
+  }, 0);
+  console.log(blockDuration);
   useEffect(() => {
     setFullTaskList(
       state.blocks
         .filter((b) => b.id === activeBlockID)[0]
-        .taskSchedule.filter((t) =>
-          state.tasks.filter((tf) => tf.id === t.taskID)
-        )
+        .taskSchedule.filter((t) => state.tasks.filter((tf) => tf.id === t.taskID))
     );
-  }, []);
+  }, [activeBlockID]);
   useEffect(() => {
     const newTS: number = timestamp ? timestamp + 1 : 1;
     const timeoutID =
-      playing === true
+      playing === 'playing'
         ? setTimeout(() => {
             console.log('tick');
             dispatch({
@@ -58,14 +46,14 @@ const CurrentTask: NextPage = () => {
             console.log();
           }, 1000)
         : setTimeout(() => undefined, 1000);
-    //call this when state.playing changes
     return () => {
       clearTimeout(timeoutID);
-      //clean up the timeout
     };
   }, [playing, timestamp]);
-  const timestampFiltered = (duration) => {
-    const ts = duration - (timestamp || 0);
+  const timeString = (progress: number, duration?: number): ReactElement => {
+    //pass only progress for time elapsed
+    //pass progress and duration for time remaining
+    const ts: number = duration ? duration - progress : progress;
     const h = Math.floor(ts / 60 / 60);
     const m = Math.floor(ts / 60 - h * 60 * 60);
     const s = Math.floor(ts - (m * 60 - h * 60 * 60));
@@ -80,36 +68,46 @@ const CurrentTask: NextPage = () => {
       </>
     );
   };
+  const [sumOfPreviousDurations, currentTaskDuration, currentTaskIndex] =
+    fullTaskList.length > 0
+      ? (fullTaskList as any[]).reduce(
+          (value: number[], current: TaskShort, index: number) => {
+            if (state.timestamp < value[0] + current.duration) {
+              return [value[0], current.duration, index];
+            }
+            return [value[0] + current.duration, value[1], value[2]];
+          },
+          [0, 0, 0]
+        )
+      : [0, 0, 0];
+  const timeRemainingOnTask = sumOfPreviousDurations + currentTaskDuration - state.timestamp;
+  const currentTask: TaskFull = state.tasks[fullTaskList[currentTaskIndex].taskID];
   return (
     <div className={styles.currentTask}>
       <div className={styles.currentTaskLeft}>
-        <p className={styles.bigTime}>{timestampFiltered()}</p>
+        <p className={styles.bigTime}>{timeString(timeRemainingOnTask)}</p>
         <div className={styles.currentTaskToolbar}>
           <button
             data-glow-color="c2"
-            disabled={playing === true}
-            onClick={() =>
-              dispatch({ type: actionTypes.SET_PLAYING, payload: true })
-            }
+            disabled={playing === 'playing'}
+            onClick={() => dispatch({ type: actionTypes.SET_PLAYING, payload: 'playing' })}
           >
             <FontAwesomeIcon icon={faPlay} />
             <p>play</p>
           </button>
           <button
             data-glow-color="c1"
-            disabled={playing !== true}
-            onClick={() =>
-              dispatch({ type: actionTypes.SET_PLAYING, payload: false })
-            }
+            disabled={playing === 'paused' || playing === 'stopped'}
+            onClick={() => dispatch({ type: actionTypes.SET_PLAYING, payload: 'paused' })}
           >
             <FontAwesomeIcon icon={faPause} />
             <p>pause</p>
           </button>
           <button
             data-glow-color="e1"
-            disabled={playing === true || playing == undefined}
+            disabled={playing === 'stopped'}
             onClick={() => {
-              dispatch({ type: actionTypes.SET_PLAYING, payload: undefined });
+              dispatch({ type: actionTypes.SET_PLAYING, payload: 'stopped' });
               dispatch({ type: actionTypes.SET_TIMESTAMP, payload: 0 });
             }}
           >
@@ -119,21 +117,8 @@ const CurrentTask: NextPage = () => {
         </div>
       </div>
       <div className={styles.currentTaskRight}>
-        <h3>task name</h3>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
-        <p>task description</p>
+        <h3>{currentTask.taskTitle}</h3>
+        <p>{currentTask.taskDescription}</p>
       </div>
     </div>
   );
