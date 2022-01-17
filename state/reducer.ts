@@ -6,7 +6,11 @@ export type Action = {
   payload: any;
 };
 export const reducer = (state: ReducerState = initialState, action: Action) => {
-  console.log(state);
+  const getDuration = (blockID: number): number => {
+    return state.blocks
+      .filter((b) => b.id === blockID)[0]
+      .taskSchedule.reduce((durractionAcc, currentTask) => durractionAcc + currentTask.duration, 0);
+  };
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:
       return { ...state, ...action.payload };
@@ -20,14 +24,9 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
         editorState: { ...state.editorState, ...action.payload },
       };
     case actionTypes.SET_ACTIVE_BLOCK_ID:
-      //set the duration here!
-      const duration = state.blocks
-        .filter((b) => b.id === state.activeBlockID)[0]
-        .taskSchedule.reduce(
-          (durractionAcc, currentTask) => durractionAcc + currentTask.duration,
-          0
-        );
-      return { ...state, activeBlockID: action.payload, duration };
+      return { ...state, activeBlockID: action.payload, duration: getDuration(action.payload) };
+    case actionTypes.SET_DURATION:
+      return { ...state, duration: getDuration(action.payload) };
     case actionTypes.SET_ACTIVE_TASK_ID:
       return {
         ...state,

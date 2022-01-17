@@ -10,5 +10,6 @@ const actionTypes = {
   SET_BLOCK_EDITOR: 'SET_BLOCK_EDITOR',
   SET_PLAYING: 'SET_PLAYING',
   SET_TIMESTAMP: 'SET_TIMESTAMP',
+  SET_DURATION: 'SET_DURATION',
 };
 export default actionTypes;
