@@ -29,7 +29,6 @@ const CurrentTask: NextPage<Props> = (props: Props) => {
     const timeoutID =
       playing === 'playing'
         ? setTimeout(() => {
-            console.log('tick');
             dispatch({
               type: actionTypes.SET_TIMESTAMP,
               payload: newTS,
@@ -46,16 +45,25 @@ const CurrentTask: NextPage<Props> = (props: Props) => {
     (b) => b.id === activeBlockID
   )[0].id
     ? (props.fullTaskList as any[]).reduce(
-        (value: number[], current: TaskShort, index: number) => {
-          if (timestamp < value[0] + current.duration) {
-            return [value[0], current.duration, index];
+        (value: number[], current: number[], index: number, arr: TaskShort[]) => {
+          //need to figure this out :)
+          console.log('aaaa not getting here');
+          if (timestamp < value[0]) {
+            if (timestamp < value[0] + arr[index].duration) {
+              return [value[0], arr[index].duration, index];
+            } else {
+              return [value[0] + arr[index].duration, value[1], value[2]];
+            }
+          } else {
+            return [value[0], value[1], value[2]];
           }
-          return [value[0] + current.duration, value[1], value[2]];
         },
         [0, 0, 0]
       )
     : [0, 0, 0];
+  console.log('ctd: ', currentTaskDuration);
   const timeRemainingOnTask = sumOfPreviousDurations + currentTaskDuration - timestamp;
+  console.log('trot: ', timeRemainingOnTask);
   return (
     <>
       <div className={styles.currentTask}>
