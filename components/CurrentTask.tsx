@@ -7,11 +7,11 @@ import { store } from '../state/store';
 import actionTypes from '../state/actionTypes';
 import { ReducerState, TaskShort, Block, TaskFull } from '../utils/types';
 import timeString from '../utils/timeString';
-interface NextPageProps extends NextPage {
-  fullTaskList?: TaskFull[];
+interface Props {
+  fullTaskList: TaskFull[];
 }
 
-const CurrentTask: NextPageProps = (props: NextPageProps) => {
+const CurrentTask: NextPage<Props> = (props: Props) => {
   const {
     state: { blocks, activeBlockID, playing, timestamp },
     dispatch,
@@ -99,8 +99,8 @@ const CurrentTask: NextPageProps = (props: NextPageProps) => {
       <div className={styles.taskList}>
         <h2>Task List:</h2>
         <ul>
-          {props.fullTaskList.map((task: TaskFull) => {
-            const isActive = true; //just need to set this
+          {props.fullTaskList.map((task: TaskFull, index: number) => {
+            const isActive = currentTaskIndex === index;
             const className =
               `${styles.taskListItem}` + (isActive ? ` ${styles.taskListItemActive}` : '');
             return (
