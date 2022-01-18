@@ -73,88 +73,91 @@ function DragAndDropList(props: any) {
     setWinReady(true);
   }, []);
   return winReady ? (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="list">
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className={styles.dragAndDropList}
-          >
-            {taskSchedule.map((item: any, index: number) => {
-              const fullTask = tasks.filter((t) => t.id === item.taskID)[0];
-              const durationData = timeString(item.duration).data;
-
-              return (
-                <Draggable
-                  draggableId={`ts_di_id-${index.toString()}`}
-                  index={index}
-                  key={`ts_di_key-${index.toString()}`}
-                >
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className={`${styles.draggableTask} ${
-                        snapshot.isDragging ? styles.draggingTask : ''
-                      }`}
-                    >
-                      <p onMouseOver={() => showToolTip(fullTask.taskDescription)}>
-                        {fullTask.taskTitle}
-                      </p>
-                      <label className={styles.draggableTaskControls}>
-                        <input
-                          type="text"
-                          name="durationHours"
-                          placeholder="HH"
-                          size={2}
-                          data-placeholder-color="c1"
-                          maxLength={2}
-                          value={durationData.hh}
-                          onChange={(e) => {
-                            updateDuration(e, item);
-                          }}
-                        ></input>
-                        :
-                        <input
-                          type="text"
-                          name="durationMinutes"
-                          placeholder="MM"
-                          size={2}
-                          data-placeholder-color="c2"
-                          maxLength={2}
-                          max={59}
-                          value={durationData.mm}
-                          onChange={(e) => {
-                            updateDuration(e, item);
-                          }}
-                        ></input>
-                      </label>
-                    </div>
-                  )}
-                </Draggable>
-              );
-            })}
-            <button
-              className={styles.addTask}
-              onClick={() =>
-                dispatch({
-                  type: actionTypes.UPDATE_EDITOR,
-                  payload: { taskEditor: true, activeTaskID: 0 },
-                })
-              }
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="list">
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={styles.dragAndDropList}
             >
-              <span>
-                <FontAwesomeIcon icon={faPlus} />
-              </span>
-              <p>add a new task</p>
-            </button>
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+              {taskSchedule.map((item: any, index: number) => {
+                const fullTask = tasks.filter((t) => t.id === item.taskID)[0];
+                const durationData = timeString(item.duration).data;
+
+                return (
+                  <Draggable
+                    draggableId={`ts_di_id-${index.toString()}`}
+                    index={index}
+                    key={`ts_di_key-${index.toString()}`}
+                  >
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className={`${styles.draggableTask} ${
+                          snapshot.isDragging ? styles.draggingTask : ''
+                        }`}
+                      >
+                        <p onMouseOver={() => showToolTip(fullTask.taskDescription)}>
+                          {fullTask.taskTitle}
+                        </p>
+                        <label className={styles.draggableTaskControls}>
+                          <input
+                            type="text"
+                            name="durationHours"
+                            placeholder="HH"
+                            size={2}
+                            data-placeholder-color="c1"
+                            maxLength={2}
+                            value={durationData.hh}
+                            onChange={(e) => {
+                              updateDuration(e, item);
+                            }}
+                          ></input>
+                          :
+                          <input
+                            type="text"
+                            name="durationMinutes"
+                            placeholder="MM"
+                            size={2}
+                            data-placeholder-color="c2"
+                            maxLength={2}
+                            max={59}
+                            value={durationData.mm}
+                            onChange={(e) => {
+                              updateDuration(e, item);
+                            }}
+                          ></input>
+                        </label>
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+      <button
+        className={styles.addTask}
+        data-glow-color={'c2'}
+        onClick={() =>
+          dispatch({
+            type: actionTypes.UPDATE_EDITOR,
+            payload: { taskEditor: true, activeTaskID: 0 },
+          })
+        }
+      >
+        <span>
+          <FontAwesomeIcon icon={faPlus} />
+        </span>
+        <p>add a new task</p>
+      </button>
+    </>
   ) : null;
 }
 

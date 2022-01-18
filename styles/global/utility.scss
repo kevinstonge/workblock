@@ -1,5 +1,5 @@
-@import "./vars.scss";
-@import "./mixins.scss";
+@import './vars.scss';
+@import './mixins.scss';
 body {
   background-color: $b1;
   color: $f1;
@@ -137,6 +137,16 @@ a {
   cursor: pointer;
 }
 .buttonRow {
+  margin-top: 0.3vw;
+  padding: 1vw;
+  border-top: 0.1vw solid $c2;
+  border-bottom: 0.1vw solid $c2;
+  background: linear-gradient(
+    to left,
+    transparent 0%,
+    transparentize($c2, 0.8) 50%,
+    transparent 100%
+  );
   @include flexR();
   justify-content: space-evenly;
   > button {

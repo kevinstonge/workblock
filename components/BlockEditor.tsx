@@ -5,12 +5,10 @@ import { store } from '../state/store';
 import styles from '../styles/BlockEditor.module.scss';
 import DragAndDropList from './DragAndDropList';
 import { useContext, useEffect } from 'react';
-import { Block, ReducerState } from '../utils/types';
-import TaskEditor from './TaskEditor';
+import { ReducerState } from '../utils/types';
 
 const BlockEditor: NextPage = () => {
-  const { state, dispatch }: { state: ReducerState; dispatch: Function } =
-    useContext(store);
+  const { state, dispatch }: { state: ReducerState; dispatch: Function } = useContext(store);
   //populate editorState on first load
   //editorState should not contain 'blocks', since only one block can be edited at a time, this will reduce chasing the desired variables.
   useEffect(() => {

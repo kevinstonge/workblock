@@ -11,12 +11,10 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
   background-color: transparentize($b1, 0.3);
   z-index: +2;
   backdrop-filter: blur(0.2rem);
   > div {
-    overflow: hidden;
     @include flexC();
     @include dropShadow();
     @include highlightTop();
