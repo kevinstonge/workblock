@@ -70,19 +70,25 @@ const CurrentTask: NextPage<Props> = (props: Props) => {
     <>
       <div className={styles.currentTask}>
         <div className={styles.currentTaskLeft}>
-          <p className={styles.bigTime}>{timeString(blockStatus.timeRemainingOnTask)}</p>
+          <p className={styles.bigTime}>{timeString(blockStatus.timeRemainingOnTask).jsx}</p>
           <div className={styles.currentTaskToolbar}>
             {playing === 'ended' ? (
               <>
                 <button
                   data-glow-color="c2"
                   onClick={() => {
-                    dispatch({ type: actionTypes.SET_PLAYING, payload: 'playing' });
+                    dispatch({ type: actionTypes.SET_PLAYING, payload: 'stopped' });
                     dispatch({ type: actionTypes.SET_TIMESTAMP, payload: 0 });
+                    setBlockStatus({
+                      durationSum: 0,
+                      currentTaskIndex: 0,
+                      currentTaskDuration: 0,
+                      timeRemainingOnTask: 0,
+                    });
                   }}
                 >
                   <FontAwesomeIcon icon={faRedo} />
-                  restart
+                  reset
                 </button>
               </>
             ) : (
@@ -138,7 +144,7 @@ const CurrentTask: NextPage<Props> = (props: Props) => {
                 </div>
                 <div>
                   <p>
-                    [{timeString(taskSchedule[index].duration)}]{task.taskDescription}
+                    [{timeString(taskSchedule[index].duration).jsx}]-{task.taskDescription}
                   </p>
                   <button>
                     <FontAwesomeIcon icon={faEye} />

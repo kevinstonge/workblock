@@ -6,6 +6,7 @@ import type { TaskFull, TaskShort, EditorState, ReducerState } from '../utils/ty
 import actionTypes from '../state/actionTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import timeString from '../utils/timeString';
 function DragAndDropList(props: any) {
   const {
     state: {
@@ -82,12 +83,13 @@ function DragAndDropList(props: any) {
           >
             {taskSchedule.map((item: any, index: number) => {
               const fullTask = tasks.filter((t) => t.id === item.taskID)[0];
+              const durationData = timeString(item.duration).data;
 
               return (
                 <Draggable
-                  draggableId={item.taskID.toString()}
+                  draggableId={`ts_di_id-${index.toString()}`}
                   index={index}
-                  key={`task_index-${index.toString()}`}
+                  key={`ts_di_key-${index.toString()}`}
                 >
                   {(provided, snapshot) => (
                     <div
@@ -109,7 +111,7 @@ function DragAndDropList(props: any) {
                           size={2}
                           data-placeholder-color="c1"
                           maxLength={2}
-                          value={item.duration}
+                          value={durationData.hh}
                           onChange={(e) => {
                             updateDuration(e, item);
                           }}
@@ -123,7 +125,7 @@ function DragAndDropList(props: any) {
                           data-placeholder-color="c2"
                           maxLength={2}
                           max={59}
-                          value={item.duration}
+                          value={durationData.mm}
                           onChange={(e) => {
                             updateDuration(e, item);
                           }}

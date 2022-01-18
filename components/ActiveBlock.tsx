@@ -5,7 +5,6 @@ import { useContext, useEffect, useState } from 'react';
 import { store } from '../state/store';
 import { ReducerState, TaskFull, TaskShort } from '../utils/types';
 import timeString from '../utils/timeString';
-import blockDuration from '../utils/blockDuration';
 import actionTypes from '../state/actionTypes';
 const ActiveBlock: NextPage = () => {
   const {
@@ -36,7 +35,7 @@ const ActiveBlock: NextPage = () => {
       <div className={styles.activeBlockContent}>
         <div className={styles.blockHeader}>
           <h2>Block Name</h2>
-          <p>-{timeString(timestamp, duration)}</p>
+          <p>-{timeString(timestamp, duration).jsx}</p>
         </div>
         <CurrentTask fullTaskList={fullTaskList} />
       </div>
