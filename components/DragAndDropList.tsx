@@ -1,18 +1,8 @@
 import { useState, useEffect, useContext, FormEvent } from 'react';
 import { store } from '../state/store';
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import styles from '../styles/DragAndDropList.module.scss';
-import type {
-  TaskFull,
-  TaskShort,
-  EditorState,
-  ReducerState,
-} from '../utils/types';
+import type { TaskFull, TaskShort, EditorState, ReducerState } from '../utils/types';
 import actionTypes from '../state/actionTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -31,11 +21,7 @@ function DragAndDropList(props: any) {
     dispatch: Function;
   } = useContext(store);
   const taskSchedule = block.taskSchedule;
-  const reorder = (
-    list: TaskShort[],
-    startIndex: number,
-    endIndex: number
-  ): TaskShort[] => {
+  const reorder = (list: TaskShort[], startIndex: number, endIndex: number): TaskShort[] => {
     const result: TaskShort[] = [...list];
     const removed = result.splice(startIndex, 1);
     result.splice(endIndex, 0, ...removed);
@@ -101,7 +87,7 @@ function DragAndDropList(props: any) {
                 <Draggable
                   draggableId={item.taskID.toString()}
                   index={index}
-                  key={item.taskID.toString()}
+                  key={`task_index-${index.toString()}`}
                 >
                   {(provided, snapshot) => (
                     <div
@@ -112,11 +98,7 @@ function DragAndDropList(props: any) {
                         snapshot.isDragging ? styles.draggingTask : ''
                       }`}
                     >
-                      <p
-                        onMouseOver={() =>
-                          showToolTip(fullTask.taskDescription)
-                        }
-                      >
+                      <p onMouseOver={() => showToolTip(fullTask.taskDescription)}>
                         {fullTask.taskTitle}
                       </p>
                       <label className={styles.draggableTaskControls}>

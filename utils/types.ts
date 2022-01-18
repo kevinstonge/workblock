@@ -11,7 +11,7 @@ export interface ReducerState {
   tasks: TaskFull[] | [];
   activeBlockID: number;
   duration: number;
-  playing: 'playing' | 'paused' | 'stopped';
+  playing: 'playing' | 'paused' | 'stopped' | 'ended';
   timestamp: number;
   editorState: EditorState;
 }

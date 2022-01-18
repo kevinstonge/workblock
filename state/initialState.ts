@@ -9,9 +9,9 @@ export const initialState: type.ReducerState = {
       id: 0,
       title: 'block zero [0]',
       taskSchedule: [
-        { taskID: 0, duration: 600 },
-        { taskID: 1, duration: 600 },
-        { taskID: 0, duration: 300 },
+        { taskID: 0, duration: 3 },
+        { taskID: 1, duration: 2 },
+        { taskID: 0, duration: 2 },
       ],
     },
   ],
@@ -34,7 +34,7 @@ export const initialState: type.ReducerState = {
   timestamp: 0,
   editorState: {
     block: { id: 0, title: '', taskSchedule: [] },
-    blockEditor: true,
+    blockEditor: false,
     taskEditor: false,
     activeTaskID: 0,
   },
