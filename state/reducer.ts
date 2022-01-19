@@ -49,6 +49,16 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
         ...state,
         playing: action.payload,
       };
+    case actionTypes.UPDATE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === action.payload.id) {
+            return action.payload.updatedTask;
+          }
+          return task;
+        }),
+      };
     default:
       return state;
   }

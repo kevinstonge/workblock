@@ -9,11 +9,16 @@ $bgColor: desaturate(lighten($c2, 25%), 40%);
   box-shadow: 0 0.2vw 0.3vw inset black;
   background-color: lighten($b2, 5%);
   padding: 1vw;
+  position: static !important; //come back to ths later
+  //there's a 'portal' solution to the draggable item position: fixed issue
+  //I'm not sure why I need to use it, because no parent containers are transformed!
+  //it seems to be due to my use of vw as a unit for padding/margin/etc, but again, not sure why
 }
 .draggableTask {
   @include flexR();
   @include dropShadow();
   cursor: pointer;
+  position: static !important; /// related to the above long comment.
   background-color: $c2;
   padding: 1vw;
   justify-content: space-between;

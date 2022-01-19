@@ -9,23 +9,28 @@ export const initialState: type.ReducerState = {
       id: 0,
       title: 'block zero [0]',
       taskSchedule: [
-        { taskID: 0, duration: 3 },
-        { taskID: 1, duration: 2 },
-        { taskID: 0, duration: 2 },
+        { taskID: 0, duration: 60 },
+        { taskID: 2, duration: 120 },
+        { taskID: 1, duration: 240 },
       ],
     },
   ],
   tasks: [
     {
       id: 0,
-      taskTitle: 'task zero [0]',
-      taskDescription:
+      title: 'task zero [0]',
+      description:
         'this is a description for the first task - let me make it a little longer so I can explore the styling of scrollbars etc',
     },
     {
       id: 1,
-      taskTitle: 'task one [1]',
-      taskDescription: 'this is a description for the second task',
+      title: 'task one [1]',
+      description: 'this is a description for the second task',
+    },
+    {
+      id: 2,
+      title: 'task two [2]',
+      description: 'this is a description for the third task',
     },
   ],
   activeBlockID: 0,

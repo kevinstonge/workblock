@@ -21,7 +21,7 @@ const ActiveBlock: NextPage = () => {
     dispatch({ type: actionTypes.SET_DURATION, payload: 0 });
   }, []);
   const [fullTaskList, setFullTaskList]: [TaskFull[], Function] = useState([
-    { id: 0, taskTitle: '', taskDescription: '' },
+    { id: 0, title: '', description: '' },
   ]);
   useEffect(() => {
     setFullTaskList(

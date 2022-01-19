@@ -16,8 +16,10 @@
   backdrop-filter: blur(0.2rem);
   > div {
     @include flexC();
+    justify-content: stretch;
     @include dropShadow();
     @include highlightTop();
+    overflow: hidden;
     padding: 1vw;
     border-radius: 0.2rem;
     background-color: $b2;

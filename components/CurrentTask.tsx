@@ -125,8 +125,8 @@ const CurrentTask: NextPage<Props> = (props: Props) => {
           </div>
         </div>
         <div className={styles.currentTaskRight}>
-          <h3>{props.fullTaskList[blockStatus.currentTaskIndex].taskTitle}</h3>
-          <p>{props.fullTaskList[blockStatus.currentTaskIndex].taskDescription}</p>
+          <h3>{props.fullTaskList[blockStatus.currentTaskIndex].title}</h3>
+          <p>{props.fullTaskList[blockStatus.currentTaskIndex].description}</p>
         </div>
       </div>
       <div className={styles.taskList}>
@@ -140,11 +140,11 @@ const CurrentTask: NextPage<Props> = (props: Props) => {
               <li className={className} key={`task_index-${index}`}>
                 <div>
                   <FontAwesomeIcon icon={faPlay} />
-                  <p className={styles.taskTitle}>{task.taskTitle}</p>
+                  <p className={styles.taskTitle}>{task.title}</p>
                 </div>
                 <div>
                   <p>
-                    [{timeString(taskSchedule[index].duration).jsx}]-{task.taskDescription}
+                    [{timeString(taskSchedule[index].duration).jsx}]-{task.description}
                   </p>
                   <button>
                     <FontAwesomeIcon icon={faEye} />

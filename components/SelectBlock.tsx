@@ -1,7 +1,7 @@
-import { NextPage } from "next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
+import { NextPage } from 'next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+import { useEffect } from 'react';
 interface Props {
   setSelectBlockVisible: Function;
 }
@@ -9,7 +9,7 @@ const SelectBlock: NextPage<Props> = (props: Props) => {
   const { setSelectBlockVisible } = props;
   useEffect(() => {
     window.addEventListener(
-      "click",
+      'click',
       () => {
         setSelectBlockVisible(false);
       },
@@ -17,7 +17,7 @@ const SelectBlock: NextPage<Props> = (props: Props) => {
     );
     return () =>
       window.removeEventListener(
-        "click",
+        'click',
         () => {
           setSelectBlockVisible(false);
         },

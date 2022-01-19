@@ -30,8 +30,8 @@ export interface State {
 
 export type TaskFull = {
   id: number;
-  taskTitle: string;
-  taskDescription: string;
+  title: string;
+  description: string;
 };
 
 export type TaskShort = {
@@ -43,10 +43,4 @@ export type Block = {
   id: number;
   title: string;
   taskSchedule: TaskShort[];
-};
-
-export type Task = {
-  id: number;
-  taskName: string;
-  taskDescription: string;
 };

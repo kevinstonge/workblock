@@ -6,6 +6,7 @@ import styles from '../styles/BlockEditor.module.scss';
 import DragAndDropList from './DragAndDropList';
 import { useContext, useEffect } from 'react';
 import { ReducerState } from '../utils/types';
+import AvailableTasksList from './AvailableTasksList';
 
 const BlockEditor: NextPage = () => {
   const { state, dispatch }: { state: ReducerState; dispatch: Function } = useContext(store);
@@ -35,7 +36,7 @@ const BlockEditor: NextPage = () => {
               <div className={styles.twoColumn}>
                 <div>
                   <label htmlFor="blockTitle">
-                    <p>title:</p>
+                    <h3>title:</h3>
                     <input
                       type="text"
                       id="blockTitle"
@@ -56,11 +57,8 @@ const BlockEditor: NextPage = () => {
                   </div>
                 </div>
                 <div>
-                  <h3>task list:</h3>
-                  <ul>
-                    <li>task 1</li>
-                    <li>task 2</li>
-                  </ul>
+                  <h3>available tasks:</h3>
+                  <AvailableTasksList />
                 </div>
               </div>
             )}

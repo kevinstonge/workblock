@@ -8,7 +8,7 @@ body {
     align-items: stretch;
     gap: 0;
     height: 100vh;
-    overflow-y: hidden;
+    // overflow-y: hidden;
     > div,
     > header {
       padding: 1vw 2vw;
@@ -31,10 +31,13 @@ body {
     @include vwFont(1.2);
   }
   h1 {
-    @include vwFont(1.5);
+    @include vwFont(1.4);
   }
   h2 {
     @include vwFont(1.3);
+  }
+  h3 {
+    @include vwFont(1.2);
   }
 }
 header {
