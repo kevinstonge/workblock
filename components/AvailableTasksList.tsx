@@ -4,7 +4,7 @@ import actionTypes from '../state/actionTypes';
 import styles from '../styles/AvailableTasksList.module.scss';
 import { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlus, faGear, faEye } from '@fortawesome/free-solid-svg-icons';
 const AvailableTasksList = () => {
   const {
     state: { tasks },
@@ -15,13 +15,17 @@ const AvailableTasksList = () => {
       <ul>
         {tasks.map((t) => (
           <li>
-            <span>
-              <button>
-                <FontAwesomeIcon icon={faArrowLeft} />
-                add
-              </button>
-            </span>
+            <span className={styles.left}>
+            <button data-glow-color="c2" className="double-icon">
+            <FontAwesomeIcon icon={faArrowLeft} className="f1 bottom-icon" />
+            <FontAwesomeIcon icon={faPlus} className="c1 top-icon" />
+            </button>
+
             {t.title}
+            </span>
+            <span className={styles.right}>
+              <button><FontAwesomeIcon icon={faGear} />/<FontAwesomeIcon icon={faEye} /></button>
+            </span>
           </li>
         ))}
       </ul>

@@ -1,5 +1,5 @@
-@import './global/vars.scss';
-@import './global/mixins.scss';
+@import "./global/vars.scss";
+@import "./global/mixins.scss";
 .listContainer {
   max-height: 70vh;
   overflow-y: auto;
@@ -7,7 +7,37 @@
   > ul {
     @include flexC();
     > li {
+      @include flexR();
+      gap: 0.5vw;
+      align-items: center;
+      justify-content: space-between;
       @include paperView();
+      > span {
+        @include flexR();
+        align-items: center;
+        &.left {
+          > button {
+            @include button();
+            padding: 0;
+            @include flexR();
+            gap: 0;
+          }
+        }
+        &.right {
+          > button {
+            @include button();
+            @include flexR();
+            gap: 0;
+            align-items: center;
+            > svg {
+              width: 2vw;
+              height: 2vw;
+              min-width: 1.5rem;
+              min-height: 1.5rem;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
-@import './vars.scss';
-@import './mixins.scss';
+@import "./vars.scss";
+@import "./mixins.scss";
 body {
   background-color: $b1;
   color: $f1;
@@ -87,25 +87,26 @@ label {
   position: relative;
   top: 0;
   width: 4.5vw;
-  height: 3.2vw;
-  min-width: 1.2rem;
-  min-height: 1.2rem;
+  height: 4.5vw;
+  min-width: 2rem;
+  min-height: 2rem;
   .top-icon {
     position: absolute;
     top: 0;
     left: 0;
-    width: 2vw;
-    height: 2vw;
-    min-width: 1rem;
-    min-height: 1rem;
+    width: 3vw;
+    height: 3vw;
+    min-width: 2rem;
+    min-height: 2rem;
     @include dropShadow();
   }
   .bottom-icon {
     position: absolute;
     top: 0.7vw;
-    left: 1vw;
-    width: 2.5vw;
-    height: 2.5vw;
+    left: 1vw; //problem causer! when calculating min-width, the 1vw messes up the offset.
+    //if you specify min-width, and set the position to the RIGHT instead, you can fake the min-left effect
+    width: 3.5vw;
+    height: 3.5vw;
     min-width: 1rem;
     min-height: 1rem;
   }
