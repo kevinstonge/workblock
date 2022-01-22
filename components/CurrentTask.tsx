@@ -11,22 +11,24 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { store } from "../state/store";
 import actionTypes from "../state/actionTypes";
-import { ReducerState, TaskShort, Block, TaskFull } from "../utils/types";
+import { TaskShort, Block, TaskFull } from "../utils/types";
 import timeString from "../utils/timeString";
 interface Props {
   fullTaskList: TaskFull[];
 }
 
-const CurrentTask: NextPage<Props> = (props: Props) => {
+const CurrentTask: NextPage = () => {
   const {
     blocks,
+    tasks,
     duration,
     activeBlockID,
     playing,
     timestamp,
     dispatch,
   }: {
-    blocks: Block[] | [];
+    blocks: Block[];
+    tasks: TaskFull[];
     duration: number;
     playing: "playing" | "paused" | "stopped" | "ended";
     timestamp: number | undefined;
@@ -37,6 +39,10 @@ const CurrentTask: NextPage<Props> = (props: Props) => {
   const taskSchedule: TaskShort[] = blocks.filter(
     (b: Block): Boolean => b.id === activeBlockID
   )[0].taskSchedule;
+
+  const fullTaskList: TaskFull[] = taskSchedule.map(
+    (task) => tasks.filter((t) => t.id === task.taskID)[0]
+  );
 
   const [blockStatus, setBlockStatus] = useState({
     durationSum: 0,
@@ -160,14 +166,14 @@ const CurrentTask: NextPage<Props> = (props: Props) => {
           </div>
         </div>
         <div className={styles.currentTaskRight}>
-          <h3>{props.fullTaskList[blockStatus.currentTaskIndex].title}</h3>
-          <p>{props.fullTaskList[blockStatus.currentTaskIndex].description}</p>
+          <h3>{fullTaskList[blockStatus.currentTaskIndex].title}</h3>
+          <p>{fullTaskList[blockStatus.currentTaskIndex].description}</p>
         </div>
       </div>
       <div className={styles.taskList}>
         <h2>Task List:</h2>
         <ul>
-          {props.fullTaskList.map((task: TaskFull, index: number) => {
+          {fullTaskList.map((task: TaskFull, index: number) => {
             const isActive = blockStatus.currentTaskIndex === index;
             const className =
               `${styles.taskListItem}` +

@@ -44,7 +44,7 @@ const ActiveBlock: NextPage = () => {
           <h2>Block Name</h2>
           <p>-{timeString(timestamp, duration).jsx}</p>
         </div>
-        <CurrentTask fullTaskList={fullTaskList} />
+        <CurrentTask />
       </div>
     </div>
   );
