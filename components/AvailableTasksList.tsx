@@ -1,5 +1,11 @@
-import { store } from "../state/store";
-import type { ReducerState, TaskFull } from "../utils/types";
+import StateProvider, { store } from "../state/store";
+import {
+  Block,
+  emptyBlock,
+  ReducerState,
+  TaskFull,
+  TaskShort,
+} from "../utils/types";
 import styles from "../styles/AvailableTasksList.module.scss";
 import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,19 +15,39 @@ import {
   faGear,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
+import actionTypes from "../state/actionTypes";
 const AvailableTasksList = () => {
   const {
-    state: { tasks },
+    state: { tasks, blocks, activeBlockID },
     dispatch,
-  }: { state: ReducerState; tasks: TaskFull[]; dispatch: Function } =
-    useContext(store);
+  }: {
+    state: ReducerState;
+    tasks: TaskFull[];
+    blocks: Block[];
+    activeBlockID: number;
+    dispatch: Function;
+  } = useContext(store);
+  const activeBlock =
+    blocks.filter((block) => block.id === activeBlockID)[0] || emptyBlock;
   return (
     <div className={styles.listContainer}>
       <ul>
-        {tasks.map((t) => (
-          <li key={`taskID-${t.id}`}>
+        {tasks.map((task: TaskFull) => (
+          <li key={`taskID-${task.id}`}>
             <span className={styles.left}>
-              <button data-glow-color="c2" className="double-icon">
+              <button
+                data-glow-color="c2"
+                className="double-icon"
+                onClick={() => {
+                  dispatch({
+                    type: actionTypes.UPDATE_BLOCK,
+                    payload: [
+                      ...activeBlock.taskSchedule,
+                      { taskID: task.id, duration: 300 },
+                    ],
+                  });
+                }}
+              >
                 <FontAwesomeIcon
                   icon={faArrowLeft}
                   className="f1 bottom-icon"
@@ -29,10 +55,21 @@ const AvailableTasksList = () => {
                 <FontAwesomeIcon icon={faPlus} className="c1 top-icon" />
               </button>
 
-              {t.title}
+              {task.title}
             </span>
             <span className={styles.right}>
-              <button>
+              <button
+                onClick={() => {
+                  dispatch({
+                    type: actionTypes.SET_ACTIVE_TASK_ID,
+                    payload: task.id,
+                  });
+                  dispatch({
+                    type: actionTypes.SET_TASK_EDITOR,
+                    payload: true,
+                  });
+                }}
+              >
                 <FontAwesomeIcon icon={faGear} />/
                 <FontAwesomeIcon icon={faEye} />
               </button>

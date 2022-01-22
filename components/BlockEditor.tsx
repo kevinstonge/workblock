@@ -1,17 +1,16 @@
-import { NextPage } from 'next';
-import ModalContainer from './ModalContainer';
-import actionTypes from '../state/actionTypes';
-import { store } from '../state/store';
-import styles from '../styles/BlockEditor.module.scss';
-import DragAndDropList from './DragAndDropList';
-import { useContext, useEffect } from 'react';
-import { ReducerState } from '../utils/types';
-import AvailableTasksList from './AvailableTasksList';
+import { NextPage } from "next";
+import ModalContainer from "./ModalContainer";
+import actionTypes from "../state/actionTypes";
+import { store } from "../state/store";
+import styles from "../styles/BlockEditor.module.scss";
+import DragAndDropList from "./DragAndDropList";
+import { useContext, useEffect } from "react";
+import { ReducerState } from "../utils/types";
+import AvailableTasksList from "./AvailableTasksList";
 
 const BlockEditor: NextPage = () => {
-  const { state, dispatch }: { state: ReducerState; dispatch: Function } = useContext(store);
-  //populate editorState on first load
-  //editorState should not contain 'blocks', since only one block can be edited at a time, this will reduce chasing the desired variables.
+  const { state, dispatch }: { state: ReducerState; dispatch: Function } =
+    useContext(store);
   useEffect(() => {
     dispatch({
       type: actionTypes.UPDATE_EDITOR,
@@ -20,7 +19,7 @@ const BlockEditor: NextPage = () => {
         tasks: state.tasks,
       },
     });
-  }, []);
+  }, [state.blocks]);
   const blockTitle = state.editorState.block.title;
   const block = state.editorState.block;
 
@@ -78,7 +77,7 @@ const BlockEditor: NextPage = () => {
             <button
               onClick={() =>
                 dispatch({
-                  type: 'UPDATE_EDITOR',
+                  type: "UPDATE_EDITOR",
                   payload: { blockEditor: false },
                 })
               }

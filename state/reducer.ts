@@ -57,13 +57,32 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
         playing: action.payload,
       };
     case actionTypes.UPDATE_TASK:
+      if (action.payload.taskID === -1) {
+        return {
+          ...state,
+          //TO DO: the updatedTask has an id of -1, need the ID from backend included in action.payload. Should still keep the new task condition or add an actionType for ADD_TASK to avoid mapping through tasks if not needed.
+          tasks: [...state.tasks, action.payload.updatedTask],
+        };
+      } else {
+        return {
+          ...state,
+          tasks: state.tasks.map((task) => {
+            if (task.id === action.payload.taskID) {
+              return action.payload.updatedTask;
+            }
+            return task;
+          }),
+        };
+      }
+    case actionTypes.UPDATE_BLOCK:
       return {
         ...state,
-        tasks: state.tasks.map((task) => {
-          if (task.id === action.payload.taskID) {
-            return action.payload.updatedTask;
+        blocks: state.blocks.map((block) => {
+          if (block.id === state.activeBlockID) {
+            return { ...block, taskSchedule: action.payload };
+          } else {
+            return block;
           }
-          return task;
         }),
       };
     default:

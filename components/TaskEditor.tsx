@@ -2,11 +2,14 @@ import { NextPage } from "next";
 import ModalContainer from "./ModalContainer";
 import { useContext, useState } from "react";
 import { store } from "../state/store";
-import { EditorState, ReducerState, TaskFull } from "../utils/types";
+import {
+  EditorState,
+  ReducerState,
+  TaskFull,
+  emptyTaskFull,
+} from "../utils/types";
 import styles from "../styles/TaskEditor.module.scss";
 import actionTypes from "../state/actionTypes";
-import MUUID from "uuid-mongodb";
-// import { TaskFull } from "../utils/types";
 const TaskEditor: NextPage = () => {
   const {
     state: {
@@ -21,11 +24,8 @@ const TaskEditor: NextPage = () => {
     tasks: TaskFull[];
     dispatch: Function;
   } = useContext(store);
-  //need to use uuids I think, first check how mongo handles unique id generation.
-  //muiid doesn't work on frontend
-  //using uuid is more performant, so advisable - will return to this later
-  // console.log(MUUID.v4());
-  const activeTask: TaskFull = tasks.filter((t) => t.id == activeTaskID)[0];
+  const activeTask: TaskFull =
+    tasks.filter((t) => t.id == activeTaskID)[0] || emptyTaskFull;
   const [task, setTask]: [task: TaskFull, setTask: Function] =
     useState(activeTask);
   return (
@@ -70,6 +70,7 @@ const TaskEditor: NextPage = () => {
               data-glow-color="c2"
               onClick={(e) => {
                 e.preventDefault();
+                //communicate with backend here, get new task ID, create new actiontype for NEW_TASK, etc.
                 dispatch({
                   type: actionTypes.UPDATE_TASK,
                   payload: { taskID: activeTaskID, updatedTask: task },
