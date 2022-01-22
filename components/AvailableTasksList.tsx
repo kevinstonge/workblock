@@ -18,10 +18,11 @@ import {
 import actionTypes from "../state/actionTypes";
 const AvailableTasksList = () => {
   const {
-    state: { tasks, blocks, activeBlockID },
+    tasks,
+    blocks,
+    activeBlockID,
     dispatch,
   }: {
-    state: ReducerState;
     tasks: TaskFull[];
     blocks: Block[];
     activeBlockID: number;

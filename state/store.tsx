@@ -1,9 +1,13 @@
-import { createContext, useReducer } from 'react';
-import { initialState, State, ReducerState } from './initialState';
-import { reducer } from './reducer';
-export const store = createContext<State>({
-  state: initialState,
-  dispatch: () => {},
+import { createContext, useReducer } from "react";
+import { ReducerState } from "../utils/types";
+import { initialState } from "./initialState";
+import { reducer } from "./reducer";
+interface ContextWithDispatch extends ReducerState {
+  dispatch: Function;
+}
+export const store = createContext<ContextWithDispatch>({
+  ...initialState,
+  dispatch: () => null,
 });
 
 const StateProvider = ({ children }: any) => {
@@ -12,7 +16,7 @@ const StateProvider = ({ children }: any) => {
     reducer,
     initialState
   );
-  return <Provider value={{ state, dispatch }}>{children}</Provider>;
+  return <Provider value={{ ...state, dispatch }}>{children}</Provider>;
 };
 
 export default StateProvider;

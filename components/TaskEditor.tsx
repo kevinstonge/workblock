@@ -12,20 +12,16 @@ import styles from "../styles/TaskEditor.module.scss";
 import actionTypes from "../state/actionTypes";
 const TaskEditor: NextPage = () => {
   const {
-    state: {
-      editorState: { activeTaskID },
-      tasks,
-    },
+    editorState,
+    tasks,
     dispatch,
   }: {
-    state: ReducerState;
     editorState: EditorState;
-    activeTaskID: number;
     tasks: TaskFull[];
     dispatch: Function;
   } = useContext(store);
   const activeTask: TaskFull =
-    tasks.filter((t) => t.id == activeTaskID)[0] || emptyTaskFull;
+    tasks.filter((t) => t.id == editorState.activeTaskID)[0] || emptyTaskFull;
   const [task, setTask]: [task: TaskFull, setTask: Function] =
     useState(activeTask);
   return (
@@ -73,7 +69,10 @@ const TaskEditor: NextPage = () => {
                 //communicate with backend here, get new task ID, create new actiontype for NEW_TASK, etc.
                 dispatch({
                   type: actionTypes.UPDATE_TASK,
-                  payload: { taskID: activeTaskID, updatedTask: task },
+                  payload: {
+                    taskID: editorState.activeTaskID,
+                    updatedTask: task,
+                  },
                 });
                 dispatch({ type: actionTypes.SET_TASK_EDITOR, payload: false });
               }}

@@ -1,32 +1,37 @@
-import type { NextPage } from 'next';
-import { useContext, useEffect } from 'react';
-import { store } from '../state/store';
-import Link from 'next/link';
-import Router from 'next/router';
-import actionTypes from '../state/actionTypes';
+import type { NextPage } from "next";
+import { useContext, useEffect } from "react";
+import { store } from "../state/store";
+import Link from "next/link";
+import Router from "next/router";
+import actionTypes from "../state/actionTypes";
 const Header: NextPage = () => {
-  const { state, dispatch } = useContext(store);
+  const {
+    token,
+    email,
+    dispatch,
+  }: { token: string | undefined; email: string; dispatch: Function } =
+    useContext(store);
   useEffect(() => {
-    if (!state.token) {
-      const lsToken = localStorage.getItem('token') || undefined;
+    if (!token) {
+      const lsToken = localStorage.getItem("token") || undefined;
       if (lsToken) {
         dispatch({
           type: actionTypes.NEW_SESSION,
           payload: {
-            email: localStorage.getItem('email'),
-            token: localStorage.getItem('token'),
-            userId: localStorage.getItem('userID'),
+            email: localStorage.getItem("email"),
+            token: localStorage.getItem("token"),
+            userId: localStorage.getItem("userID"),
           },
         });
       }
     }
   }, []);
   const onLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
-    localStorage.removeItem('userID');
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("userID");
     dispatch({ type: actionTypes.LOGOUT });
-    Router.push('/');
+    Router.push("/");
   };
 
   return (
@@ -36,7 +41,7 @@ const Header: NextPage = () => {
           <a>WorkBlock!</a>
         </h1>
       </Link>
-      {state.token === undefined ? (
+      {token === undefined ? (
         <nav>
           <Link href="/signup">
             <button data-glow-color="c1">
@@ -53,7 +58,7 @@ const Header: NextPage = () => {
         <nav>
           <button onClick={() => onLogout()} data-glow-color="e1">
             <p>logout</p>
-            <p className="smalltext">{state.email}</p>
+            <p className="smalltext">{email}</p>
           </button>
         </nav>
       )}

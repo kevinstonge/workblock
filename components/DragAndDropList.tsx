@@ -20,17 +20,11 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import timeString from "../utils/timeString";
 function DragAndDropList(props: any) {
   const {
-    state: {
-      editorState,
-      editorState: { block },
-      tasks,
-    },
+    editorState,
+    tasks,
     dispatch,
   }: {
-    state: ReducerState;
     editorState: EditorState;
-    block: Block;
-    taskSchedule: TaskShort[];
     tasks: TaskFull[];
     dispatch: Function;
   } = useContext(store);
@@ -54,13 +48,15 @@ function DragAndDropList(props: any) {
       return;
     }
     const newTaskSchedule: TaskShort[] = reorder(
-      block.taskSchedule,
+      editorState.block.taskSchedule,
       result.source.index,
       result.destination.index
     );
     dispatch({
       type: actionTypes.UPDATE_EDITOR,
-      payload: { block: { ...block, taskSchedule: newTaskSchedule } },
+      payload: {
+        block: { ...editorState.block, taskSchedule: newTaskSchedule },
+      },
     });
   };
   const showToolTip = (text: string): void => {
@@ -86,8 +82,8 @@ function DragAndDropList(props: any) {
       type: actionTypes.UPDATE_EDITOR,
       payload: {
         block: {
-          ...block,
-          taskSchedule: block.taskSchedule.map((t) => {
+          ...editorState.block,
+          taskSchedule: editorState.block.taskSchedule.map((t) => {
             if (t.taskID === item.taskID) {
               return {
                 ...item,

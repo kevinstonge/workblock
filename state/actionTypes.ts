@@ -1,4 +1,21 @@
-const actionTypes = {
+export interface ActionTypes {
+  LOGIN_SUCCESS: string;
+  SIGNUP_SUCCESS: string;
+  LOGOUT: string;
+  NEW_SESSION: string;
+  UPDATE_EDITOR: string;
+  UPDATE_TASK: string;
+  SET_ACTIVE_TASK_ID: string;
+  SET_ACTIVE_BLOCK_ID: string;
+  SET_TASK_EDITOR: string;
+  SET_BLOCK_EDITOR: string;
+  SET_PLAYING: string;
+  SET_TIMESTAMP: string;
+  SET_DURATION: string;
+  UPDATE_BLOCK: string;
+  payload?: any;
+}
+const actionTypes: ActionTypes = {
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   SIGNUP_SUCCESS: "SIGNUP_SUCCESS",
   LOGOUT: "LOGOUT",

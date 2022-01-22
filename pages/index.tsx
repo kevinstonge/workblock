@@ -1,21 +1,23 @@
-import type { NextPage } from 'next';
-import { useContext, useEffect } from 'react';
-import { store } from '../state/store';
-import Toolbar from '../components/Toolbar';
-import ActiveBlock from '../components/ActiveBlock';
-import { axiosWithAuth } from '../utils/axios';
+import type { NextPage } from "next";
+import { useContext, useEffect } from "react";
+import { store } from "../state/store";
+import Toolbar from "../components/Toolbar";
+import ActiveBlock from "../components/ActiveBlock";
+import { axiosWithAuth } from "../utils/axios";
+import { Block } from "../utils/types";
 
 const Home: NextPage = (props) => {
-  const { state } = useContext(store);
+  const { blocks, token }: { blocks: Block[]; token: string | undefined } =
+    useContext(store);
   useEffect(() => {
-    if (state.blocks === undefined && localStorage.getItem('userID')) {
+    if (blocks === undefined && localStorage.getItem("userID")) {
       axiosWithAuth
-        .get(`/api/user/${localStorage.getItem('userID')}`)
+        .get(`/api/user/${localStorage.getItem("userID")}`)
         .then(console.log)
         .catch(console.log);
     }
-  }, [state.token]);
-  if (!state.token) {
+  }, [token]);
+  if (!token) {
     return (
       <>
         <Toolbar />

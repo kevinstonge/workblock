@@ -5,23 +5,34 @@ import { store } from "../state/store";
 import styles from "../styles/BlockEditor.module.scss";
 import DragAndDropList from "./DragAndDropList";
 import { useContext, useEffect } from "react";
-import { ReducerState } from "../utils/types";
+import { EditorState, Block, TaskFull } from "../utils/types";
 import AvailableTasksList from "./AvailableTasksList";
 
 const BlockEditor: NextPage = () => {
-  const { state, dispatch }: { state: ReducerState; dispatch: Function } =
-    useContext(store);
+  const {
+    blocks,
+    tasks,
+    editorState,
+    activeBlockID,
+    dispatch,
+  }: {
+    blocks: Block[];
+    tasks: TaskFull[];
+    editorState: EditorState;
+    activeBlockID: number;
+    dispatch: Function;
+  } = useContext(store);
   useEffect(() => {
     dispatch({
       type: actionTypes.UPDATE_EDITOR,
       payload: {
-        block: state.blocks.filter((b) => b.id === state.activeBlockID)[0],
-        tasks: state.tasks,
+        block: blocks.filter((b) => b.id === activeBlockID)[0],
+        tasks: tasks,
       },
     });
-  }, [state.blocks]);
-  const blockTitle = state.editorState.block.title;
-  const block = state.editorState.block;
+  }, [blocks]);
+  const blockTitle = editorState.block.title;
+  const block = editorState.block;
 
   return (
     <>
@@ -29,7 +40,7 @@ const BlockEditor: NextPage = () => {
         <div className={styles.blockEditor}>
           <div>
             <h2>block editor</h2>
-            {state.blocks.length === 0 ? (
+            {blocks.length === 0 ? (
               <p>no blocks</p>
             ) : (
               <div className={styles.twoColumn}>
