@@ -60,7 +60,6 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
       if (action.payload.taskID === -1) {
         return {
           ...state,
-          //TO DO: the updatedTask has an id of -1, need the ID from backend included in action.payload. Should still keep the new task condition or add an actionType for ADD_TASK to avoid mapping through tasks if not needed.
           tasks: [...state.tasks, action.payload.updatedTask],
         };
       } else {

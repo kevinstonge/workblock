@@ -40,6 +40,7 @@ const AvailableTasksList = () => {
                 data-glow-color="c2"
                 className="double-icon"
                 onClick={() => {
+                  ///this should happen on SAVE:
                   dispatch({
                     type: actionTypes.UPDATE_BLOCK,
                     payload: [
