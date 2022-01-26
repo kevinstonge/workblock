@@ -1,12 +1,12 @@
-import { NextPage } from "next";
-import ModalContainer from "./ModalContainer";
-import actionTypes from "../state/actionTypes";
-import { store } from "../state/store";
-import styles from "../styles/BlockEditor.module.scss";
-import DragAndDropList from "./DragAndDropList";
-import { useContext, useEffect } from "react";
-import { EditorState, Block, TaskFull } from "../utils/types";
-import AvailableTasksList from "./AvailableTasksList";
+import { NextPage } from 'next';
+import ModalContainer from './ModalContainer';
+import actionTypes from '../state/actionTypes';
+import { store } from '../state/store';
+import styles from '../styles/BlockEditor.module.scss';
+import DragAndDropList from './DragAndDropList';
+import { useContext, useEffect } from 'react';
+import { EditorState, Block, TaskFull } from '../utils/types';
+import AvailableTasksList from './AvailableTasksList';
 
 const BlockEditor: NextPage = () => {
   const {
@@ -86,12 +86,16 @@ const BlockEditor: NextPage = () => {
               discard & close
             </button>
             <button
-              onClick={() =>
+              onClick={() => {
                 dispatch({
-                  type: "UPDATE_EDITOR",
+                  type: actionTypes.UPDATE_BLOCK,
+                  payload: { title: blockTitle, taskSchedule: editorState.block.taskSchedule },
+                });
+                dispatch({
+                  type: actionTypes.UPDATE_EDITOR,
                   payload: { blockEditor: false },
-                })
-              }
+                });
+              }}
               data-glow-color="c2"
             >
               save & close

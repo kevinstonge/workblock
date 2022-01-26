@@ -1,35 +1,24 @@
-import StateProvider, { store } from "../state/store";
-import {
-  Block,
-  emptyBlock,
-  ReducerState,
-  TaskFull,
-  TaskShort,
-} from "../utils/types";
-import styles from "../styles/AvailableTasksList.module.scss";
-import { useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowLeft,
-  faPlus,
-  faGear,
-  faEye,
-} from "@fortawesome/free-solid-svg-icons";
-import actionTypes from "../state/actionTypes";
+import StateProvider, { store } from '../state/store';
+import { Block, EditorState, emptyBlock, ReducerState, TaskFull, TaskShort } from '../utils/types';
+import styles from '../styles/AvailableTasksList.module.scss';
+import { useContext, useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faPlus, faGear, faEye } from '@fortawesome/free-solid-svg-icons';
+import actionTypes from '../state/actionTypes';
 const AvailableTasksList = () => {
   const {
     tasks,
     blocks,
     activeBlockID,
+    editorState,
     dispatch,
   }: {
     tasks: TaskFull[];
     blocks: Block[];
     activeBlockID: number;
+    editorState: EditorState;
     dispatch: Function;
   } = useContext(store);
-  const activeBlock =
-    blocks.filter((block) => block.id === activeBlockID)[0] || emptyBlock;
   return (
     <div className={styles.listContainer}>
       <ul>
@@ -40,20 +29,21 @@ const AvailableTasksList = () => {
                 data-glow-color="c2"
                 className="double-icon"
                 onClick={() => {
-                  ///this should happen on SAVE:
                   dispatch({
-                    type: actionTypes.UPDATE_BLOCK,
-                    payload: [
-                      ...activeBlock.taskSchedule,
-                      { taskID: task.id, duration: 300 },
-                    ],
+                    type: actionTypes.UPDATE_EDITOR,
+                    payload: {
+                      block: {
+                        ...editorState.block,
+                        taskSchedule: [
+                          ...editorState.block.taskSchedule,
+                          { taskID: task.id, duration: 300 },
+                        ],
+                      },
+                    },
                   });
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faArrowLeft}
-                  className="f1 bottom-icon"
-                />
+                <FontAwesomeIcon icon={faArrowLeft} className="f1 bottom-icon" />
                 <FontAwesomeIcon icon={faPlus} className="c1 top-icon" />
               </button>
 

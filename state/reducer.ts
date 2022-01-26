@@ -1,6 +1,6 @@
-import { initialState } from "./initialState";
-import { ReducerState, TaskShort } from "../utils/types";
-import actionTypes from "./actionTypes";
+import { initialState } from './initialState';
+import { ReducerState, TaskShort } from '../utils/types';
+import actionTypes from './actionTypes';
 export type Action = {
   type: String;
   payload: any;
@@ -9,10 +9,7 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
   const getDuration = (blockID: number): number => {
     return state.blocks
       .filter((b) => b.id === blockID)[0]
-      .taskSchedule.reduce(
-        (durractionAcc, currentTask) => durractionAcc + currentTask.duration,
-        0
-      );
+      .taskSchedule.reduce((durractionAcc, currentTask) => durractionAcc + currentTask.duration, 0);
   };
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:
@@ -78,7 +75,7 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
         ...state,
         blocks: state.blocks.map((block) => {
           if (block.id === state.activeBlockID) {
-            return { ...block, taskSchedule: action.payload };
+            return { ...block, ...action.payload };
           } else {
             return block;
           }
