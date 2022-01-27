@@ -1,23 +1,12 @@
-import { useState, useEffect, useContext, FormEvent } from "react";
-import { store } from "../state/store";
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from "react-beautiful-dnd";
-import styles from "../styles/DragAndDropList.module.scss";
-import type {
-  TaskFull,
-  TaskShort,
-  EditorState,
-  ReducerState,
-  Block,
-} from "../utils/types";
-import actionTypes from "../state/actionTypes";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import timeString from "../utils/timeString";
+import { useState, useEffect, useContext, FormEvent } from 'react';
+import { store } from '../state/store';
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import styles from '../styles/DragAndDropList.module.scss';
+import type { TaskFull, TaskShort, EditorState, ReducerState, Block } from '../utils/types';
+import actionTypes from '../state/actionTypes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import timeString from '../utils/timeString';
 function DragAndDropList(props: any) {
   const {
     editorState,
@@ -28,11 +17,7 @@ function DragAndDropList(props: any) {
     tasks: TaskFull[];
     dispatch: Function;
   } = useContext(store);
-  const reorder = (
-    list: TaskShort[],
-    startIndex: number,
-    endIndex: number
-  ): TaskShort[] => {
+  const reorder = (list: TaskShort[], startIndex: number, endIndex: number): TaskShort[] => {
     const result: TaskShort[] = [...list];
     const removed = result.splice(startIndex, 1);
     result.splice(endIndex, 0, ...removed);
@@ -60,23 +45,21 @@ function DragAndDropList(props: any) {
     });
   };
   const showToolTip = (text: string): void => {
-    console.log("tooltip: ", text); //todo - add this feature
+    console.log('tooltip: ', text); //todo - add this feature
   };
   const updateDuration = (
     e: FormEvent<HTMLInputElement>,
     item: TaskShort,
-    unit: "h" | "m",
+    unit: 'h' | 'm',
     index: number
   ) => {
-    const filteredInput: string = e.currentTarget.value.replace(/\D{0-2}/, "");
+    const filteredInput: string = e.currentTarget.value.replace(/\D{0-2}/, '');
     const input: number = parseInt(filteredInput) ? parseInt(filteredInput) : 0;
-    const inputInSeconds = unit === "h" ? input * 60 * 60 : input * 60;
+    const inputInSeconds = unit === 'h' ? input * 60 * 60 : input * 60;
     const oldDuration = item.duration;
     const oldDurationTimeData = timeString(oldDuration).rawData;
     const oldDurationAddend =
-      unit === "h"
-        ? oldDurationTimeData.m * 60
-        : oldDurationTimeData.h * 60 * 60;
+      unit === 'h' ? oldDurationTimeData.m * 60 : oldDurationTimeData.h * 60 * 60;
     const newDuration = inputInSeconds + oldDurationAddend;
     dispatch({
       type: actionTypes.UPDATE_EDITOR,
@@ -110,8 +93,8 @@ function DragAndDropList(props: any) {
               {...provided.droppableProps}
               className={styles.dragAndDropList}
             >
-              {editorState.block.taskSchedule.map(
-                (item: TaskShort, index: number) => {
+              {editorState.block?.taskSchedule?.length > 0 &&
+                editorState.block.taskSchedule.map((item: TaskShort, index: number) => {
                   const fullTask = tasks.filter((t) => t.id === item.taskID)[0];
                   const durationData = timeString(item.duration).rawData;
                   return (
@@ -126,14 +109,10 @@ function DragAndDropList(props: any) {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                           className={`${styles.draggableTask} ${
-                            snapshot.isDragging ? styles.draggingTask : ""
+                            snapshot.isDragging ? styles.draggingTask : ''
                           }`}
                         >
-                          <p
-                            onMouseOver={() =>
-                              showToolTip(fullTask.description)
-                            }
-                          >
+                          <p onMouseOver={() => showToolTip(fullTask.description)}>
                             {fullTask.title}
                           </p>
                           <label className={styles.draggableTaskControls}>
@@ -145,7 +124,7 @@ function DragAndDropList(props: any) {
                               maxLength={2}
                               value={durationData.h}
                               onChange={(e) => {
-                                updateDuration(e, item, "h", index);
+                                updateDuration(e, item, 'h', index);
                               }}
                               autoComplete="off"
                             ></input>
@@ -158,7 +137,7 @@ function DragAndDropList(props: any) {
                               maxLength={2}
                               value={durationData.m}
                               onChange={(e) => {
-                                updateDuration(e, item, "m", index);
+                                updateDuration(e, item, 'm', index);
                               }}
                               autoComplete="off"
                             ></input>
@@ -167,8 +146,7 @@ function DragAndDropList(props: any) {
                       )}
                     </Draggable>
                   );
-                }
-              )}
+                })}
               {provided.placeholder}
             </div>
           )}
@@ -176,7 +154,7 @@ function DragAndDropList(props: any) {
       </DragDropContext>
       <button
         className={styles.addTask}
-        data-glow-color={"c2"}
+        data-glow-color={'c2'}
         onClick={() =>
           dispatch({
             type: actionTypes.UPDATE_EDITOR,

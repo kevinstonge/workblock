@@ -4,9 +4,15 @@ import actionTypes from '../state/actionTypes';
 import { store } from '../state/store';
 import styles from '../styles/BlockEditor.module.scss';
 import DragAndDropList from './DragAndDropList';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { EditorState, Block, TaskFull } from '../utils/types';
 import AvailableTasksList from './AvailableTasksList';
+
+//current problem:
+
+//when a NEW block is created, the activeBlockID is set to -1, but if the new block is not saved (i.e., actually created), the activeBlockID still points to -1 and there's no record of what the previous ID was - really activeBlockID should apply to everything except the editor.
+
+//should the editor accept a special parameter to indicate that this is a new block?
 
 const BlockEditor: NextPage = () => {
   const {
@@ -22,15 +28,6 @@ const BlockEditor: NextPage = () => {
     activeBlockID: number;
     dispatch: Function;
   } = useContext(store);
-  useEffect(() => {
-    dispatch({
-      type: actionTypes.UPDATE_EDITOR,
-      payload: {
-        block: blocks.filter((b) => b.id === activeBlockID)[0],
-        tasks: tasks,
-      },
-    });
-  }, [blocks]);
   const blockTitle = editorState.block.title;
   const block = editorState.block;
 

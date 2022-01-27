@@ -1,11 +1,12 @@
 import { initialState } from './initialState';
-import { ReducerState, TaskShort } from '../utils/types';
+import { emptyBlock, ReducerState } from '../utils/types';
 import actionTypes from './actionTypes';
 export type Action = {
   type: String;
   payload: any;
 };
 export const reducer = (state: ReducerState = initialState, action: Action) => {
+  console.log(state);
   const getDuration = (blockID: number): number => {
     return state.blocks
       .filter((b) => b.id === blockID)[0]
@@ -27,7 +28,7 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
       return {
         ...state,
         activeBlockID: action.payload,
-        duration: getDuration(action.payload),
+        duration: action.payload === -1 ? 0 : getDuration(action.payload),
       };
     case actionTypes.SET_DURATION:
       return { ...state, duration: getDuration(action.payload) };
@@ -80,6 +81,17 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
             return block;
           }
         }),
+      };
+    case actionTypes.CREATE_AND_EDIT_NEW_BLOCK:
+      return {
+        ...state,
+        activeBlockID: -1,
+        editorState: {
+          activeTaskID: -1,
+          block: emptyBlock,
+          blockEditor: true,
+          taskEditor: false,
+        },
       };
     default:
       return state;

@@ -1,7 +1,9 @@
 import { NextPage } from 'next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import { Block } from '../utils/types';
+import { store } from '../state/store';
 interface Props {
   setSelectBlockVisible: Function;
 }
@@ -24,6 +26,8 @@ const SelectBlock: NextPage<Props> = (props: Props) => {
         false
       );
   }, [setSelectBlockVisible]);
+
+  const { blocks }: { blocks: Block[] } = useContext(store);
   return (
     <>
       <h3>
@@ -37,14 +41,9 @@ const SelectBlock: NextPage<Props> = (props: Props) => {
         </span>
       </h3>
       <ul>
-        <li>block title 1 [block duration]</li>
-        <li>asdf</li>
-        <li>asdf</li>
-        <li>asdf</li>
-        <li>asdf</li>
-        <li>asdf</li>
-        <li>asdf</li>
-        <li>asdf</li>
+        {blocks.map((b) => (
+          <li>{b.title}</li>
+        ))}
       </ul>
     </>
   );
