@@ -2,12 +2,7 @@ import { NextPage } from "next";
 import ModalContainer from "./ModalContainer";
 import { useContext, useState } from "react";
 import { store } from "../state/store";
-import {
-  EditorState,
-  ReducerState,
-  TaskFull,
-  emptyTaskFull,
-} from "../utils/types";
+import { EditorState, TaskFull, emptyTaskFull } from "../utils/types";
 import styles from "../styles/TaskEditor.module.scss";
 import actionTypes from "../state/actionTypes";
 const TaskEditor: NextPage = () => {

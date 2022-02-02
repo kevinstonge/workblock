@@ -1,5 +1,3 @@
-import { ReactElement } from 'react';
-
 const timeString = (progress: number, duration?: number): any => {
   //pass only progress for time elapsed
   //pass progress and duration for time remaining

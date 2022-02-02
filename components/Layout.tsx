@@ -5,7 +5,7 @@ import { store } from "../state/store";
 import { ReactNode, useContext } from "react";
 import TaskEditor from "./TaskEditor";
 import BlockEditor from "./BlockEditor";
-import { EditorState, ReducerState } from "../utils/types";
+import { EditorState } from "../utils/types";
 type Props = {
   children?: ReactNode;
 };

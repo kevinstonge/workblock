@@ -1,5 +1,5 @@
-@import './global/vars.scss';
-@import './global/mixins.scss';
+@import "./global/vars.scss";
+@import "./global/mixins.scss";
 .toolbar {
   z-index: +1;
   > ul {
@@ -27,7 +27,7 @@
           @include paperView();
           > ul {
             @include flexC();
-            > li {
+            > li:not([data-selected="selected"]) {
               cursor: pointer;
               &:hover {
                 @include highlight($c1);
