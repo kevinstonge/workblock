@@ -21,6 +21,7 @@ export type EditorState = {
   blockEditor: boolean;
   taskEditor: boolean;
   activeTaskID: number;
+  isNew: boolean;
 };
 
 export interface State {

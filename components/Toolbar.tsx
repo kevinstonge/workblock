@@ -63,7 +63,7 @@ const Toolbar: NextPage = () => {
               onClick={() => {
                 dispatch({
                   type: actionTypes.UPDATE_EDITOR,
-                  payload: { blockEditor: true },
+                  payload: { blockEditor: true, isNew: false },
                 });
               }}
             >

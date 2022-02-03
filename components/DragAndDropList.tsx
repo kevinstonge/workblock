@@ -12,7 +12,7 @@ import actionTypes from "../state/actionTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import timeString from "../utils/timeString";
-function DragAndDropList(props: any) {
+function DragAndDropList() {
   const {
     editorState,
     tasks,
@@ -60,7 +60,6 @@ function DragAndDropList(props: any) {
     e: FormEvent<HTMLInputElement>,
     item: TaskShort,
     unit: "h" | "m",
-    index: number
   ) => {
     const filteredInput: string = e.currentTarget.value.replace(/\D{0-2}/, "");
     const input: number = parseInt(filteredInput) ? parseInt(filteredInput) : 0;
@@ -142,7 +141,7 @@ function DragAndDropList(props: any) {
                                 maxLength={2}
                                 value={durationData.h}
                                 onChange={(e) => {
-                                  updateDuration(e, item, "h", index);
+                                  updateDuration(e, item, "h");
                                 }}
                                 autoComplete="off"
                               ></input>
@@ -155,7 +154,7 @@ function DragAndDropList(props: any) {
                                 maxLength={2}
                                 value={durationData.m}
                                 onChange={(e) => {
-                                  updateDuration(e, item, "m", index);
+                                  updateDuration(e, item, "m");
                                 }}
                                 autoComplete="off"
                               ></input>

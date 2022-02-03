@@ -14,6 +14,7 @@ export interface ActionTypes {
   SET_DURATION: string;
   UPDATE_BLOCK: string;
   CREATE_AND_EDIT_NEW_BLOCK: string;
+  ADD_BLOCK: string;
   payload?: any;
 }
 const actionTypes: ActionTypes = {
@@ -32,5 +33,6 @@ const actionTypes: ActionTypes = {
   SET_DURATION: 'SET_DURATION',
   UPDATE_BLOCK: 'UPDATE_BLOCK',
   CREATE_AND_EDIT_NEW_BLOCK: 'CREATE_AND_EDIT_NEW_BLOCK',
+  ADD_BLOCK: 'ADD_BLOCK',
 };
 export default actionTypes;

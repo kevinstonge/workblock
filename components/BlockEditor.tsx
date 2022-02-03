@@ -8,16 +8,9 @@ import { useContext } from 'react';
 import { EditorState, Block, TaskFull } from '../utils/types';
 import AvailableTasksList from './AvailableTasksList';
 
-//current problem:
-
-//when a NEW block is created, the activeBlockID is set to -1, but if the new block is not saved (i.e., actually created), the activeBlockID still points to -1 and there's no record of what the previous ID was - really activeBlockID should apply to everything except the editor.
-
-//should the editor accept a special parameter to indicate that this is a new block?
-
 const BlockEditor: NextPage = () => {
   const {
     blocks,
-    tasks,
     editorState,
     activeBlockID,
     dispatch,
@@ -30,6 +23,25 @@ const BlockEditor: NextPage = () => {
   } = useContext(store);
   const blockTitle = editorState.block.title;
   const block = editorState.block;
+
+  const saveAndClose = () => {
+    //update block in database or localStorage first,
+    //then on success, update state:
+    const newBlockID = 2; //get this value from backend
+    if (editorState.isNew) {
+      dispatch({type: actionTypes.ADD_BLOCK, payload: {title: blockTitle, taskSchedule: editorState.block.taskSchedule, id: newBlockID}})
+    } else {
+      dispatch({
+        type: actionTypes.UPDATE_BLOCK,
+        payload: { title: blockTitle, taskSchedule: editorState.block.taskSchedule, id: activeBlockID },
+      });
+    }
+    
+    dispatch({
+      type: actionTypes.UPDATE_EDITOR,
+      payload: { blockEditor: false },
+    });
+  }
 
   return (
     <>
@@ -83,16 +95,9 @@ const BlockEditor: NextPage = () => {
               discard & close
             </button>
             <button
-              onClick={() => {
-                dispatch({
-                  type: actionTypes.UPDATE_BLOCK,
-                  payload: { title: blockTitle, taskSchedule: editorState.block.taskSchedule },
-                });
-                dispatch({
-                  type: actionTypes.UPDATE_EDITOR,
-                  payload: { blockEditor: false },
-                });
-              }}
+              onClick={() => 
+                saveAndClose()
+              }
               data-glow-color="c2"
             >
               save & close

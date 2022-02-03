@@ -40,6 +40,7 @@ export const initialState: type.ReducerState = {
   editorState: {
     block: { id: 0, title: '', taskSchedule: [] },
     blockEditor: false,
+    isNew: false,
     taskEditor: false,
     activeTaskID: 0,
   },
