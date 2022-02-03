@@ -12,6 +12,8 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
       .taskSchedule.reduce((durractionAcc, currentTask) => durractionAcc + currentTask.duration, 0);
   };
   switch (action.type) {
+    case actionTypes.RETURNING_USER_LOCAL_STORAGE:
+      return action.payload;
     case actionTypes.LOGIN_SUCCESS:
       return { ...state, ...action.payload };
     case actionTypes.LOGOUT:

@@ -1,4 +1,5 @@
 export interface ActionTypes {
+  RETURNING_USER_LOCAL_STORAGE: string;
   LOGIN_SUCCESS: string;
   SIGNUP_SUCCESS: string;
   LOGOUT: string;
@@ -18,6 +19,7 @@ export interface ActionTypes {
   payload?: any;
 }
 const actionTypes: ActionTypes = {
+  RETURNING_USER_LOCAL_STORAGE: 'RETURNING_USER_LOCAL_STORAGE',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   SIGNUP_SUCCESS: 'SIGNUP_SUCCESS',
   LOGOUT: 'LOGOUT',
