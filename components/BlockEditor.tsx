@@ -36,7 +36,6 @@ const BlockEditor: NextPage = () => {
         payload: { title: blockTitle, taskSchedule: editorState.block.taskSchedule, id: activeBlockID },
       });
     }
-    
     dispatch({
       type: actionTypes.UPDATE_EDITOR,
       payload: { blockEditor: false },
