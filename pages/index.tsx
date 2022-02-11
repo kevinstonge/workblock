@@ -10,7 +10,7 @@ import TaskEditor from "../components/TaskEditor";
 
 const Home: NextPage = () => {
   const { editorState }: { editorState: EditorState } = useContext(store);
-  const { blocks, token }: { blocks: Block[]; token: string | undefined } =
+  const { blocks, token }: { blocks: Block[]; token: string } =
     useContext(store);
   useEffect(() => {
     if (blocks === undefined && localStorage.getItem("userID")) {

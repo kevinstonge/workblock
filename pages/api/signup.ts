@@ -1,7 +1,6 @@
 import type { NextApiResponse } from "next";
 import type { NextApiRequestExtended } from "../../utils/types";
-// import db from "./middleware/db-prod";
-import Datastore from "nedb";
+import db from "../../data/db";
 import { Block, TaskFull } from "../../utils/types";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -14,7 +13,6 @@ interface Doc {
   tasks: TaskFull[];
   _id?: string;
 }
-const db = new Datastore({ filename: "./db.db", autoload: true });
 const handler = nextConnect();
 handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
   try {

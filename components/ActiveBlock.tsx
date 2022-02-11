@@ -16,17 +16,28 @@ const ActiveBlock: NextPage = () => {
     activeBlockID: number;
     dispatch: Function;
   } = useContext(store);
-  const activeBlock = blocks.filter(b=>b.id===activeBlockID)[0];
-  const title = activeBlock.title || '' 
-  const duration = activeBlock.taskSchedule.reduce((a,c)=>{return a + c.duration},0);
+  const activeBlock =
+    blocks.length > 0
+      ? blocks.filter((b) => b.id === activeBlockID)[0]
+      : undefined;
+  const title = activeBlock?.title || "";
+  const duration = activeBlock?.taskSchedule?.reduce((a, c) => {
+    return a + c.duration;
+  }, 0);
   return (
     <div className={styles.activeBlock}>
       <div className={styles.activeBlockContent}>
-        <div className={styles.blockHeader}>
-          <h2>{title}</h2>
-          <p>-{timeString(timestamp, duration).jsx}</p>
-        </div>
-        <CurrentTask />
+        {activeBlock ? (
+          <>
+            <div className={styles.blockHeader}>
+              <h2>{title}</h2>
+              <p>-{timeString(timestamp, duration).jsx}</p>
+            </div>
+            <CurrentTask />
+          </>
+        ) : (
+          <p>create your first block by clicking the "new" button above!</p>
+        )}
       </div>
     </div>
   );

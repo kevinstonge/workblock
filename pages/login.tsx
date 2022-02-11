@@ -46,12 +46,15 @@ const Login = () => {
         localStorage.setItem("email", formState.email);
         localStorage.setItem("userID", data.data.userID);
       }
+      //TODO: populate state with blocks and tasks from login response!
       dispatch({
         type: actionTypes.LOGIN_SUCCESS,
         payload: {
           email: formState.email,
           token,
           userID: data.data.userID,
+          blocks: data.data.blocks,
+          tasks: data.data.tasks,
         },
       });
       Router.push("/");

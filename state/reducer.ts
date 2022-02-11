@@ -1,6 +1,6 @@
-import { initialState } from './initialState';
-import { emptyBlock, ReducerState } from '../utils/types';
-import actionTypes from './actionTypes';
+import { initialState } from "./initialState";
+import { emptyBlock, ReducerState } from "../utils/types";
+import actionTypes from "./actionTypes";
 export type Action = {
   type: String;
   payload: any;
@@ -9,7 +9,10 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
   const getDuration = (blockID: number): number => {
     return state.blocks
       .filter((b) => b.id === blockID)[0]
-      .taskSchedule.reduce((durractionAcc, currentTask) => durractionAcc + currentTask.duration, 0);
+      .taskSchedule.reduce(
+        (durractionAcc, currentTask) => durractionAcc + currentTask.duration,
+        0
+      );
   };
   switch (action.type) {
     case actionTypes.RETURNING_USER_LOCAL_STORAGE:
@@ -17,7 +20,7 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
     case actionTypes.LOGIN_SUCCESS:
       return { ...state, ...action.payload };
     case actionTypes.LOGOUT:
-      return { initialState };
+      return initialState;
     case actionTypes.NEW_SESSION:
       return { ...state, ...action.payload };
     case actionTypes.UPDATE_EDITOR:
@@ -77,7 +80,11 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
         ...state,
         blocks: state.blocks.map((block) => {
           if (block.id === action.payload.id) {
-            return { id: action.payload.id, title: action.payload.title, taskSchedule: action.payload.taskSchedule };
+            return {
+              id: action.payload.id,
+              title: action.payload.title,
+              taskSchedule: action.payload.taskSchedule,
+            };
           } else {
             return block;
           }
@@ -86,13 +93,16 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
     case actionTypes.ADD_BLOCK:
       return {
         ...state,
-        blocks: [...state.blocks, {
-          id: action.payload.id,
-          title: action.payload.title,
-          taskSchedule: action.payload.taskSchedule
-        }],
-        activeBlockID: action.payload.id
-      }
+        blocks: [
+          ...state.blocks,
+          {
+            id: action.payload.id,
+            title: action.payload.title,
+            taskSchedule: action.payload.taskSchedule,
+          },
+        ],
+        activeBlockID: action.payload.id,
+      };
     case actionTypes.CREATE_AND_EDIT_NEW_BLOCK:
       return {
         ...state,

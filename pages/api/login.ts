@@ -1,29 +1,28 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import nextConnect from 'next-connect';
-import type { NextApiResponse } from 'next';
-import type { NextApiRequestExtended } from '../../utils/types';
-import db from './middleware/db-prod';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { ObjectID } from 'bson';
+import db from "../../data/db";
+import nextConnect from "next-connect";
+import type { NextApiResponse } from "next";
+import type { NextApiRequestExtended } from "../../utils/types";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const handler = nextConnect();
-handler.use(db);
 handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
-  const email: string = req.body.email || '';
-  const password: string = req.body.password || '';
-  const userData = await req.db.collection('users').findOne({ email });
-  if (
-    userData.email === email &&
-    bcrypt.compareSync(password, userData.password)
-  ) {
-    const secret = process.env.JWT_SECRET;
-    const token = secret ? jwt.sign({ email }, secret) : false;
-    //need to get userID and add to response (after DB connected)
-    res.status(200).json({ token, userID: userData._id });
-  } else {
-    res.status(401).json({ message: 'error logging in' });
-  }
+  const email: string = req.body.email || "";
+  const password: string = req.body.password || "";
+  await db.findOne({ email }, (err, doc) => {
+    if (err)
+      res.status(500).json({ message: "database error", errorMessage: err });
+    if (doc.email === email && bcrypt.compareSync(password, doc.password)) {
+      res.status(200).json({
+        token: jwt.sign({ email }, process.env.JWT_SECRET || ""),
+        userID: doc._id,
+        blocks: doc.blocks,
+        tasks: doc.tasks,
+      });
+    } else {
+      res.status(401).json({ message: "failed to log in" });
+    }
+  });
 });
 
 export default handler;

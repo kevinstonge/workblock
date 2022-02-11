@@ -5,7 +5,7 @@ export interface NextApiRequestExtended extends NextApiRequest {
 }
 export interface ReducerState {
   email: string;
-  token: string | undefined;
+  token: string;
   userID: string;
   blocks: Block[] | [];
   tasks: TaskFull[] | [];
