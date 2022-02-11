@@ -45,6 +45,7 @@ const Signup = () => {
       url: "/api/signup",
       data: { email, password },
     });
+    console.log(data);
     if (data.status === 201) {
       const token: string | undefined = data.data.token;
       if (typeof window !== "undefined" && token) {

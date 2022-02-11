@@ -10,7 +10,6 @@ type Props = {
   children?: ReactNode;
 };
 const Layout: NextPage = ({ children }: Props) => {
-  const { editorState }: { editorState: EditorState } = useContext(store);
   return (
     <>
       <Head>
@@ -23,8 +22,6 @@ const Layout: NextPage = ({ children }: Props) => {
       </Head>
       <Header />
       {children}
-      {editorState.blockEditor && <BlockEditor />}
-      {editorState.taskEditor && <TaskEditor />}
     </>
   );
 };

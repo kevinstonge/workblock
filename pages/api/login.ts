@@ -2,7 +2,7 @@
 import nextConnect from 'next-connect';
 import type { NextApiResponse } from 'next';
 import type { NextApiRequestExtended } from '../../utils/types';
-import db from './middleware/db';
+import db from './middleware/db-prod';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { ObjectID } from 'bson';

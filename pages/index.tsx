@@ -4,9 +4,12 @@ import { store } from "../state/store";
 import Toolbar from "../components/Toolbar";
 import ActiveBlock from "../components/ActiveBlock";
 import { axiosWithAuth } from "../utils/axios";
-import { Block } from "../utils/types";
+import { Block, EditorState } from "../utils/types";
+import BlockEditor from "../components/BlockEditor";
+import TaskEditor from "../components/TaskEditor";
 
 const Home: NextPage = () => {
+  const { editorState }: { editorState: EditorState } = useContext(store);
   const { blocks, token }: { blocks: Block[]; token: string | undefined } =
     useContext(store);
   useEffect(() => {
@@ -17,11 +20,13 @@ const Home: NextPage = () => {
         .catch(console.log);
     }
   }, [token, blocks]);
-  if (!token) {
+  if (token !== "") {
     return (
       <>
         <Toolbar />
         <ActiveBlock />
+        {editorState?.blockEditor && <BlockEditor />}
+        {editorState?.taskEditor && <TaskEditor />}
       </>
     );
   } else {

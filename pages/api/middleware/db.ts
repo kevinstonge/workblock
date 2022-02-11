@@ -1,25 +1,47 @@
-import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
-const { MongoClient } = require('mongodb');
-import { NextApiRequestExtended } from '../../../utils/types';
-import nextConnect from 'next-connect';
-const uri = process.env.MONGO_DB_URL;
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-const database = async (req: NextApiRequestExtended, res: NextApiResponse, next: any) => {
-  try {
-    const ObjectID = require('mongodb').ObjectID;
-    console.log(new ObjectID());
-    if (!client.isConnected) await client.connect();
-    req.dbClient = client;
-    req.db = client.db('dev');
-    return next();
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: 'unable to connect to database' });
-  }
+import Datastore from "nedb";
+import { Block, TaskFull } from "../../../utils/types";
+const db = new Datastore({ filename: "./db.db", autoload: true });
+const errorResponse = (errorMessasge: Error) => {
+  return { status: 500, message: "database error", errorMessasge };
 };
-const db = nextConnect();
-db.use(database);
-export default db;
+interface UserObject {
+  email: string;
+  password: string;
+}
+interface NewUserObject extends UserObject {
+  blocks: Block[];
+  tasks: TaskFull[];
+}
+const createUser = (userObject: UserObject) => {
+  const email = userObject.email;
+  db.findOne({ email }, (err, doc) => {
+    if (err) return errorResponse(err);
+    if (doc === null) {
+      const newUserObject: NewUserObject = {
+        ...userObject,
+        blocks: [],
+        tasks: [],
+      };
+      db.insert(newUserObject, (err, doc) => {
+        if (err) return errorResponse(err);
+        return { status: 201, doc };
+      });
+    } else {
+      return { status: 409, message: "user already exists" };
+    }
+  });
+};
+
+const addTask = (userID: number, taskObject: TaskFull) => {
+  db.update(
+    { id: userID },
+    { $push: { tasks: taskObject } },
+    {},
+    (err, doc) => {
+      if (err) return errorResponse(err);
+      return doc;
+    }
+  );
+};
+
+export { createUser, addTask };

@@ -27,10 +27,10 @@ const Header: NextPage = () => {
     }
   }, []);
   const onLogout = () => {
+    dispatch({ type: actionTypes.LOGOUT });
     localStorage.removeItem("token");
     localStorage.removeItem("email");
     localStorage.removeItem("userID");
-    dispatch({ type: actionTypes.LOGOUT });
     Router.push("/");
   };
 
@@ -41,7 +41,7 @@ const Header: NextPage = () => {
           <a>WorkBlock!</a>
         </h1>
       </Link>
-      {token === undefined ? (
+      {token === "" ? (
         <nav>
           <Link href="/signup">
             <button data-glow-color="c1">
