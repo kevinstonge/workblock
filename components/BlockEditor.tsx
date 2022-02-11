@@ -4,28 +4,30 @@ import actionTypes from "../state/actionTypes";
 import { store } from "../state/store";
 import styles from "../styles/BlockEditor.module.scss";
 import DragAndDropList from "./DragAndDropList";
-import { useContext } from "react";
-import { EditorState, Block, TaskFull } from "../utils/types";
+import { useContext, useEffect } from "react";
+import { EditorState, TaskFull } from "../utils/types";
 import AvailableTasksList from "./AvailableTasksList";
 
 const BlockEditor: NextPage = () => {
   const {
-    blocks,
     editorState,
     activeBlockID,
     dispatch,
   }: {
-    blocks: Block[];
     tasks: TaskFull[];
     editorState: EditorState;
     activeBlockID: number;
     dispatch: Function;
   } = useContext(store);
-  const blockTitle = editorState.isNew ? "" : editorState.block.title;
-  const block = editorState.isNew
-    ? { title: "", taskSchedule: [] }
-    : editorState.block;
-
+  //I think I need a useEffect here to populate editorState with empty data if editorState.isNew.
+  useEffect(() => {
+    if (editorState.isNew) {
+      dispatch({
+        type: actionTypes.UPDATE_EDITOR,
+        payload: { block: { id: -1, title: "", taskSchedule: [] } },
+      });
+    }
+  }, []);
   const saveAndClose = () => {
     //update block in database or localStorage first,
     //then on success, update state:
@@ -34,7 +36,7 @@ const BlockEditor: NextPage = () => {
       dispatch({
         type: actionTypes.ADD_BLOCK,
         payload: {
-          title: blockTitle,
+          title: editorState.block.title,
           taskSchedule: editorState.block.taskSchedule,
           id: newBlockID,
         },
@@ -43,7 +45,7 @@ const BlockEditor: NextPage = () => {
       dispatch({
         type: actionTypes.UPDATE_BLOCK,
         payload: {
-          title: blockTitle,
+          title: editorState.block.title,
           taskSchedule: editorState.block.taskSchedule,
           id: activeBlockID,
         },
@@ -69,12 +71,15 @@ const BlockEditor: NextPage = () => {
                     type="text"
                     id="blockTitle"
                     name="blockTitle"
-                    value={blockTitle}
+                    value={editorState.block.title}
                     onChange={(e) =>
                       dispatch({
                         type: actionTypes.UPDATE_EDITOR,
                         payload: {
-                          block: { ...block, title: e.target.value },
+                          block: {
+                            ...editorState.block,
+                            title: e.target.value,
+                          },
                         },
                       })
                     }
