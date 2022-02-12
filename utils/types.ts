@@ -17,7 +17,7 @@ export interface ReducerState {
 }
 
 export type EditorState = {
-  block: Block;
+  block: Block | undefined;
   blockEditor: boolean;
   taskEditor: boolean;
   activeTaskID: number;

@@ -42,7 +42,7 @@ function DragAndDropList() {
       return;
     }
     const newTaskSchedule: TaskShort[] = reorder(
-      editorState.block.taskSchedule,
+      editorState?.block?.taskSchedule || [],
       result.source.index,
       result.destination.index
     );
@@ -59,7 +59,7 @@ function DragAndDropList() {
   const updateDuration = (
     e: FormEvent<HTMLInputElement>,
     item: TaskShort,
-    unit: "h" | "m",
+    unit: "h" | "m"
   ) => {
     const filteredInput: string = e.currentTarget.value.replace(/\D{0-2}/, "");
     const input: number = parseInt(filteredInput) ? parseInt(filteredInput) : 0;
@@ -76,7 +76,7 @@ function DragAndDropList() {
       payload: {
         block: {
           ...editorState.block,
-          taskSchedule: editorState.block.taskSchedule.map((t) => {
+          taskSchedule: editorState?.block?.taskSchedule.map((t) => {
             if (t.taskID === item.taskID) {
               return {
                 ...item,
@@ -103,7 +103,7 @@ function DragAndDropList() {
               {...provided.droppableProps}
               className={styles.dragAndDropList}
             >
-              {editorState.block?.taskSchedule?.length > 0 &&
+              {editorState?.block?.taskSchedule &&
                 editorState.block.taskSchedule.map(
                   (item: TaskShort, index: number) => {
                     const fullTask = tasks.filter(

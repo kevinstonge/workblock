@@ -36,7 +36,7 @@ const AvailableTasksList = () => {
                       block: {
                         ...editorState.block,
                         taskSchedule: [
-                          ...editorState.block.taskSchedule,
+                          ...(editorState.block?.taskSchedule || []),
                           { taskID: task.id, duration: 300 },
                         ],
                       },
