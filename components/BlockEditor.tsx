@@ -44,10 +44,12 @@ const BlockEditor: NextPage = () => {
               id: result.data._id,
             },
           });
+        } else {
+          //error handling?
         }
       } else {
         const result = await axiosWithAuth.post(
-          `/api/updateBlock/${editorState.block.id}`,
+          `/api/updateblock/${editorState.block.id}`,
           { block: editorState.block }
         );
         if (result.status === 200) {

@@ -5,6 +5,7 @@ import { store } from "../state/store";
 import { EditorState, TaskFull, emptyTaskFull } from "../utils/types";
 import styles from "../styles/TaskEditor.module.scss";
 import actionTypes from "../state/actionTypes";
+import { axiosWithAuth } from "../utils/axios";
 const TaskEditor: NextPage = () => {
   const {
     editorState,
@@ -19,6 +20,21 @@ const TaskEditor: NextPage = () => {
     tasks.filter((t) => t.id == editorState.activeTaskID)[0] || emptyTaskFull;
   const [task, setTask]: [task: TaskFull, setTask: Function] =
     useState(activeTask);
+  const saveAndClose = async () => {
+    const result = await axiosWithAuth.post("/api/addtask", {
+      task,
+    });
+    if (result.status === 201) {
+      dispatch({
+        type: actionTypes.UPDATE_TASK,
+        payload: {
+          taskID: editorState.activeTaskID,
+          updatedTask: task,
+        },
+      });
+      dispatch({ type: actionTypes.SET_TASK_EDITOR, payload: false });
+    }
+  };
   return (
     <ModalContainer>
       <div className={styles.taskEditor}>
@@ -61,15 +77,7 @@ const TaskEditor: NextPage = () => {
               data-glow-color="c2"
               onClick={(e) => {
                 e.preventDefault();
-                //communicate with backend here, get new task ID, create new actiontype for NEW_TASK, etc.
-                dispatch({
-                  type: actionTypes.UPDATE_TASK,
-                  payload: {
-                    taskID: editorState.activeTaskID,
-                    updatedTask: task,
-                  },
-                });
-                dispatch({ type: actionTypes.SET_TASK_EDITOR, payload: false });
+                saveAndClose();
               }}
             >
               save
