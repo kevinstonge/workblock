@@ -8,21 +8,32 @@ const handler = nextConnect();
 handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
   const authHeader: string = req.headers.authorization || "";
   const token: string = authHeader.split(" ")[1];
-  const email: string | JwtPayload | null = jwt.decode(token);
-  const blockID: string = uuidv4();
-  await db.update(
-    { email },
-    //need an id for the block here!!
-    { $push: { blocks: { ...req.body.block, id: blockID } } },
-    {},
-    (err) => {
-      if (err)
-        res.status(500).json({ message: "database error", errorMessage: err });
-      else {
-        res.status(201).json({ message: "added block successfully", blockID });
+  const decodedToken: JwtPayload | null = jwt.decode(token, {
+    complete: true,
+  });
+  const email: string = decodedToken?.payload?.email || "";
+  if (email !== "") {
+    const blockID: string = uuidv4();
+    await db.update(
+      { email },
+      { $push: { blocks: { ...req.body.block, id: blockID } } },
+      {},
+      (err, doc) => {
+        console.log(`doc: ${JSON.stringify(doc)}`);
+        if (err)
+          res
+            .status(500)
+            .json({ message: "database error", errorMessage: err });
+        else {
+          res
+            .status(201)
+            .json({ message: "added block successfully", blockID });
+        }
       }
-    }
-  );
+    );
+  } else {
+    res.status(401).json({ message: "not authorized" });
+  }
 });
 
 export default handler;

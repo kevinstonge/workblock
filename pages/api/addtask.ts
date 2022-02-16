@@ -9,18 +9,33 @@ const handler = nextConnect();
 handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
   const authHeader: string = req.headers.authorization || "";
   const token: string = authHeader.split(" ")[1];
-  const email: string | JwtPayload | null = jwt.decode(token || "");
-  const task: TaskFull = req.body.task;
-  task.id = uuidv4();
-  await db.update({ email }, { $push: { tasks: task } }, {}, (err) => {
-    if (err)
-      res.status(500).json({ message: "database error", errorMessage: err });
-    else {
-      res
-        .status(201)
-        .json({ message: "added task successfully", taskID: task.id });
-    }
+  const decodedToken: JwtPayload | null = jwt.decode(token, {
+    complete: true,
   });
+  const email: string = decodedToken?.payload?.email || "";
+  if (email !== "") {
+    const task: TaskFull = req.body.task;
+    task.id = uuidv4();
+    await db.update(
+      { email: email },
+      { $push: { tasks: task } },
+      {},
+      (err, doc) => {
+        console.log(`doc: ${JSON.stringify(doc)}`);
+        if (err)
+          res
+            .status(500)
+            .json({ message: "database error", errorMessage: err });
+        else {
+          res
+            .status(201)
+            .json({ message: "added task successfully", taskID: task.id });
+        }
+      }
+    );
+  } else {
+    res.status(401).json({ message: "not authorized" });
+  }
 });
 
 export default handler;

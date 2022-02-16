@@ -13,6 +13,7 @@ handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
     if (err)
       res.status(500).json({ message: "database error", errorMessage: err });
     if (doc.email === email && bcrypt.compareSync(password, doc.password)) {
+      console.log(doc);
       res.status(200).json({
         token: jwt.sign({ email }, process.env.JWT_SECRET || ""),
         userID: doc._id,
