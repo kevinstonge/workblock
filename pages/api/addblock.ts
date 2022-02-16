@@ -18,8 +18,7 @@ handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
       { email },
       { $push: { blocks: { ...req.body.block, id: blockID } } },
       {},
-      (err, doc) => {
-        console.log(`doc: ${JSON.stringify(doc)}`);
+      (err) => {
         if (err)
           res
             .status(500)

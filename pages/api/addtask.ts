@@ -16,23 +16,15 @@ handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
   if (email !== "") {
     const task: TaskFull = req.body.task;
     task.id = uuidv4();
-    await db.update(
-      { email: email },
-      { $push: { tasks: task } },
-      {},
-      (err, doc) => {
-        console.log(`doc: ${JSON.stringify(doc)}`);
-        if (err)
-          res
-            .status(500)
-            .json({ message: "database error", errorMessage: err });
-        else {
-          res
-            .status(201)
-            .json({ message: "added task successfully", taskID: task.id });
-        }
+    await db.update({ email: email }, { $push: { tasks: task } }, {}, (err) => {
+      if (err)
+        res.status(500).json({ message: "database error", errorMessage: err });
+      else {
+        res
+          .status(201)
+          .json({ message: "added task successfully", taskID: task.id });
       }
-    );
+    });
   } else {
     res.status(401).json({ message: "not authorized" });
   }
