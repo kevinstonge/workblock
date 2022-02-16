@@ -9,7 +9,7 @@ export interface ReducerState {
   userID: string;
   blocks: Block[] | [];
   tasks: TaskFull[] | [];
-  activeBlockID: number;
+  activeBlockID: string;
   duration: number;
   playing: "playing" | "paused" | "stopped" | "ended";
   timestamp: number;
@@ -20,8 +20,9 @@ export type EditorState = {
   block: Block | undefined;
   blockEditor: boolean;
   taskEditor: boolean;
-  activeTaskID: number;
-  isNew: boolean;
+  activeTaskID: string;
+  isNewBlock: boolean;
+  isNewTask: boolean;
 };
 
 export interface State {
@@ -30,30 +31,30 @@ export interface State {
 }
 
 export type TaskFull = {
-  id: number;
+  id: string;
   title: string;
   description: string;
 };
 
 export const emptyTaskFull: TaskFull = {
-  id: -1,
+  id: "",
   title: "",
   description: "",
 };
 
 export type TaskShort = {
-  taskID: number;
+  taskID: string;
   duration: number;
 };
 
 export type Block = {
-  id: number;
+  id: string;
   title: string;
   taskSchedule: TaskShort[];
 };
 
 export const emptyBlock: Block = {
-  id: -1,
+  id: "",
   title: "",
   taskSchedule: [],
 };

@@ -13,7 +13,7 @@ const ActiveBlock: NextPage = () => {
   }: {
     blocks: Block[];
     timestamp: number;
-    activeBlockID: number;
+    activeBlockID: string;
     dispatch: Function;
   } = useContext(store);
   const activeBlock =

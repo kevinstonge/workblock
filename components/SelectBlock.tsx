@@ -32,7 +32,7 @@ const SelectBlock: NextPage<Props> = (props: Props) => {
     blocks,
     activeBlockID,
     dispatch,
-  }: { blocks: Block[]; activeBlockID: Number; dispatch: Function } =
+  }: { blocks: Block[]; activeBlockID: string; dispatch: Function } =
     useContext(store);
   return (
     <>

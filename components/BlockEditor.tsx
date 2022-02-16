@@ -17,31 +17,31 @@ const BlockEditor: NextPage = () => {
   }: {
     tasks: TaskFull[];
     editorState: EditorState;
-    activeBlockID: number;
+    activeBlockID: string;
     dispatch: Function;
   } = useContext(store);
-  //I think I need a useEffect here to populate editorState with empty data if editorState.isNew.
   useEffect(() => {
-    if (editorState.isNew) {
+    if (editorState.isNewBlock) {
       dispatch({
         type: actionTypes.UPDATE_EDITOR,
-        payload: { block: { id: -1, title: "", taskSchedule: [] } },
+        payload: { block: { id: "", title: "", taskSchedule: [] } },
       });
     }
   }, []);
   const saveAndClose = async () => {
     if (editorState.block !== undefined) {
-      if (editorState.isNew) {
+      if (editorState.isNewBlock) {
         const result = await axiosWithAuth.post("/api/addblock", {
           block: editorState.block,
         });
         if (result.status === 201) {
+          console.log(result);
           dispatch({
             type: actionTypes.ADD_BLOCK,
             payload: {
-              title: "",
-              taskSchedule: [],
-              id: result.data._id,
+              title: editorState.block.title,
+              taskSchedule: editorState.block.taskSchedule,
+              id: result.data.blockID,
             },
           });
         } else {

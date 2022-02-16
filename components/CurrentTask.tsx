@@ -29,12 +29,12 @@ const CurrentTask: NextPage = () => {
     duration: number;
     playing: "playing" | "paused" | "stopped" | "ended";
     timestamp: number | undefined;
-    activeBlockID: number;
+    activeBlockID: string;
     dispatch: Function;
   } = useContext(store);
 
   const taskSchedule: TaskShort[] =
-    activeBlockID === -1
+    activeBlockID === ""
       ? []
       : blocks.filter((b: Block): Boolean => b.id === activeBlockID)[0]
           .taskSchedule;

@@ -17,22 +17,21 @@ const TaskEditor: NextPage = () => {
     dispatch: Function;
   } = useContext(store);
   const activeTask: TaskFull =
-    tasks.filter((t) => t.id == editorState.activeTaskID)[0] || emptyTaskFull;
+    tasks.filter((t) => t.id == editorState.activeTaskID)[0] || emptyTaskFull; // if id not in tasks, use emptyTaskFull
   const [task, setTask]: [task: TaskFull, setTask: Function] =
     useState(activeTask);
   const saveAndClose = async () => {
-    const result = await axiosWithAuth.post("/api/addtask", {
-      task,
-    });
-    if (result.status === 201) {
-      dispatch({
-        type: actionTypes.UPDATE_TASK,
-        payload: {
-          taskID: editorState.activeTaskID,
-          updatedTask: task,
-        },
+    if (editorState.activeTaskID === "") {
+      const result = await axiosWithAuth.post("/api/addtask", {
+        task,
       });
-      dispatch({ type: actionTypes.SET_TASK_EDITOR, payload: false });
+      if (result.status === 201) {
+        dispatch({
+          type: actionTypes.ADD_TASK,
+          payload: { ...task, id: result.data.taskID },
+        });
+        dispatch({ type: actionTypes.SET_TASK_EDITOR, payload: false });
+      }
     }
   };
   return (

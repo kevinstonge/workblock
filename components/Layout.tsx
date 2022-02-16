@@ -1,11 +1,7 @@
 import type { NextPage } from "next";
 import Header from "./Header";
 import Head from "next/head";
-import { store } from "../state/store";
-import { ReactNode, useContext } from "react";
-import TaskEditor from "./TaskEditor";
-import BlockEditor from "./BlockEditor";
-import { EditorState } from "../utils/types";
+import { ReactNode } from "react";
 type Props = {
   children?: ReactNode;
 };

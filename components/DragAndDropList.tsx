@@ -176,7 +176,7 @@ function DragAndDropList() {
         onClick={() =>
           dispatch({
             type: actionTypes.UPDATE_EDITOR,
-            payload: { taskEditor: true, activeTaskID: -1 },
+            payload: { taskEditor: true, activeTaskID: "" },
           })
         }
       >

@@ -6,7 +6,7 @@ export type Action = {
   payload: any;
 };
 export const reducer = (state: ReducerState = initialState, action: Action) => {
-  const getDuration = (blockID: number): number => {
+  const getDuration = (blockID: string): number => {
     return state.blocks
       .filter((b) => b.id === blockID)[0]
       .taskSchedule.reduce(
@@ -93,22 +93,21 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
     case actionTypes.ADD_BLOCK:
       return {
         ...state,
-        blocks: [
-          ...state.blocks,
-          {
-            id: action.payload.id,
-            title: action.payload.title,
-            taskSchedule: action.payload.taskSchedule,
-          },
-        ],
+        blocks: [...state.blocks, action.payload],
+        //if new block is created, make it the active block:
         activeBlockID: action.payload.id,
+      };
+    case actionTypes.ADD_TASK:
+      return {
+        ...state,
+        tasks: [...state.tasks, action.payload],
       };
     case actionTypes.CREATE_AND_EDIT_NEW_BLOCK:
       return {
         ...state,
         editorState: {
-          isNew: true,
-          activeTaskID: -1,
+          isNewBlock: true,
+          activeTaskID: "",
           block: emptyBlock,
           blockEditor: true,
           taskEditor: false,
