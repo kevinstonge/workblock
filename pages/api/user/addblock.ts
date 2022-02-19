@@ -5,10 +5,11 @@ import type { NextApiRequestExtended } from "../../../utils/types";
 import { v4 as uuidv4 } from "uuid";
 const handler = nextConnect();
 handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
-  const blockID: string = uuidv4();
+  const block = req.body.block;
+  block.id = uuidv4();
   await db.update(
-    { email: req.userData.email },
-    { $push: { blocks: { ...req.body.block, id: blockID } } },
+    { email: res.getHeader("email") },
+    { $push: { blocks: block } },
     {},
     (err) => {
       if (err)
@@ -19,7 +20,7 @@ handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
       else {
         res.status(201).json({
           message: "added block successfully",
-          blockID,
+          blockID: block.id,
         });
       }
     }
