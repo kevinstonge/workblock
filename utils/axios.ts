@@ -10,7 +10,6 @@ const baseURL: string | undefined =
   process.env.NODE_ENV === "production"
     ? process.env.REACT_APP_API
     : process.env.REACT_APP_API_DEV;
-console.log(baseURL);
 export const axiosWithAuth = axios.create({
   baseURL,
   withCredentials: true,

@@ -1,7 +1,15 @@
-import { NextApiRequest } from "next";
+import type { NextApiRequest } from "next";
+import type { NextApiResponse } from "next";
 export interface NextApiRequestExtended extends NextApiRequest {
   db: any;
   dbClient: any;
+  userData: { email: string };
+  headers: any;
+}
+
+export interface NextApiResponseExtended extends NextApiResponse {
+  email: string;
+  headers: any;
 }
 export interface ReducerState {
   email: string;

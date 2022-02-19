@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse, NextApiHandler } from "next";
+import type { NextApiResponse } from "next";
 const { MongoClient } = require("mongodb");
 import { NextApiRequestExtended } from "../../../utils/types";
 import nextConnect from "next-connect";
@@ -14,13 +14,11 @@ const database = async (
 ) => {
   try {
     const ObjectID = require("mongodb").ObjectID;
-    console.log(new ObjectID());
     if (!client.isConnected) await client.connect();
     req.dbClient = client;
     req.db = client.db("dev");
     return next();
   } catch (err) {
-    console.log(err);
     res.status(500).json({ message: "unable to connect to database" });
   }
 };

@@ -22,7 +22,7 @@ const TaskEditor: NextPage = () => {
     useState(activeTask);
   const saveAndClose = async () => {
     if (editorState.activeTaskID === "") {
-      const result = await axiosWithAuth.post("/api/addtask", {
+      const result = await axiosWithAuth.post("/api/user/addtask", {
         task,
       });
       if (result.status === 201) {

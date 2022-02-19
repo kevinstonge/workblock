@@ -31,11 +31,10 @@ const BlockEditor: NextPage = () => {
   const saveAndClose = async () => {
     if (editorState.block !== undefined) {
       if (editorState.isNewBlock) {
-        const result = await axiosWithAuth.post("/api/addblock", {
+        const result = await axiosWithAuth.post("/api/user/addblock", {
           block: editorState.block,
         });
         if (result.status === 201) {
-          console.log(result);
           dispatch({
             type: actionTypes.ADD_BLOCK,
             payload: {
