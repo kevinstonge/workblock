@@ -26,7 +26,11 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
     case actionTypes.UPDATE_EDITOR:
       return {
         ...state,
-        editorState: { ...state.editorState, ...action.payload },
+        editorState: {
+          ...state.editorState,
+          block: state.blocks.filter((b) => b.id === state.activeBlockID)[0],
+          ...action.payload,
+        },
       };
     case actionTypes.SET_ACTIVE_BLOCK_ID:
       return {

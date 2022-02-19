@@ -47,10 +47,9 @@ const BlockEditor: NextPage = () => {
           //error handling?
         }
       } else {
-        const result = await axiosWithAuth.post(
-          `/api/updateblock/${editorState.block.id}`,
-          { block: editorState.block }
-        );
+        const result = await axiosWithAuth.post(`/api/user/updateblock`, {
+          block: editorState.block,
+        });
         if (result.status === 200) {
           dispatch({
             type: actionTypes.UPDATE_BLOCK,
