@@ -4,6 +4,8 @@ import actionTypes from "../state/actionTypes";
 import { store } from "../state/store";
 import styles from "../styles/BlockEditor.module.scss";
 import DragAndDropList from "./DragAndDropList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect } from "react";
 import { Block, EditorState, TaskFull } from "../utils/types";
 import AvailableTasksList from "./AvailableTasksList";
@@ -106,6 +108,21 @@ const BlockEditor: NextPage = () => {
                 <div>
                   <h3>available tasks:</h3>
                   <AvailableTasksList />
+                  <button
+                    className={styles.addTask}
+                    data-glow-color={"c2"}
+                    onClick={() =>
+                      dispatch({
+                        type: actionTypes.UPDATE_EDITOR,
+                        payload: { taskEditor: true, activeTaskID: "" },
+                      })
+                    }
+                  >
+                    <span>
+                      <FontAwesomeIcon icon={faPlus} />
+                    </span>
+                    <p>add a new task</p>
+                  </button>
                 </div>
               </div>
             </div>

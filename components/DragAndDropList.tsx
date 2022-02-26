@@ -9,7 +9,6 @@ import {
 import styles from "../styles/DragAndDropList.module.scss";
 import type { TaskFull, TaskShort, EditorState } from "../utils/types";
 import actionTypes from "../state/actionTypes";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import timeString from "../utils/timeString";
 function DragAndDropList() {
@@ -170,21 +169,6 @@ function DragAndDropList() {
           )}
         </Droppable>
       </DragDropContext>
-      <button
-        className={styles.addTask}
-        data-glow-color={"c2"}
-        onClick={() =>
-          dispatch({
-            type: actionTypes.UPDATE_EDITOR,
-            payload: { taskEditor: true, activeTaskID: "" },
-          })
-        }
-      >
-        <span>
-          <FontAwesomeIcon icon={faPlus} />
-        </span>
-        <p>add a new task</p>
-      </button>
     </>
   ) : null;
 }

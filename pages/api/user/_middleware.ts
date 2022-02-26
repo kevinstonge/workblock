@@ -6,6 +6,7 @@ export function middleware(req: NextApiRequestExtended) {
   if (req.headers) {
     const authHeader: string = req.headers.get("authorization") || "";
     const token: string = authHeader.split(" ")[1];
+    console.log(`token: ${token}`);
     const decodedToken: JwtPayload | null = jwt.decode(token, {
       complete: true,
     });

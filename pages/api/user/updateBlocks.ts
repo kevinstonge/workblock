@@ -9,23 +9,14 @@ const handler = nextConnect();
 handler.post(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     const email = res.getHeader("email");
-    await db.update(
-      {
-        email: email,
-      },
-      { blocks: req.body.blocks },
-      {},
-      (err) => {
-        if (err) {
-          console.log(err);
-          res
-            .status(500)
-            .json({ message: "database error", errorMessage: err });
-        } else {
-          res.status(200).json({ message: "blocks updated successfully" });
-        }
+    const blocks = req.body.blocks;
+    await db.update({ email }, { $set: { blocks: blocks } }, {}, (err) => {
+      if (err) {
+        res.status(500).json({ message: "database error", errorMessage: err });
+      } else {
+        res.status(200).json({ message: "blocks updated successfully" });
       }
-    );
+    });
   }
 );
 
