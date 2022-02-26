@@ -2,13 +2,8 @@ import nextConnect from "next-connect";
 import type { NextApiResponse } from "next";
 import type { NextApiRequestExtended } from "../../../utils/types";
 import db from "../middleware/db-prod";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Error } from "mongoose";
-interface Jwt {
-  email: string;
-  iat: number;
-}
+
 const handler = nextConnect();
 handler.use(db);
 handler.get(async (req: NextApiRequestExtended, res: NextApiResponse) => {

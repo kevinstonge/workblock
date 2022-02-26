@@ -63,22 +63,15 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
         playing: action.payload,
       };
     case actionTypes.UPDATE_TASK:
-      if (action.payload.taskID === -1) {
-        return {
-          ...state,
-          tasks: [...state.tasks, action.payload.updatedTask],
-        };
-      } else {
-        return {
-          ...state,
-          tasks: state.tasks.map((task) => {
-            if (task.id === action.payload.taskID) {
-              return action.payload.updatedTask;
-            }
-            return task;
-          }),
-        };
-      }
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === action.payload.id) {
+            return action.payload;
+          }
+          return task;
+        }),
+      };
     case actionTypes.UPDATE_BLOCK:
       return {
         ...state,

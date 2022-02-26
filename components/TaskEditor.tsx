@@ -6,6 +6,7 @@ import { EditorState, TaskFull, emptyTaskFull } from "../utils/types";
 import styles from "../styles/TaskEditor.module.scss";
 import actionTypes from "../state/actionTypes";
 import { axiosWithAuth } from "../utils/axios";
+import { v4 as uuidv4 } from "uuid";
 const TaskEditor: NextPage = () => {
   const {
     editorState,
@@ -17,18 +18,36 @@ const TaskEditor: NextPage = () => {
     dispatch: Function;
   } = useContext(store);
   const activeTask: TaskFull =
-    tasks.filter((t) => t.id == editorState.activeTaskID)[0] || emptyTaskFull; // if id not in tasks, use emptyTaskFull
+    tasks.filter((t) => t.id == editorState.activeTaskID)[0] || emptyTaskFull;
   const [task, setTask]: [task: TaskFull, setTask: Function] =
     useState(activeTask);
   const saveAndClose = async () => {
-    if (editorState.activeTaskID === "") {
-      const result = await axiosWithAuth.post("/api/user/addtask", {
-        task,
+    //a new task has an id of ""
+    if (task.id === "") {
+      const newTasks: TaskFull[] = [...tasks, { ...task, id: uuidv4() }];
+      const result = await axiosWithAuth.post("/api/user/updateTasks", {
+        tasks: newTasks,
       });
-      if (result.status === 201) {
+      if (result.status === 200) {
         dispatch({
           type: actionTypes.ADD_TASK,
-          payload: { ...task, id: result.data.taskID },
+          payload: task,
+        });
+        dispatch({ type: actionTypes.SET_TASK_EDITOR, payload: false });
+      }
+    } else {
+      const newTasks: TaskFull[] = tasks.map((t) => {
+        if (t.id === task.id) {
+          return task;
+        } else return t;
+      });
+      const result = await axiosWithAuth.post("/api/user/updateTasks", {
+        tasks: newTasks,
+      });
+      if (result.status === 200) {
+        dispatch({
+          type: actionTypes.UPDATE_TASK,
+          payload: task,
         });
         dispatch({ type: actionTypes.SET_TASK_EDITOR, payload: false });
       }

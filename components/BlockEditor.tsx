@@ -5,19 +5,20 @@ import { store } from "../state/store";
 import styles from "../styles/BlockEditor.module.scss";
 import DragAndDropList from "./DragAndDropList";
 import { useContext, useEffect } from "react";
-import { EditorState, TaskFull } from "../utils/types";
+import { Block, EditorState, TaskFull } from "../utils/types";
 import AvailableTasksList from "./AvailableTasksList";
 import { axiosWithAuth } from "../utils/axios";
+import { v4 as uuidv4 } from "uuid";
 
 const BlockEditor: NextPage = () => {
   const {
     editorState,
-    activeBlockID,
+    blocks,
     dispatch,
   }: {
     tasks: TaskFull[];
     editorState: EditorState;
-    activeBlockID: string;
+    blocks: Block[];
     dispatch: Function;
   } = useContext(store);
   useEffect(() => {
@@ -31,34 +32,35 @@ const BlockEditor: NextPage = () => {
   const saveAndClose = async () => {
     if (editorState.block !== undefined) {
       if (editorState.isNewBlock) {
-        const result = await axiosWithAuth.post("/api/user/addblock", {
-          block: editorState.block,
+        editorState.block.id = uuidv4();
+        const result = await axiosWithAuth.post("/api/user/updateBlocks", {
+          blocks: [...blocks, editorState.block],
         });
-        if (result.status === 201) {
+        if (result.status === 200) {
           dispatch({
             type: actionTypes.ADD_BLOCK,
-            payload: {
-              title: editorState.block.title,
-              taskSchedule: editorState.block.taskSchedule,
-              id: result.data.blockID,
-            },
+            payload: editorState.block,
           });
         } else {
-          //error handling?
+          console.log("saveAndClose failed? result:");
+          console.log(result);
         }
       } else {
-        const result = await axiosWithAuth.post(`/api/user/updateblock`, {
-          block: editorState.block,
+        const result = await axiosWithAuth.post(`/api/user/updateBlocks`, {
+          blocks: blocks.map((block) => {
+            if (block.id === editorState?.block?.id) {
+              return editorState.block;
+            } else return block;
+          }),
         });
         if (result.status === 200) {
           dispatch({
             type: actionTypes.UPDATE_BLOCK,
-            payload: {
-              id: editorState.block.id,
-              title: editorState.block.title,
-              taskSchedule: editorState.block.taskSchedule,
-            },
+            payload: editorState.block,
           });
+        } else {
+          console.log("saveAndClose failed? result:");
+          console.log(result);
         }
       }
     }
