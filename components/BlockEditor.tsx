@@ -7,18 +7,19 @@ import DragAndDropList from "./DragAndDropList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect } from "react";
-import { Block, EditorState, TaskFull } from "../utils/types";
+import { Block, EditorState } from "../utils/types";
 import AvailableTasksList from "./AvailableTasksList";
-import { axiosWithAuth } from "../utils/axios";
+import { axiosA } from "../utils/axios";
 import { v4 as uuidv4 } from "uuid";
 
 const BlockEditor: NextPage = () => {
   const {
+    token,
     editorState,
     blocks,
     dispatch,
   }: {
-    tasks: TaskFull[];
+    token: string;
     editorState: EditorState;
     blocks: Block[];
     dispatch: Function;
@@ -35,7 +36,7 @@ const BlockEditor: NextPage = () => {
     if (editorState.block !== undefined) {
       if (editorState.isNewBlock) {
         editorState.block.id = uuidv4();
-        const result = await axiosWithAuth.post("/api/user/updateBlocks", {
+        const result = await axiosA(token).post("/api/user/updateBlocks", {
           blocks: [...blocks, editorState.block],
         });
         if (result.status === 200) {
@@ -48,7 +49,7 @@ const BlockEditor: NextPage = () => {
           console.log(result);
         }
       } else {
-        const result = await axiosWithAuth.post(`/api/user/updateBlocks`, {
+        const result = await axiosA(token).post(`/api/user/updateBlocks`, {
           blocks: blocks.map((block) => {
             if (block.id === editorState?.block?.id) {
               return editorState.block;

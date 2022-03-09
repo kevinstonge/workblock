@@ -5,14 +5,16 @@ import { store } from "../state/store";
 import { EditorState, TaskFull, emptyTaskFull } from "../utils/types";
 import styles from "../styles/TaskEditor.module.scss";
 import actionTypes from "../state/actionTypes";
-import { axiosWithAuth } from "../utils/axios";
+import { axiosA } from "../utils/axios";
 import { v4 as uuidv4 } from "uuid";
 const TaskEditor: NextPage = () => {
   const {
+    token,
     editorState,
     tasks,
     dispatch,
   }: {
+    token: string;
     editorState: EditorState;
     tasks: TaskFull[];
     dispatch: Function;
@@ -26,7 +28,7 @@ const TaskEditor: NextPage = () => {
     if (task.id === "") {
       const newTask = { ...task, id: uuidv4() }
       const newTasks: TaskFull[] = [...tasks, newTask];
-      const result = await axiosWithAuth.post("/api/user/updateTasks", {
+      const result = await axiosA(token).post("/api/user/updateTasks", {
         tasks: newTasks,
       });
       if (result.status === 200) {
@@ -42,7 +44,7 @@ const TaskEditor: NextPage = () => {
           return task;
         } else return t;
       });
-      const result = await axiosWithAuth.post("/api/user/updateTasks", {
+      const result = await axiosA(token).post("/api/user/updateTasks", {
         tasks: newTasks,
       });
       if (result.status === 200) {
