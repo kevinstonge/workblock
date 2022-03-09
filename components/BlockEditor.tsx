@@ -25,12 +25,12 @@ const BlockEditor: NextPage = () => {
     dispatch: Function;
   } = useContext(store);
   useEffect(() => {
-    if (editorState.isNewBlock) {
+    if (editorState.isNewBlock === true) {
+      console.log('setting empty block');
       dispatch({
         type: actionTypes.UPDATE_EDITOR,
         payload: { block: { id: "", title: "", taskSchedule: [] } },
-      });
-    }
+      });    }
   }, []);
   const saveAndClose = async () => {
     if (editorState.block !== undefined) {

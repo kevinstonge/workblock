@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState, useContext } from "react";
-import { axiosWithAuth } from "../utils/axios";
+import axios from "axios";
 import validator from "validator";
 import { store } from "../state/store";
 import actionTypes from "../state/actionTypes";
@@ -40,7 +40,7 @@ const Signup = () => {
       setFormState({ ...formState, error: "passwords do not match" });
       return;
     }
-    const data = await axiosWithAuth({
+    const data = await axios({
       method: "POST",
       url: "/api/signup",
       data: { email, password },
