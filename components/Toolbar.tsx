@@ -10,11 +10,13 @@ import {
   faGears,
 } from "@fortawesome/free-solid-svg-icons";
 import SelectBlock from "./SelectBlock";
+import DeleteConfirmation from "./DeleteConfirmation";
 import styles from "../styles/Toolbar.module.scss";
 import { useContext, useState } from "react";
 const Toolbar: NextPage = () => {
-  const { dispatch }: { dispatch: Function } = useContext(store);
+  const { dispatch, activeBlockID }: { dispatch: Function, activeBlockID: string } = useContext(store);
   const [selectBlockVisible, setSelectBlockVisible] = useState(false);
+  const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
 
   return (
     <>
@@ -75,7 +77,7 @@ const Toolbar: NextPage = () => {
               onClick={() => {
                 dispatch({
                   type: actionTypes.UPDATE_EDITOR,
-                  payload: { blockEditor: true, isNew: false },
+                  payload: { blockEditor: true, isNewBlock: false },
                 });
               }}
             >
@@ -90,7 +92,9 @@ const Toolbar: NextPage = () => {
             </button>
           </li>
           <li>
-            <button data-glow-color="e1" className={styles.b2}>
+            <button data-glow-color="e1" className={styles.b2 + " " + styles.dropdownButton} onClick={()=>{
+              setDeleteConfirmationVisible(!deleteConfirmationVisible);
+            }}>
               <span className="double-icon">
                 <FontAwesomeIcon
                   icon={faTableColumns}
@@ -99,6 +103,17 @@ const Toolbar: NextPage = () => {
                 <FontAwesomeIcon icon={faTrash} className="e1 top-icon" />
               </span>
               <p>delete</p>
+              {deleteConfirmationVisible && (
+                <div
+                  className={styles.dropdownContent}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <DeleteConfirmation 
+                    setDeleteConfirmationVisible={setDeleteConfirmationVisible}
+                    blockID={activeBlockID}
+                    />
+                </div>
+              )}
             </button>
           </li>
         </ul>
