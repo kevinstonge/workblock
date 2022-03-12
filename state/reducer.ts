@@ -94,6 +94,12 @@ export const reducer = (state: ReducerState = initialState, action: Action) => {
         //if new block is created, make it the active block:
         activeBlockID: action.payload.id,
       };
+    case actionTypes.DELETE_BLOCK:
+      return {
+        ...state,
+        blocks: state.blocks.filter((b) => b.id !== action.payload),
+        activeBlockID: state.blocks[0].id,
+      };
     case actionTypes.ADD_TASK:
       return {
         ...state,

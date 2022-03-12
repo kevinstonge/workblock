@@ -17,6 +17,7 @@ export interface ActionTypes {
   CREATE_AND_EDIT_NEW_BLOCK: string;
   ADD_BLOCK: string;
   ADD_TASK: string;
+  DELETE_BLOCK: string;
   payload?: any;
 }
 const actionTypes: ActionTypes = {
@@ -38,5 +39,6 @@ const actionTypes: ActionTypes = {
   CREATE_AND_EDIT_NEW_BLOCK: "CREATE_AND_EDIT_NEW_BLOCK",
   ADD_BLOCK: "ADD_BLOCK",
   ADD_TASK: "ADD_TASK",
+  DELETE_BLOCK: "DELETE_BLOCK",
 };
 export default actionTypes;

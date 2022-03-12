@@ -16,6 +16,6 @@ export const initialState: type.ReducerState = {
     isNewBlock: false,
     isNewTask: false,
     taskEditor: false,
-    activeTaskID: " ",
+    activeTaskID: "",
   },
 };

@@ -14,9 +14,13 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import styles from "../styles/Toolbar.module.scss";
 import { useContext, useState } from "react";
 const Toolbar: NextPage = () => {
-  const { dispatch, activeBlockID }: { dispatch: Function, activeBlockID: string } = useContext(store);
+  const {
+    dispatch,
+    activeBlockID,
+  }: { dispatch: Function; activeBlockID: string } = useContext(store);
   const [selectBlockVisible, setSelectBlockVisible] = useState(false);
-  const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+  const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
+    useState(false);
 
   return (
     <>
@@ -92,9 +96,14 @@ const Toolbar: NextPage = () => {
             </button>
           </li>
           <li>
-            <button data-glow-color="e1" className={styles.b2 + " " + styles.dropdownButton} onClick={()=>{
-              setDeleteConfirmationVisible(!deleteConfirmationVisible);
-            }}>
+            <button
+              data-glow-color="e1"
+              className={styles.b2 + " " + styles.dropdownButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                setDeleteConfirmationVisible(!deleteConfirmationVisible);
+              }}
+            >
               <span className="double-icon">
                 <FontAwesomeIcon
                   icon={faTableColumns}
@@ -105,13 +114,14 @@ const Toolbar: NextPage = () => {
               <p>delete</p>
               {deleteConfirmationVisible && (
                 <div
-                  className={styles.dropdownContent}
+                  className={
+                    styles.dropdownContent + " " + styles.confirmDelete
+                  }
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <DeleteConfirmation 
+                  <DeleteConfirmation
                     setDeleteConfirmationVisible={setDeleteConfirmationVisible}
-                    blockID={activeBlockID}
-                    />
+                  />
                 </div>
               )}
             </button>

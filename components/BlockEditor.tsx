@@ -139,7 +139,7 @@ const BlockEditor: NextPage = () => {
               >
                 discard & close
               </button>
-              <button onClick={() => saveAndClose()} data-glow-color="c2">
+              <button onClick={(e) => { e.preventDefault(); saveAndClose(); }} data-glow-color="c2">
                 save & close
               </button>
             </div>

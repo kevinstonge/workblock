@@ -24,9 +24,8 @@ const TaskEditor: NextPage = () => {
   const [task, setTask]: [task: TaskFull, setTask: Function] =
     useState(activeTask);
   const saveAndClose = async () => {
-    //a new task has an id of ""
     if (task.id === "") {
-      const newTask = { ...task, id: uuidv4() }
+      const newTask = { ...task, id: uuidv4() };
       const newTasks: TaskFull[] = [...tasks, newTask];
       const result = await axiosA(token).post("/api/user/updateTasks", {
         tasks: newTasks,

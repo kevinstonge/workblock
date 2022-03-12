@@ -12,7 +12,7 @@ handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
   await db.findOne({ email }, (err, doc) => {
     if (err)
       res.status(500).json({ message: "database error", errorMessage: err });
-    if (doc.email === email && bcrypt.compareSync(password, doc.password)) {
+    if (doc?.email === email && bcrypt.compareSync(password, doc?.password)) {
       res.status(200).json({
         token: jwt.sign({ email }, process.env.JWT_SECRET || ""),
         userID: doc._id,

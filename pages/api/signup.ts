@@ -38,7 +38,7 @@ handler.post(async (req: NextApiRequestExtended, res: NextApiResponse) => {
           }
           //success:
           const token = jwt.sign(
-            document._id || "",
+            document.email || "",
             process.env.JWT_SECRET || ""
           );
           res.status(201).json({ token, userID: document._id });
