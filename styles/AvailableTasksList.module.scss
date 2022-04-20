@@ -6,36 +6,33 @@
 
   > ul {
     @include flexC();
+    @include paperView();
     > li {
       @include flexR();
       gap: 0.5vw;
-      align-items: center;
       justify-content: space-between;
-      @include paperView();
-      > span {
+      > div {
         @include flexR();
         align-items: center;
-        &.left {
-          > button {
-            @include button();
-            padding: 0;
-            @include flexR();
-            gap: 0;
+        > button {
+          border: none;
+          background-color: transparent;
+          padding: 0;
+          margin: 0;
+          @include flexR();
+          align-items: center;
+          &:hover {
+            cursor: pointer;
+          }
+          > svg {
+            width: 2vw;
+            height: 2vw;
+            min-width: 1.5rem;
+            min-height: 1.5rem;
           }
         }
-        &.right {
-          > button {
-            @include button();
-            @include flexR();
-            gap: 0;
-            align-items: center;
-            > svg {
-              width: 2vw;
-              height: 2vw;
-              min-width: 1.5rem;
-              min-height: 1.5rem;
-            }
-          }
+        &.left {
+          overflow: hidden;
         }
       }
     }

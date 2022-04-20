@@ -3,7 +3,7 @@ import ModalContainer from "./ModalContainer";
 import actionTypes from "../state/actionTypes";
 import { store } from "../state/store";
 import styles from "../styles/BlockEditor.module.scss";
-import DragAndDropList from "./DragAndDropList";
+import TaskScheduler from "./TaskScheduler";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect } from "react";
@@ -26,11 +26,12 @@ const BlockEditor: NextPage = () => {
   } = useContext(store);
   useEffect(() => {
     if (editorState.isNewBlock === true) {
-      console.log('setting empty block');
+      console.log("setting empty block");
       dispatch({
         type: actionTypes.UPDATE_EDITOR,
         payload: { block: { id: "", title: "", taskSchedule: [] } },
-      });    }
+      });
+    }
   }, []);
   const saveAndClose = async () => {
     if (editorState.block !== undefined) {
@@ -102,28 +103,14 @@ const BlockEditor: NextPage = () => {
                       }
                     ></input>
                   </label>
-                  <div className={styles.taskSequenceContainer}>
-                    <DragAndDropList />
+                  <h3>task schedule:</h3>
+                  <div className={styles.taskScheduler}>
+                    <TaskScheduler />
                   </div>
                 </div>
                 <div>
-                  <h3>available tasks:</h3>
+                  <h3>your tasks:</h3>
                   <AvailableTasksList />
-                  <button
-                    className={styles.addTask}
-                    data-glow-color={"c2"}
-                    onClick={() =>
-                      dispatch({
-                        type: actionTypes.UPDATE_EDITOR,
-                        payload: { taskEditor: true, activeTaskID: "" },
-                      })
-                    }
-                  >
-                    <span>
-                      <FontAwesomeIcon icon={faPlus} />
-                    </span>
-                    <p>add a new task</p>
-                  </button>
                 </div>
               </div>
             </div>
@@ -139,7 +126,13 @@ const BlockEditor: NextPage = () => {
               >
                 discard & close
               </button>
-              <button onClick={(e) => { e.preventDefault(); saveAndClose(); }} data-glow-color="c2">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  saveAndClose();
+                }}
+                data-glow-color="c2"
+              >
                 save & close
               </button>
             </div>

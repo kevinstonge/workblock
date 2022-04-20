@@ -1,4 +1,4 @@
-@import './vars.scss';
+@import "./vars.scss";
 @mixin flexR {
   display: flex;
   flex-direction: row;
@@ -52,19 +52,19 @@
     min-width: 1.2rem;
     min-height: 1.2rem;
   }
-  &[data-glow-color='c1'] {
+  &[data-glow-color="c1"] {
     background-color: $c1;
     &:hover {
       @include button-animate-on-hover(c1);
     }
   }
-  &[data-glow-color='c2'] {
+  &[data-glow-color="c2"] {
     background-color: $c2;
     &:hover {
       @include button-animate-on-hover(c2);
     }
   }
-  &[data-glow-color='e1'] {
+  &[data-glow-color="e1"] {
     background-color: $e1;
     &:hover {
       @include button-animate-on-hover(e1);
@@ -75,7 +75,11 @@
 @mixin paperView {
   @include highlightTop();
   overflow-y: auto;
-  background: linear-gradient(to bottom, lighten($paper, 5%) 0%, darken($paper, 5%) 100%);
+  background: linear-gradient(
+    to bottom,
+    lighten($paper, 5%) 0%,
+    darken($paper, 5%) 100%
+  );
   box-shadow: 0 0.2vw 0.25vw black;
   color: $b2;
   padding: 0.6vw;
@@ -85,7 +89,7 @@
   border-bottom: 0.3vw outset $paper;
   > div,
   > p,
-  > ul > li,
+  li,
   > h3 {
     padding: 0.2vw;
     width: 100%;
@@ -111,10 +115,26 @@
   border-top-color: black;
   border-radius: 1vw;
   background: radial-gradient(lighten($bg, 10%), transparent),
-    radial-gradient(closest-side at 50% 5%, lighten($bg, 15%) 0%, transparent 100%),
-    radial-gradient(closest-side at 50% 95%, darken($bg, 5%) 0%, transparent 100%),
-    radial-gradient(closest-side at 5% 60%, darken($bg, 1%) 0%, transparent 100%),
-    radial-gradient(closest-side at 95% 60%, darken($bg, 1%) 0%, transparent 100%);
+    radial-gradient(
+      closest-side at 50% 5%,
+      lighten($bg, 15%) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      closest-side at 50% 95%,
+      darken($bg, 5%) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      closest-side at 5% 60%,
+      darken($bg, 1%) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      closest-side at 95% 60%,
+      darken($bg, 1%) 0%,
+      transparent 100%
+    );
 }
 @mixin highlight($c) {
   border-radius: 0.2rem;

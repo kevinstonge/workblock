@@ -1,0 +1,35 @@
+@import "./global/vars.scss";
+@import "./global/mixins.scss";
+$bgColor: desaturate(lighten($c2, 25%), 40%);
+.task {
+  @include flexR();
+  padding: 1vw;
+  justify-content: space-between;
+  align-items: center;
+  > p {
+    min-width: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  .taskControls {
+    flex-wrap: nowrap;
+    input {
+      @include inputDark(lighten($c1, 20%));
+      @include vwFont(0.9);
+      &[data-placeholder-color="c1"] {
+        &::placeholder {
+          color: transparentize(lighten($c1, 20%), 0.6);
+        }
+      }
+      &[data-placeholder-color="c2"] {
+        &::placeholder {
+          color: transparentize(lighten($c2, 10%), 0.5);
+        }
+      }
+    }
+  }
+}

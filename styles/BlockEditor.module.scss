@@ -1,5 +1,5 @@
-@import './global/vars.scss';
-@import './global/mixins.scss';
+@import "./global/vars.scss";
+@import "./global/mixins.scss";
 .blockEditor {
   width: 100vw;
   @media (min-width: 800px) {
@@ -30,12 +30,14 @@
             width: 100%;
           }
         }
-        .taskSequenceContainer {
+        .taskScheduler {
+          @include flexC();
+          @include paperView();
           max-height: 80vh;
           overflow-y: auto;
           border-radius: 0.25vw;
           &::-webkit-scrollbar-track {
-            background: desaturate(lighten($c2, 25%), 40%) !important;
+            background: desaturate(lighten($c2, 25%), 40%);
           }
         }
       }
@@ -44,5 +46,17 @@
 
   input {
     @include inputDark(lighten($c1, 20%));
+  }
+}
+.addTask {
+  cursor: pointer;
+  @include button;
+  background-color: $c2;
+  justify-self: center;
+  align-self: center;
+  margin: 0 auto;
+  > svg {
+    width: 3vw;
+    height: 3vw;
   }
 }
