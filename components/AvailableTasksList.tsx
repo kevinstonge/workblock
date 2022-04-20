@@ -39,6 +39,7 @@ const AvailableTasksList = () => {
               >
                 <FontAwesomeIcon icon={faPencil} />
               </button>
+              {/* trash button should be disabled if task is present in any blocks */}
               <button>
                 <FontAwesomeIcon icon={faTrash} />
               </button>
