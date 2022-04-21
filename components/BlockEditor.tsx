@@ -30,7 +30,7 @@ const BlockEditor: NextPage = () => {
         payload: { block: { id: '', title: '', taskSchedule: [] } },
       });
     }
-  }, []);
+  }, [dispatch, editorState.isNewBlock]);
   const saveAndClose = async () => {
     if (editorState.block !== undefined) {
       if (editorState.isNewBlock) {

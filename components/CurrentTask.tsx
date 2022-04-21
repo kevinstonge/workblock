@@ -1,18 +1,12 @@
-import type { NextPage } from "next";
-import styles from "../styles/CurrentTask.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEye,
-  faPlay,
-  faPause,
-  faRedo,
-  faStopCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import { useContext, useEffect, useState } from "react";
-import { store } from "../state/store";
-import actionTypes from "../state/actionTypes";
-import { TaskShort, Block, TaskFull } from "../utils/types";
-import timeString from "../utils/timeString";
+import type { NextPage } from 'next';
+import styles from '../styles/CurrentTask.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faPlay, faPause, faRedo, faStopCircle } from '@fortawesome/free-solid-svg-icons';
+import { useContext, useEffect, useState } from 'react';
+import { store } from '../state/store';
+import actionTypes from '../state/actionTypes';
+import { TaskShort, Block, TaskFull } from '../utils/types';
+import timeString from '../utils/timeString';
 
 const CurrentTask: NextPage = () => {
   const {
@@ -27,17 +21,16 @@ const CurrentTask: NextPage = () => {
     blocks: Block[];
     tasks: TaskFull[];
     duration: number;
-    playing: "playing" | "paused" | "stopped" | "ended";
+    playing: 'playing' | 'paused' | 'stopped' | 'ended';
     timestamp: number | undefined;
     activeBlockID: string;
     dispatch: Function;
   } = useContext(store);
 
   const taskSchedule: TaskShort[] =
-    activeBlockID === ""
+    activeBlockID === ''
       ? []
-      : blocks.filter((b: Block): Boolean => b.id === activeBlockID)[0]
-          .taskSchedule;
+      : blocks.filter((b: Block): Boolean => b.id === activeBlockID)[0].taskSchedule;
 
   const fullTaskList: TaskFull[] = taskSchedule.map(
     (task) => tasks.filter((t) => t.id === task.taskID)[0]
@@ -52,30 +45,23 @@ const CurrentTask: NextPage = () => {
 
   useEffect(() => {
     let timeoutID: ReturnType<typeof setTimeout>;
-    if (playing === "playing") {
+    if (playing === 'playing') {
       const newBlockStatus = { ...blockStatus };
       const newTS: number = timestamp ? timestamp + 1 : 1;
       while (newBlockStatus.currentTaskIndex + 1 < taskSchedule.length) {
-        newBlockStatus.currentTaskDuration =
-          taskSchedule[newBlockStatus.currentTaskIndex].duration;
-        if (
-          newTS <=
-          newBlockStatus.durationSum + newBlockStatus.currentTaskDuration
-        ) {
+        newBlockStatus.currentTaskDuration = taskSchedule[newBlockStatus.currentTaskIndex].duration;
+        if (newTS <= newBlockStatus.durationSum + newBlockStatus.currentTaskDuration) {
           break;
         }
-        newBlockStatus.durationSum +=
-          taskSchedule[newBlockStatus.currentTaskIndex].duration;
+        newBlockStatus.durationSum += taskSchedule[newBlockStatus.currentTaskIndex].duration;
         newBlockStatus.currentTaskIndex++;
       }
       newBlockStatus.timeRemainingOnTask =
-        newBlockStatus.durationSum +
-        newBlockStatus.currentTaskDuration -
-        timestamp;
+        newBlockStatus.durationSum + newBlockStatus.currentTaskDuration - timestamp;
       setBlockStatus(newBlockStatus);
 
       if (timestamp === duration) {
-        dispatch({ type: actionTypes.SET_PLAYING, payload: "ended" });
+        dispatch({ type: actionTypes.SET_PLAYING, payload: 'ended' });
         dispatch({ type: actionTypes.SET_TIMESTAMP, payload: duration });
         setBlockStatus({ ...blockStatus, timeRemainingOnTask: 0 });
       } else if (timestamp < duration) {
@@ -87,23 +73,21 @@ const CurrentTask: NextPage = () => {
     return () => {
       clearTimeout(timeoutID);
     };
-  }, [playing, timestamp]);
+  }, [playing, timestamp, blockStatus, dispatch, duration, taskSchedule]);
   return (
     <>
       <div className={styles.currentTask}>
         <div className={styles.currentTaskLeft}>
-          <p className={styles.bigTime}>
-            {timeString(blockStatus.timeRemainingOnTask).jsx}
-          </p>
+          <p className={styles.bigTime}>{timeString(blockStatus.timeRemainingOnTask).jsx}</p>
           <div className={styles.currentTaskToolbar}>
-            {playing === "ended" ? (
+            {playing === 'ended' ? (
               <>
                 <button
                   data-glow-color="c2"
                   onClick={() => {
                     dispatch({
                       type: actionTypes.SET_PLAYING,
-                      payload: "stopped",
+                      payload: 'stopped',
                     });
                     dispatch({ type: actionTypes.SET_TIMESTAMP, payload: 0 });
                     setBlockStatus({
@@ -122,11 +106,11 @@ const CurrentTask: NextPage = () => {
               <>
                 <button
                   data-glow-color="c2"
-                  disabled={playing === "playing"}
+                  disabled={playing === 'playing'}
                   onClick={() =>
                     dispatch({
                       type: actionTypes.SET_PLAYING,
-                      payload: "playing",
+                      payload: 'playing',
                     })
                   }
                 >
@@ -135,11 +119,11 @@ const CurrentTask: NextPage = () => {
                 </button>
                 <button
                   data-glow-color="c1"
-                  disabled={playing === "paused" || playing === "stopped"}
+                  disabled={playing === 'paused' || playing === 'stopped'}
                   onClick={() =>
                     dispatch({
                       type: actionTypes.SET_PLAYING,
-                      payload: "paused",
+                      payload: 'paused',
                     })
                   }
                 >
@@ -148,11 +132,11 @@ const CurrentTask: NextPage = () => {
                 </button>
                 <button
                   data-glow-color="e1"
-                  disabled={playing === "stopped"}
+                  disabled={playing === 'stopped'}
                   onClick={() => {
                     dispatch({
                       type: actionTypes.SET_PLAYING,
-                      payload: "stopped",
+                      payload: 'stopped',
                     });
                     dispatch({ type: actionTypes.SET_TIMESTAMP, payload: 0 });
                   }}
@@ -165,8 +149,8 @@ const CurrentTask: NextPage = () => {
           </div>
         </div>
         <div className={styles.currentTaskRight}>
-          <h3>{fullTaskList[blockStatus.currentTaskIndex]?.title || ""}</h3>
-          <p>{fullTaskList[blockStatus.currentTaskIndex]?.description || ""}</p>
+          <h3>{fullTaskList[blockStatus.currentTaskIndex]?.title || ''}</h3>
+          <p>{fullTaskList[blockStatus.currentTaskIndex]?.description || ''}</p>
         </div>
       </div>
       <div className={styles.taskList}>
@@ -175,8 +159,7 @@ const CurrentTask: NextPage = () => {
           {fullTaskList.map((task: TaskFull, index: number) => {
             const isActive = blockStatus.currentTaskIndex === index;
             const className =
-              `${styles.taskListItem}` +
-              (isActive ? ` ${styles.taskListItemActive}` : "");
+              `${styles.taskListItem}` + (isActive ? ` ${styles.taskListItemActive}` : '');
             return (
               <li className={className} key={`task_index-${index}`}>
                 <div>
