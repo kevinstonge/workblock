@@ -1,16 +1,14 @@
-import { NextPage } from "next";
-import ModalContainer from "./ModalContainer";
-import actionTypes from "../state/actionTypes";
-import { store } from "../state/store";
-import styles from "../styles/BlockEditor.module.scss";
-import TaskScheduler from "./TaskScheduler";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useEffect } from "react";
-import { Block, EditorState } from "../utils/types";
-import AvailableTasksList from "./AvailableTasksList";
-import { axiosA } from "../utils/axios";
-import { v4 as uuidv4 } from "uuid";
+import { NextPage } from 'next';
+import ModalContainer from './ModalContainer';
+import actionTypes from '../state/actionTypes';
+import { store } from '../state/store';
+import styles from '../styles/BlockEditor.module.scss';
+import TaskScheduler from './TaskScheduler';
+import { useContext, useEffect } from 'react';
+import { Block, EditorState } from '../utils/types';
+import AvailableTasksList from './AvailableTasksList';
+import { axiosA } from '../utils/axios';
+import { v4 as uuidv4 } from 'uuid';
 
 const BlockEditor: NextPage = () => {
   const {
@@ -26,10 +24,10 @@ const BlockEditor: NextPage = () => {
   } = useContext(store);
   useEffect(() => {
     if (editorState.isNewBlock === true) {
-      console.log("setting empty block");
+      console.log('setting empty block');
       dispatch({
         type: actionTypes.UPDATE_EDITOR,
-        payload: { block: { id: "", title: "", taskSchedule: [] } },
+        payload: { block: { id: '', title: '', taskSchedule: [] } },
       });
     }
   }, []);
@@ -37,7 +35,7 @@ const BlockEditor: NextPage = () => {
     if (editorState.block !== undefined) {
       if (editorState.isNewBlock) {
         editorState.block.id = uuidv4();
-        const result = await axiosA(token).post("/api/user/updateBlocks", {
+        const result = await axiosA(token).post('/api/user/updateBlocks', {
           blocks: [...blocks, editorState.block],
         });
         if (result.status === 200) {
@@ -46,7 +44,7 @@ const BlockEditor: NextPage = () => {
             payload: editorState.block,
           });
         } else {
-          console.log("saveAndClose failed? result:");
+          console.log('saveAndClose failed? result:');
           console.log(result);
         }
       } else {
@@ -63,7 +61,7 @@ const BlockEditor: NextPage = () => {
             payload: editorState.block,
           });
         } else {
-          console.log("saveAndClose failed? result:");
+          console.log('saveAndClose failed? result:');
           console.log(result);
         }
       }
