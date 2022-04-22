@@ -1,18 +1,16 @@
-import { store } from "../state/store";
-import { EditorState, TaskFull } from "../utils/types";
-import styles from "../styles/AvailableTasksList.module.scss";
-import { useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import actionTypes from "../state/actionTypes";
+import { store } from '../state/store';
+import type { TaskFull } from '../utils/types';
+import styles from '../styles/AvailableTasksList.module.scss';
+import { useContext } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import actionTypes from '../state/actionTypes';
 const AvailableTasksList = () => {
   const {
     tasks,
-    editorState,
     dispatch,
   }: {
     tasks: TaskFull[];
-    editorState: EditorState;
     dispatch: Function;
   } = useContext(store);
   return (
@@ -39,8 +37,14 @@ const AvailableTasksList = () => {
               >
                 <FontAwesomeIcon icon={faPencil} />
               </button>
-              {/* trash button should be disabled if task is present in any blocks */}
-              <button>
+              <button
+                onClick={() => {
+                  //need another delete confirmation here.
+                  //do a full modal popup, with a list of taskSchedules the task exists in
+                  //also, when a task is deleted, it then needs to be removed from all taskSchedules!
+                  console.log('delete');
+                }}
+              >
                 <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
@@ -50,11 +54,11 @@ const AvailableTasksList = () => {
           <div className={styles.left}>
             <button
               className={styles.addTask}
-              data-glow-color={"c2"}
+              data-glow-color={'c2'}
               onClick={() =>
                 dispatch({
                   type: actionTypes.UPDATE_EDITOR,
-                  payload: { taskEditor: true, activeTaskID: "" },
+                  payload: { taskEditor: true, activeTaskID: '' },
                 })
               }
             >

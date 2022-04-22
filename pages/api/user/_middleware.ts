@@ -1,6 +1,6 @@
 import type { NextApiRequestExtended } from '../../../utils/types';
 import jwt from 'cloudflare-worker-jwt';
-import { JwtPayload } from 'jsonwebtoken';
+import type { JwtPayload } from 'jsonwebtoken';
 import validator from 'validator';
 
 export function middleware(req: NextApiRequestExtended) {
